@@ -106,9 +106,9 @@ export default function App() {
             <SectionBlock
               id="register"
               number="A"
-              label="Step 1 — Registration"
-              title="How to Register as an Artist"
-              subtitle="Getting started on Zigguratss is quick and free. Create your verified artist account in just a few easy steps and join our growing community."
+              label="Step 1"
+              title="Getting yourself registered"
+              subtitle="It only takes a few minutes. Fill in your details, verify your email, and you're in — no complicated forms, nothing to pay upfront."
               steps={registerSteps}
               icon={UserPlus}
               accentColor="#b8943e"
@@ -117,9 +117,9 @@ export default function App() {
             <SectionBlock
               id="setup"
               number="B"
-              label="Step 2 — Profile Setup"
-              title="Set Up Your Artist Profile"
-              subtitle="Your profile is your digital gallery. Complete it fully to build trust with buyers, showcase your credentials, and receive secure payments."
+              label="Step 2"
+              title="Making your profile work for you"
+              subtitle="Think of your profile as your digital studio. Add a photo, write something about yourself, and link your bank so you're ready to get paid."
               steps={setupSteps}
               icon={Settings}
               accentColor="#6d5f9a"
@@ -128,9 +128,9 @@ export default function App() {
             <SectionBlock
               id="upload"
               number="C"
-              label="Step 3 — Upload Artwork"
-              title="List Your Artwork for Sale"
-              subtitle="Adding your artwork is straightforward. Provide detailed information and high-quality images to maximize your chances of making a sale."
+              label="Step 3"
+              title="Putting your work out there"
+              subtitle="Upload at least 5 clear photos of each piece, add the details collectors actually care about — size, medium, price — and hit submit."
               steps={uploadSteps}
               icon={ImagePlus}
               accentColor="#b8943e"
@@ -139,9 +139,9 @@ export default function App() {
             <SectionBlock
               id="manage"
               number="D"
-              label="Step 4 — Manage & Sell"
-              title="Manage Your Art & Start Selling"
-              subtitle="Once your artwork is approved and live, keep your profile fresh, engage with buyers, and grow your presence on the Zigguratss platform."
+              label="Step 4"
+              title="Staying on top of things"
+              subtitle="Once you're live, it's about keeping things fresh — update your listings, respond to buyers and watch your presence on the platform grow."
               steps={manageSteps}
               icon={Palette}
               accentColor="#6d5f9a"

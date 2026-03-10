@@ -169,12 +169,12 @@ export default function BenefitsSection() {
       }} />
       <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
         <div ref={headerRef} style={{ textAlign: 'center', marginBottom: '4rem', opacity: 0 }}>
-          <span style={{ fontSize: '0.75rem', letterSpacing: '0.15em', textTransform: 'uppercase', color: 'var(--gold)', fontWeight: 700 }}>Why Zigguratss</span>
+          <span style={{ fontSize: '0.75rem', letterSpacing: '0.15em', textTransform: 'uppercase', color: 'var(--gold)', fontWeight: 700 }}>Why artists love us</span>
           <h2 style={{ fontSize: 'clamp(2rem, 5vw, 3rem)', fontFamily: "'Playfair Display', serif", fontWeight: 800, marginTop: '0.8rem', color: 'var(--text-primary)' }}>
-            Benefits of Selling With Us
+            Real tools. Real earnings.
           </h2>
           <p style={{ marginTop: '1rem', color: 'var(--text-secondary)', fontSize: '1rem', maxWidth: '520px', margin: '1rem auto 0' }}>
-            Join a community of passionate artists and discover why thousands choose Zigguratss.
+            We built Zigguratss for artists, not corporations. Here's what that looks like in practice.
           </p>
         </div>
         <div className="benefits-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1.5rem', perspective: '1000px' }}>

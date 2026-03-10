@@ -10,7 +10,7 @@
 import { useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { gsap } from 'gsap';
-import { ArrowDown, Star, Brush } from 'lucide-react';
+import { ArrowDown, Brush } from 'lucide-react';
 
 export default function Hero() {
   const canvasRef   = useRef(null);
@@ -29,7 +29,7 @@ export default function Hero() {
     };
     window.addEventListener('resize', resize);
 
-    const COLORS = ['#c9a84c', '#e8c97a', '#7c6baa', '#c26b6b', '#ffffff'];
+    const COLORS = ['#b8943e', '#d4aa55', '#c8bfa0', '#e8e0cc', '#ffffff'];
 
     class Particle {
       constructor() { this.reset(); }
@@ -113,35 +113,9 @@ export default function Hero() {
     return () => { cancelAnimationFrame(raf); window.removeEventListener('resize', resize); };
   }, []);
 
-  // GSAP title animation
-  useEffect(() => {
-    const tl = gsap.timeline({ delay: 0.3 });
-    tl.fromTo(
-      titleRef.current,
-      { opacity: 0, y: 60, skewY: 3 },
-      { opacity: 1, y: 0, skewY: 0, duration: 1.2, ease: 'power4.out' }
-    )
-    .fromTo(
-      subtitleRef.current,
-      { opacity: 0, y: 30 },
-      { opacity: 1, y: 0, duration: 0.9, ease: 'power3.out' },
-      '-=0.6'
-    );
-  }, []);
+  // Title and subtitle are now animated by Framer Motion directly
 
-  const wordVariants = {
-    hidden: {},
-    visible: { transition: { staggerChildren: 0.06 } },
-  };
-  const letterVariants = {
-    hidden: { opacity: 0, y: 40, rotateX: -90 },
-    visible: {
-      opacity: 1, y: 0, rotateX: 0,
-      transition: { type: 'spring', damping: 14, stiffness: 100 },
-    },
-  };
-
-  const titleWords = 'Artist Guide'.split('');
+  const titleLines = ['Your Art,', 'Your Stage.'];
 
   return (
     <section
@@ -153,7 +127,7 @@ export default function Hero() {
         alignItems: 'center',
         justifyContent: 'center',
         overflow: 'hidden',
-        background: 'linear-gradient(180deg, #0a0a0f 0%, #0f0f1a 60%, #12121a 100%)',
+        background: 'linear-gradient(175deg, #0c0c14 0%, #0f0e18 55%, #0a0a10 100%)',
       }}
     >
       {/* Canvas background */}
@@ -162,269 +136,207 @@ export default function Hero() {
         style={{ position: 'absolute', inset: 0, pointerEvents: 'none', zIndex: 0 }}
       />
 
-      {/* Gradient overlays */}
+      {/* Warm glow centre */}
       <div style={{
         position: 'absolute', inset: 0, zIndex: 1,
-        background: 'radial-gradient(ellipse 80% 60% at 50% 50%, rgba(124,107,170,0.12) 0%, transparent 70%)',
-        pointerEvents: 'none',
-      }} />
-      <div style={{
-        position: 'absolute', bottom: 0, left: 0, right: 0, height: '30%', zIndex: 1,
-        background: 'linear-gradient(transparent, var(--dark))',
+        background: 'radial-gradient(ellipse 70% 55% at 50% 45%, rgba(184,148,62,0.09) 0%, transparent 70%)',
         pointerEvents: 'none',
       }} />
 
-      {/* Grid lines */}
+      {/* Bottom fade */}
       <div style={{
-        position: 'absolute', inset: 0, zIndex: 1, pointerEvents: 'none',
-        backgroundImage: `linear-gradient(rgba(201,168,76,0.04) 1px, transparent 1px),
-          linear-gradient(90deg, rgba(201,168,76,0.04) 1px, transparent 1px)`,
-        backgroundSize: '80px 80px',
+        position: 'absolute', bottom: 0, left: 0, right: 0, height: '28%', zIndex: 1,
+        background: 'linear-gradient(transparent, #0c0c14)',
+        pointerEvents: 'none',
       }} />
 
-      {/* Floating badge */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
+      {/* Top label — feels handwritten/personal */}
+      <motion.p
+        initial={{ opacity: 0, y: 14 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.5, duration: 0.8 }}
+        transition={{ delay: 0.3, duration: 0.7 }}
         style={{
           position: 'relative', zIndex: 10,
-          display: 'inline-flex', alignItems: 'center', gap: '8px',
-          padding: '8px 20px', borderRadius: '50px',
-          border: '1px solid var(--border)',
-          background: 'rgba(201,168,76,0.08)',
-          backdropFilter: 'blur(10px)',
-          marginBottom: '2rem',
-          fontSize: '0.8rem',
-          letterSpacing: '0.1em',
-          textTransform: 'uppercase',
-          color: 'var(--gold)',
-          fontWeight: 600,
+          fontSize: '0.78rem', letterSpacing: '0.18em',
+          textTransform: 'uppercase', fontWeight: 600,
+          color: 'rgba(184,148,62,0.75)',
+          marginBottom: '1.4rem',
         }}
       >
-        <Star size={12} fill="currentColor" />
-        Complete Step-by-Step Guide
-        <Star size={12} fill="currentColor" />
-      </motion.div>
+        Zigguratss · Artist Guide
+      </motion.p>
 
-      {/* Main title */}
-      <div ref={titleRef} style={{ position: 'relative', zIndex: 10, textAlign: 'center', opacity: 0 }}>
-        <motion.div
-          variants={wordVariants}
-          initial="hidden"
-          animate="visible"
-          style={{
-            fontSize: 'clamp(3.5rem, 10vw, 9rem)',
-            fontFamily: "'Playfair Display', serif",
-            fontWeight: 900,
-            lineHeight: 1,
-            display: 'flex',
-            gap: '0.5rem',
-            justifyContent: 'center',
-            flexWrap: 'wrap',
-            marginBottom: '0.2em',
-          }}
-        >
-          {titleWords.map((char, i) => (
-            <motion.span
-              key={i}
-              variants={letterVariants}
-              style={{
-                display: 'inline-block',
-                background: char === ' ' ? 'none' : 'linear-gradient(135deg, #f0ece2 30%, var(--gold) 100%)',
-                WebkitBackgroundClip: char === ' ' ? 'none' : 'text',
-                WebkitTextFillColor: char === ' ' ? 'transparent' : 'transparent',
-                backgroundClip: char === ' ' ? 'none' : 'text',
-                width: char === ' ' ? '0.4em' : 'auto',
-              }}
-            >
-              {char}
-            </motion.span>
-          ))}
-        </motion.div>
+      {/* Main title — simple slide up, no letter-by-letter robot feel */}
+      <div ref={titleRef} style={{ position: 'relative', zIndex: 10, textAlign: 'center' }}>
+        {titleLines.map((line, i) => (
+          <motion.div
+            key={i}
+            initial={{ opacity: 0, y: 40 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.5 + i * 0.18, duration: 0.75, ease: [0.22, 1, 0.36, 1] }}
+            style={{
+              fontSize: 'clamp(3.2rem, 9.5vw, 8.5rem)',
+              fontFamily: "'Playfair Display', serif",
+              fontWeight: 900,
+              lineHeight: 1.05,
+              background: i === 0
+                ? 'linear-gradient(135deg, #f0ece2 20%, #d4c4a0 100%)'
+                : 'linear-gradient(135deg, #b8943e 0%, #d4aa55 60%, #b8943e 100%)',
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
+              backgroundClip: 'text',
+            }}
+          >
+            {line}
+          </motion.div>
+        ))}
+
+        {/* Warm underline */}
         <motion.div
           initial={{ scaleX: 0 }}
           animate={{ scaleX: 1 }}
-          transition={{ delay: 1.2, duration: 0.8, ease: 'easeOut' }}
+          transition={{ delay: 1.0, duration: 0.7, ease: 'easeOut' }}
           style={{
-            height: '3px',
-            background: 'linear-gradient(90deg, transparent, var(--gold), transparent)',
-            margin: '0 auto',
-            width: '60%',
+            height: '2px',
+            background: 'linear-gradient(90deg, transparent, rgba(184,148,62,0.6), transparent)',
+            margin: '1.2rem auto 0',
+            width: '50%',
             transformOrigin: 'center',
           }}
         />
       </div>
 
-      {/* Subtitle */}
+      {/* Subtitle — feels like a real person wrote it */}
       <div
         ref={subtitleRef}
         style={{
           position: 'relative', zIndex: 10, textAlign: 'center',
-          opacity: 0, maxWidth: '600px', padding: '0 2rem', marginTop: '1.5rem',
+          maxWidth: '540px', padding: '0 1.5rem', marginTop: '1.8rem',
         }}
       >
         <p style={{
-          fontSize: 'clamp(1rem, 2.5vw, 1.18rem)',
-          color: 'rgba(180,172,200,0.85)',
-          lineHeight: 1.8,
+          fontSize: 'clamp(1rem, 2.2vw, 1.12rem)',
+          color: 'rgba(195,188,210,0.78)',
+          lineHeight: 1.85,
           fontWeight: 400,
-          letterSpacing: '0.01em',
         }}>
-          Everything you need to start selling your artwork on
-          <span style={{ color: 'var(--gold)', fontWeight: 600 }}> Zigguratss</span> —
-          from registration to your very first sale, we guide you every step of the way.
+          We've put together everything a new artist needs to get set up on Zigguratss —
+          no confusion, no guesswork. Just follow along and you'll be up and selling in no time.
         </p>
       </div>
 
       {/* CTA buttons */}
       <motion.div
-        initial={{ opacity: 0, y: 30 }}
+        initial={{ opacity: 0, y: 24 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 1.4, duration: 0.8 }}
+        transition={{ delay: 1.2, duration: 0.7 }}
         style={{
           display: 'flex', gap: '1rem', flexWrap: 'wrap',
-          justifyContent: 'center', marginTop: '2.5rem',
+          justifyContent: 'center', marginTop: '2.8rem',
           position: 'relative', zIndex: 10,
         }}
       >
         <motion.a
           href="#register"
-          whileHover={{ scale: 1.05, boxShadow: '0 0 40px rgba(201,168,76,0.4)' }}
+          whileHover={{ scale: 1.04, boxShadow: '0 8px 36px rgba(184,148,62,0.35)' }}
           whileTap={{ scale: 0.97 }}
           style={{
-            padding: '14px 36px',
-            borderRadius: '50px',
-            background: 'linear-gradient(135deg, var(--gold), var(--gold-dark))',
-            color: '#0a0a0f',
+            padding: '13px 34px',
+            borderRadius: '8px',
+            background: 'linear-gradient(135deg, #b8943e, #8a6e2a)',
+            color: '#0c0c14',
             fontWeight: 700,
-            fontSize: '0.95rem',
+            fontSize: '0.93rem',
             textDecoration: 'none',
-            letterSpacing: '0.06em',
+            letterSpacing: '0.04em',
             display: 'flex', alignItems: 'center', gap: '8px',
           }}
         >
-          <Brush size={16} />
-          Start Your Journey
+          <Brush size={15} />
+          Get Started
         </motion.a>
         <motion.a
-          href="#upload"
-          whileHover={{ scale: 1.05 }}
+          href="https://zigguratss.com"
+          target="_blank"
+          rel="noreferrer"
+          whileHover={{ scale: 1.04, borderColor: 'rgba(184,148,62,0.5)' }}
           whileTap={{ scale: 0.97 }}
           style={{
-            padding: '14px 36px',
-            borderRadius: '50px',
-            border: '1px solid var(--border)',
-            color: 'var(--text-primary)',
+            padding: '13px 30px',
+            borderRadius: '8px',
+            border: '1px solid rgba(184,148,62,0.25)',
+            color: 'rgba(220,215,230,0.88)',
             fontWeight: 500,
-            fontSize: '0.95rem',
+            fontSize: '0.93rem',
             textDecoration: 'none',
-            letterSpacing: '0.06em',
             background: 'rgba(255,255,255,0.04)',
-            backdropFilter: 'blur(10px)',
           }}
         >
-          Upload Artwork
+          Visit Zigguratss
         </motion.a>
       </motion.div>
 
-      {/* Stats row */}
+      {/* Stats — simple, honest, monochrome-ish */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ delay: 1.8, duration: 0.8 }}
+        transition={{ delay: 1.6, duration: 0.8 }}
         className="hero-stats"
         style={{
-          display: 'flex', gap: '3rem', flexWrap: 'wrap',
-          justifyContent: 'center', marginTop: '4rem',
+          display: 'flex', gap: '1px', flexWrap: 'wrap',
+          justifyContent: 'center', marginTop: '4.5rem',
           position: 'relative', zIndex: 10,
+          background: 'rgba(255,255,255,0.05)',
+          borderRadius: '12px', overflow: 'hidden',
+          border: '1px solid rgba(255,255,255,0.07)',
         }}
       >
         {[
-          { val: '3', unit: 'Simple Steps', desc: 'To get started', gradient: 'linear-gradient(135deg, #4f46e5, #7c3aed)' },
-          { val: '100%', unit: 'Free', desc: 'Registration', gradient: 'linear-gradient(135deg, #06b6d4, #3b82f6)' },
-          { val: '24/7', unit: 'Support', desc: 'Always here', gradient: 'linear-gradient(135deg, #10b981, #059669)' },
+          { val: '4 Steps',   desc: 'From signup to first sale' },
+          { val: '100% Free', desc: 'Registration costs nothing' },
+          { val: '24 / 7',    desc: 'Support whenever you need' },
         ].map((s, i) => (
-          <motion.div 
-            key={s.unit} 
-            initial={{ opacity: 0, y: 30, scale: 0.9 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            transition={{ delay: 2.2 + i * 0.15, duration: 0.8, type: 'spring', stiffness: 100 }}
-            style={{ textAlign: 'center', position: 'relative' }}
+          <motion.div
+            key={s.val}
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 1.8 + i * 0.12, duration: 0.6 }}
+            style={{
+              textAlign: 'center',
+              padding: '1.5rem 2.5rem',
+              borderRight: i < 2 ? '1px solid rgba(255,255,255,0.07)' : 'none',
+              minWidth: '150px',
+            }}
           >
-            {/* Professional stat container */}
             <div style={{
-              background: 'rgba(15,15,25,0.8)',
-              backdropFilter: 'blur(20px)',
-              borderRadius: '20px',
-              border: '1px solid rgba(255,255,255,0.1)',
-              padding: '2rem 1.5rem',
-              position: 'relative',
-              overflow: 'hidden',
-              minWidth: '140px',
-            }}>
-              {/* Subtle glow effect */}
-              <div style={{
-                position: 'absolute',
-                top: '-50%',
-                left: '-50%', 
-                right: '-50%',
-                bottom: '-50%',
-                background: s.gradient,
-                opacity: 0.1,
-                filter: 'blur(40px)',
-                transform: 'rotate(45deg)',
-              }} />
-              
-              {/* Professional number */}
-              <div style={{
-                fontSize: 'clamp(2.2rem, 5vw, 3.2rem)',
-                fontFamily: "'Inter', sans-serif",
-                fontWeight: 800,
-                background: s.gradient,
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent',
-                backgroundClip: 'text',
-                lineHeight: 1,
-                marginBottom: '0.8rem',
-                position: 'relative',
-                letterSpacing: '-0.02em',
-              }}>{s.val}</div>
-              
-              {/* Professional labels */}
-              <div style={{ position: 'relative' }}>
-                <div style={{ 
-                  fontSize: '0.9rem', 
-                  color: '#f1f5f9', 
-                  fontWeight: 600,
-                  marginBottom: '0.3rem',
-                  letterSpacing: '0.01em'
-                }}>{s.unit}</div>
-                <div style={{ 
-                  fontSize: '0.75rem', 
-                  color: '#94a3b8',
-                  fontWeight: 400 
-                }}>{s.desc}</div>
-              </div>
-            </div>
+              fontSize: 'clamp(1.3rem, 3vw, 1.7rem)',
+              fontFamily: "'Playfair Display', serif",
+              fontWeight: 800,
+              color: '#d4aa55',
+              lineHeight: 1, marginBottom: '0.5rem',
+            }}>{s.val}</div>
+            <div style={{
+              fontSize: '0.72rem', color: 'rgba(160,155,185,0.7)',
+              letterSpacing: '0.05em', lineHeight: 1.4,
+            }}>{s.desc}</div>
           </motion.div>
         ))}
       </motion.div>
 
       {/* Scroll indicator */}
       <motion.div
-        animate={{ y: [0, 8, 0] }}
-        transition={{ repeat: Infinity, duration: 2.2, ease: 'easeInOut' }}
+        animate={{ y: [0, 7, 0] }}
+        transition={{ repeat: Infinity, duration: 2.4, ease: 'easeInOut' }}
         style={{
-          position: 'absolute', bottom: '2.5rem', left: '50%',
+          position: 'absolute', bottom: '2rem', left: '50%',
           transform: 'translateX(-50%)', zIndex: 10,
           display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '5px',
-          color: 'rgba(160,152,128,0.7)', fontSize: '0.62rem', letterSpacing: '0.2em',
+          color: 'rgba(160,152,128,0.6)', fontSize: '0.6rem', letterSpacing: '0.18em',
           textTransform: 'uppercase',
         }}
       >
-        <span style={{ marginBottom: '2px' }}>Scroll</span>
-        <ArrowDown size={16} color="rgba(201,168,76,0.7)" strokeWidth={1.5} />
+        <span>scroll</span>
+        <ArrowDown size={14} color="rgba(184,148,62,0.6)" strokeWidth={1.5} />
       </motion.div>
     </section>
   );
