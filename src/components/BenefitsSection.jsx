@@ -18,6 +18,7 @@ import RevealOnScroll from './RevealOnScroll';
 gsap.registerPlugin(ScrollTrigger);
 
 // ─── Data
+const FEATURES = [
   { icon: Globe, title: 'Global Reach', desc: 'Showcase your artwork to collectors and art lovers from across the globe.', color: '#c9a84c' },
   { icon: Shield, title: 'Secure Payments', desc: 'Multiple secure payment gateways including PayPal, Visa, and banking transfers.', color: '#7c6baa' },
   { icon: TrendingUp, title: 'Grow Your Brand', desc: 'Build your artist profile and grow a following of dedicated art enthusiasts.', color: '#c26b6b' },
