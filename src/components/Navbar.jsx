@@ -50,7 +50,7 @@ export default function Navbar({ onSwitchPage, isCustomerPage, onBack }) {
       transition={{ duration: 0.8, ease: 'easeOut' }}
       style={{
         position: 'fixed', top: 0, left: 0, right: 0, zIndex: 1000,
-        padding: '0 2.5rem', height: '68px',
+        padding: '0 clamp(1rem, 4vw, 2.5rem)', height: 'clamp(60px, 8vw, 68px)',
         display: 'flex', alignItems: 'center', justifyContent: 'space-between',
         background: scrolled ? 'rgba(8,8,14,0.97)' : 'transparent',
         backdropFilter: scrolled ? 'blur(24px) saturate(1.4)' : 'none',

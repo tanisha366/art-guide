@@ -142,7 +142,7 @@ export default function Timeline() {
             className="timeline-line"
           />
 
-          <div style={{
+          <div className="timeline-grid" style={{
             display:             'grid',
             gridTemplateColumns: 'repeat(auto-fit, minmax(230px, 1fr))',
             gap:                 '2rem',

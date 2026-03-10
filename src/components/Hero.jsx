@@ -333,6 +333,7 @@ export default function Hero() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1.8, duration: 0.8 }}
+        className="hero-stats"
         style={{
           display: 'flex', gap: '3rem', flexWrap: 'wrap',
           justifyContent: 'center', marginTop: '4rem',

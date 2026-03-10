@@ -135,8 +135,8 @@ export default function BenefitsSection() {
             Join a community of passionate artists and discover why thousands choose Zigguratss.
           </p>
         </div>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1.5rem', perspective: '1000px' }}>
-          {benefits.map((b, i) => <BenefitCard key={b.title} b={b} index={i} />)}
+        <div className="benefits-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1.5rem', perspective: '1000px' }}>
+          {FEATURES.map((b, i) => <BenefitCard key={b.title} b={b} index={i} />)}
         </div>
       </div>
     </section>

@@ -118,8 +118,9 @@ export default function SectionBlock({
     <section
       id={id}
       ref={sectionRef}
+      className="section-block"
       style={{
-        padding:  '7rem 1.5rem',
+        padding:  'clamp(5rem, 10vw, 7rem) clamp(1rem, 4vw, 1.5rem)',
         position: 'relative',
         overflow: 'hidden',
         background: isEven ? 'var(--dark-2)' : 'var(--dark)',
@@ -167,8 +168,8 @@ export default function SectionBlock({
       <div style={{ maxWidth: '1200px', margin: '0 auto', position: 'relative', zIndex: 1 }}>
         <div style={{
           display:             'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
-          gap:                 '4rem',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+          gap:                 'clamp(2rem, 6vw, 4rem)',
           alignItems:         'center',
         }}>
 

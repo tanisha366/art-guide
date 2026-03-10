@@ -194,12 +194,35 @@ a, button {
 
 /* ── 15. Responsive Breakpoints ──────────────────── */
 
+/* Large Desktop */
+@media (min-width: 1400px) {
+  .container { max-width: 1320px; }
+}
+
+/* Desktop */
+@media (min-width: 1200px) {
+  .container { max-width: 1140px; }
+}
+
 /* Tablet / small desktop — hide desktop nav, show burger */
 @media (max-width: 900px) {
   .nav-desktop                { display: none !important; }
   .nav-mobile                 { display: flex !important; }
   .progress-nav-hidden-mobile { display: none !important; }
   .art-frame-side             { display: none !important; }
+  
+  /* Hero stats - stack vertically on tablet */
+  .hero-stats {
+    gap: 2rem !important;
+    flex-direction: column !important;
+    align-items: center !important;
+  }
+  
+  /* Timeline - better mobile grid */
+  .timeline-grid {
+    grid-template-columns: 1fr !important;
+    gap: 2rem !important;
+  }
 }
 
 /* Mobile — tighten horizontal padding, fix section order */
@@ -212,9 +235,90 @@ a, button {
   .section-text-side { order: 1 !important; }
   .section-card-side { order: 2 !important; }
   .timeline-line     { display: none !important; }
+  
+  /* Navbar mobile improvements */
+  nav {
+    padding: 0 1rem !important;
+    height: 60px !important;
+  }
+  
+  /* Benefits grid - single column */
+  .benefits-grid {
+    grid-template-columns: 1fr !important;
+    gap: 1.5rem !important;
+  }
+  
+  /* Footer - stack columns */
+  .footer-grid {
+    grid-template-columns: 1fr !important;
+    gap: 2.5rem !important;
+    text-align: center !important;
+  }
+  
+  /* CTA Banner - better mobile layout */
+  .cta-card {
+    margin: 0 !important;
+    padding: 2rem 1.5rem !important;
+    text-align: center !important;
+  }
+  
+  .cta-buttons {
+    flex-direction: column !important;
+    gap: 1rem !important;
+    width: 100% !important;
+  }
+  
+  .cta-button {
+    width: 100% !important;
+    justify-content: center !important;
+  }
 }
 
-/* Small phones — reduce base font size */
+/* Small phones — reduce base font size, tighter spacing */
 @media (max-width: 480px) {
   html { font-size: 14px; }
+  
+  section {
+    padding: 4rem 0.75rem !important;
+  }
+  
+  /* Hero mobile improvements */
+  .hero-title {
+    font-size: 2.8rem !important;
+    line-height: 1.1 !important;
+  }
+  
+  .hero-subtitle {
+    font-size: 1rem !important;
+    line-height: 1.5 !important;
+  }
+  
+  .hero-stats {
+    margin-top: 2.5rem !important;
+    gap: 1.5rem !important;
+  }
+  
+  /* Section blocks - smaller padding */
+  .section-block {
+    padding: 5rem 0.75rem !important;
+  }
+  
+  /* Timeline mobile compact */
+  .timeline-milestone {
+    padding: 1.5rem !important;
+    text-align: center !important;
+  }
+}
+
+/* Extra small phones */
+@media (max-width: 320px) {
+  html { font-size: 13px; }
+  
+  .hero-title {
+    font-size: 2.2rem !important;
+  }
+  
+  section {
+    padding: 3rem 0.5rem !important;
+  }
 }
