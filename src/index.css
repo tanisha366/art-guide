@@ -23,26 +23,26 @@
 /* ── 1. Design Tokens ────────────────────────────── */
 :root {
   /* Gold palette */
-  --gold:        #c9a84c;
-  --gold-light:  #e8c97a;
-  --gold-dark:   #9a7830;
+  --gold:        #b8943e;
+  --gold-light:  #d4aa55;
+  --gold-dark:   #8a6e2a;
 
   /* Backgrounds */
   --dark:     #0a0a0f;
   --dark-2:   #12121a;
   --dark-3:   #1a1a26;
-  --card-bg:  rgba(26, 26, 40, 0.85);
+  --card-bg:  rgba(22, 22, 34, 0.85);
 
   /* Text */
-  --text-primary:   #f0ece2;
-  --text-secondary: #a09880;
+  --text-primary:   #ece8de;
+  --text-secondary: #9590a0;
 
   /* Accents */
-  --accent:   #7c6baa;
-  --accent-2: #c26b6b;
+  --accent:   #6d5f9a;
+  --accent-2: #9a6060;
 
   /* Borders */
-  --border: rgba(201, 168, 76, 0.18);
+  --border: rgba(184, 148, 62, 0.14);
 }
 
 
@@ -210,6 +210,11 @@ a, button {
   .nav-mobile                 { display: flex !important; }
   .progress-nav-hidden-mobile { display: none !important; }
   .art-frame-side             { display: none !important; }
+
+  /* Benefits — 2 columns on tablet */
+  .benefits-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
   
   /* Hero stats - stack vertically on tablet */
   .hero-stats {
@@ -242,7 +247,7 @@ a, button {
     height: 60px !important;
   }
   
-  /* Benefits grid - single column */
+  /* Benefits grid - single column on mobile */
   .benefits-grid {
     grid-template-columns: 1fr !important;
     gap: 1.5rem !important;

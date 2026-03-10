@@ -19,12 +19,12 @@ gsap.registerPlugin(ScrollTrigger);
 
 // ─── Data
 const FEATURES = [
-  { icon: Globe, title: 'Global Reach', desc: 'Showcase your artwork to collectors and art lovers from across the globe.', color: '#c9a84c' },
-  { icon: Shield, title: 'Secure Payments', desc: 'Multiple secure payment gateways including PayPal, Visa, and banking transfers.', color: '#7c6baa' },
-  { icon: TrendingUp, title: 'Grow Your Brand', desc: 'Build your artist profile and grow a following of dedicated art enthusiasts.', color: '#c26b6b' },
-  { icon: Award, title: 'Contests & Recognition', desc: 'Participate in weekly art contests and win recognition for your talent.', color: '#4bc9a8' },
-  { icon: Banknote, title: 'Fair Earnings', desc: 'Transparent pricing with your earnings directly deposited to your bank.', color: '#c9a84c' },
-  { icon: Headphones, title: 'Dedicated Support', desc: '24/7 support team ready to help you with any questions or issues.', color: '#7c6baa' },
+  { icon: Globe, title: 'Global Reach', desc: 'Showcase your artwork to collectors and art lovers from across the globe.', color: '#b8943e' },
+  { icon: Shield, title: 'Secure Payments', desc: 'Multiple secure payment gateways including PayPal, Visa, and banking transfers.', color: '#6d5f9a' },
+  { icon: TrendingUp, title: 'Grow Your Brand', desc: 'Build your artist profile and grow a following of dedicated art enthusiasts.', color: '#b8943e' },
+  { icon: Award, title: 'Contests & Recognition', desc: 'Participate in weekly art contests and win recognition for your talent.', color: '#6d5f9a' },
+  { icon: Banknote, title: 'Fair Earnings', desc: 'Transparent pricing with your earnings directly deposited to your bank.', color: '#b8943e' },
+  { icon: Headphones, title: 'Dedicated Support', desc: '24/7 support team ready to help you with any questions or issues.', color: '#6d5f9a' },
 ];
 
 function BenefitCard({ b, index }) {
@@ -177,7 +177,7 @@ export default function BenefitsSection() {
             Join a community of passionate artists and discover why thousands choose Zigguratss.
           </p>
         </div>
-        <div className="benefits-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1.5rem', perspective: '1000px' }}>
+        <div className="benefits-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1.5rem', perspective: '1000px' }}>
           {FEATURES.map((b, i) => <BenefitCard key={b.title} b={b} index={i} />)}
         </div>
       </div>

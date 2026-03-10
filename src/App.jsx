@@ -13,7 +13,6 @@ import SectionBlock    from './components/SectionBlock';
 import BenefitsSection from './components/BenefitsSection';
 import CTABanner       from './components/CTABanner';
 import Footer          from './components/Footer';
-import ProgressNav     from './components/ProgressNav';
 import ScrollProgress  from './components/ScrollProgress';
 import CustomerGuide   from './components/CustomerGuide';
 
@@ -99,7 +98,6 @@ export default function App() {
         <motion.div key="artist" variants={pageVariants} initial="initial" animate="animate" exit="exit">
           <ScrollProgress />
           <Navbar onSwitchPage={switchToCustomer} />
-          <ProgressNav />
 
           <main>
             <Hero />
@@ -113,7 +111,7 @@ export default function App() {
               subtitle="Getting started on Zigguratss is quick and free. Create your verified artist account in just a few easy steps and join our growing community."
               steps={registerSteps}
               icon={UserPlus}
-              accentColor="#c9a84c"
+              accentColor="#b8943e"
             />
 
             <SectionBlock
@@ -124,7 +122,7 @@ export default function App() {
               subtitle="Your profile is your digital gallery. Complete it fully to build trust with buyers, showcase your credentials, and receive secure payments."
               steps={setupSteps}
               icon={Settings}
-              accentColor="#7c6baa"
+              accentColor="#6d5f9a"
             />
 
             <SectionBlock
@@ -135,7 +133,7 @@ export default function App() {
               subtitle="Adding your artwork is straightforward. Provide detailed information and high-quality images to maximize your chances of making a sale."
               steps={uploadSteps}
               icon={ImagePlus}
-              accentColor="#c26b6b"
+              accentColor="#b8943e"
             />
 
             <SectionBlock
@@ -146,7 +144,7 @@ export default function App() {
               subtitle="Once your artwork is approved and live, keep your profile fresh, engage with buyers, and grow your presence on the Zigguratss platform."
               steps={manageSteps}
               icon={Palette}
-              accentColor="#4bc9a8"
+              accentColor="#6d5f9a"
             />
 
             <BenefitsSection />
