@@ -341,25 +341,73 @@ export default function Hero() {
         }}
       >
         {[
-          { val: '3', unit: 'Simple Steps', desc: 'To get started' },
-          { val: '100%', unit: 'Free', desc: 'Registration' },
-          { val: '24/7', unit: 'Support', desc: 'Always here' },
-        ].map((s) => (
-          <div key={s.unit} style={{ textAlign: 'center' }}>
+          { val: '3', unit: 'Simple Steps', desc: 'To get started', gradient: 'linear-gradient(135deg, #4f46e5, #7c3aed)' },
+          { val: '100%', unit: 'Free', desc: 'Registration', gradient: 'linear-gradient(135deg, #06b6d4, #3b82f6)' },
+          { val: '24/7', unit: 'Support', desc: 'Always here', gradient: 'linear-gradient(135deg, #10b981, #059669)' },
+        ].map((s, i) => (
+          <motion.div 
+            key={s.unit} 
+            initial={{ opacity: 0, y: 30, scale: 0.9 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            transition={{ delay: 2.2 + i * 0.15, duration: 0.8, type: 'spring', stiffness: 100 }}
+            style={{ textAlign: 'center', position: 'relative' }}
+          >
+            {/* Professional stat container */}
             <div style={{
-              fontSize: 'clamp(2rem, 4vw, 2.8rem)',
-              fontFamily: "'Playfair Display', serif",
-              fontWeight: 900,
-              background: 'linear-gradient(135deg, var(--gold-light), var(--gold))',
-              WebkitBackgroundClip: 'text',
-              WebkitTextFillColor: 'transparent',
-              backgroundClip: 'text',
-            }}>{s.val}</div>
-            <div style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', marginTop: '4px' }}>
-              <strong style={{ color: 'var(--text-primary)', display: 'block' }}>{s.unit}</strong>
-              {s.desc}
+              background: 'rgba(15,15,25,0.8)',
+              backdropFilter: 'blur(20px)',
+              borderRadius: '20px',
+              border: '1px solid rgba(255,255,255,0.1)',
+              padding: '2rem 1.5rem',
+              position: 'relative',
+              overflow: 'hidden',
+              minWidth: '140px',
+            }}>
+              {/* Subtle glow effect */}
+              <div style={{
+                position: 'absolute',
+                top: '-50%',
+                left: '-50%', 
+                right: '-50%',
+                bottom: '-50%',
+                background: s.gradient,
+                opacity: 0.1,
+                filter: 'blur(40px)',
+                transform: 'rotate(45deg)',
+              }} />
+              
+              {/* Professional number */}
+              <div style={{
+                fontSize: 'clamp(2.2rem, 5vw, 3.2rem)',
+                fontFamily: "'Inter', sans-serif",
+                fontWeight: 800,
+                background: s.gradient,
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+                backgroundClip: 'text',
+                lineHeight: 1,
+                marginBottom: '0.8rem',
+                position: 'relative',
+                letterSpacing: '-0.02em',
+              }}>{s.val}</div>
+              
+              {/* Professional labels */}
+              <div style={{ position: 'relative' }}>
+                <div style={{ 
+                  fontSize: '0.9rem', 
+                  color: '#f1f5f9', 
+                  fontWeight: 600,
+                  marginBottom: '0.3rem',
+                  letterSpacing: '0.01em'
+                }}>{s.unit}</div>
+                <div style={{ 
+                  fontSize: '0.75rem', 
+                  color: '#94a3b8',
+                  fontWeight: 400 
+                }}>{s.desc}</div>
+              </div>
             </div>
-          </div>
+          </motion.div>
         ))}
       </motion.div>
 

@@ -124,7 +124,49 @@ export default function BenefitsSection() {
   }, []);
 
   return (
-    <section ref={ref} style={{ padding: '7rem 1.5rem', background: 'linear-gradient(180deg, var(--dark) 0%, var(--dark-2) 50%, var(--dark) 100%)', position: 'relative' }}>
+    <section ref={ref} style={{ 
+      padding: 'clamp(6rem, 12vw, 8rem) clamp(1rem, 4vw, 1.5rem)', 
+      background: 'linear-gradient(180deg, #0a0a0f 0%, #0f0f14 50%, #12121a 100%)', 
+      position: 'relative',
+      overflow: 'hidden'
+    }}>
+      {/* Professional geometric background */}
+      <div style={{
+        position: 'absolute',
+        inset: 0,
+        backgroundImage: [
+          'radial-gradient(circle at 25% 25%, rgba(124,107,170,0.05) 0%, transparent 50%)',
+          'radial-gradient(circle at 75% 75%, rgba(201,168,76,0.05) 0%, transparent 50%)',
+          'linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px)',
+          'linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px)'
+        ].join(','),
+        backgroundSize: '800px 800px, 800px 800px, 80px 80px, 80px 80px',
+        pointerEvents: 'none',
+      }} />
+      
+      {/* Floating orbs for depth */}
+      <div style={{
+        position: 'absolute',
+        top: '10%',
+        right: '10%',
+        width: '300px',
+        height: '300px',
+        borderRadius: '50%',
+        background: 'radial-gradient(circle, rgba(124,107,170,0.08) 0%, transparent 70%)',
+        filter: 'blur(60px)',
+        pointerEvents: 'none',
+      }} />
+      <div style={{
+        position: 'absolute',
+        bottom: '20%',
+        left: '15%',
+        width: '400px',
+        height: '400px',
+        borderRadius: '50%',
+        background: 'radial-gradient(circle, rgba(201,168,76,0.06) 0%, transparent 70%)',
+        filter: 'blur(80px)',
+        pointerEvents: 'none',
+      }} />
       <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
         <div ref={headerRef} style={{ textAlign: 'center', marginBottom: '4rem', opacity: 0 }}>
           <span style={{ fontSize: '0.75rem', letterSpacing: '0.15em', textTransform: 'uppercase', color: 'var(--gold)', fontWeight: 700 }}>Why Zigguratss</span>

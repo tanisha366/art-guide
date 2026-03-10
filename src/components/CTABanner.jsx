@@ -149,12 +149,37 @@ export default function CTABanner() {
 
   return (
     <section ref={ref} style={{
-      padding: '9rem 1.5rem',
+      padding: 'clamp(7rem, 12vw, 9rem) clamp(1rem, 4vw, 1.5rem)',
       position: 'relative',
       overflow: 'hidden',
-      background: 'linear-gradient(180deg, var(--dark) 0%, #0d0b14 50%, var(--dark) 100%)',
-      minHeight: '560px',
+      background: 'linear-gradient(180deg, #0a0a0f 0%, #0d0b14 30%, #0f0e18 70%, #0a0a0f 100%)',
+      minHeight: '600px',
     }}>
+      {/* Sophisticated background elements */}
+      <div style={{
+        position: 'absolute',
+        inset: 0,
+        backgroundImage: [
+          'radial-gradient(circle at 20% 20%, rgba(201,168,76,0.08) 0%, transparent 40%)',
+          'radial-gradient(circle at 80% 80%, rgba(124,107,170,0.06) 0%, transparent 40%)',
+          'radial-gradient(circle at 50% 50%, rgba(194,107,107,0.04) 0%, transparent 60%)',
+        ].join(','),
+        backgroundSize: '1000px 1000px, 800px 800px, 1200px 1200px',
+        pointerEvents: 'none',
+      }} />
+      
+      {/* Professional grid overlay */}
+      <div style={{
+        position: 'absolute',
+        inset: 0,
+        backgroundImage: [
+          'linear-gradient(rgba(201,168,76,0.03) 1px, transparent 1px)',
+          'linear-gradient(90deg, rgba(201,168,76,0.03) 1px, transparent 1px)'
+        ].join(','),
+        backgroundSize: '100px 100px',
+        pointerEvents: 'none',
+        opacity: 0.3,
+      }} />
 
       {/* ── Ambient floor light */}
       <div style={{
@@ -200,22 +225,26 @@ export default function CTABanner() {
         pointerEvents: 'none',
       }} />
 
-      {/* ── Main card */}
+      {/* Professional main card */}
       <motion.div
-        initial={{ opacity: 0, y: 60 }}
+        className="cta-card"
         animate={cardControls}
+        whileHover={{ scale: 1.02, y: -12 }}
+        whileTap={{ scale: 0.99 }}
         style={{
-          maxWidth: '760px',
-          margin: '0 auto',
+          maxWidth: '800px', margin: '0 auto',
+          background: 'linear-gradient(145deg, rgba(15,15,25,0.95), rgba(8,8,15,0.9))',
+          borderRadius: '32px', padding: 'clamp(3rem, 6vw, 4.5rem)',
+          border: '1px solid rgba(255,255,255,0.1)',
+          backdropFilter: 'blur(40px)',
+          position: 'relative', zIndex: 10,
           textAlign: 'center',
-          position: 'relative',
-          zIndex: 2,
-          background: 'rgba(10,10,20,0.72)',
-          borderRadius: '32px',
-          border: '1px solid rgba(201,168,76,0.35)',
-          padding: 'clamp(2.5rem, 6vw, 5rem) clamp(1.5rem, 5vw, 4rem)',
-          backdropFilter: 'blur(28px)',
-          boxShadow: '0 0 80px rgba(201,168,76,0.08), 0 30px 80px rgba(0,0,0,0.6)',
+          boxShadow: [
+            '0 0 0 1px rgba(201,168,76,0.1)',
+            '0 20px 60px rgba(0,0,0,0.6)',
+            '0 0 100px rgba(201,168,76,0.05)',
+            'inset 0 1px 0 rgba(255,255,255,0.1)'
+          ].join(','),
         }}
       >
         {/* Top gold shimmer line */}

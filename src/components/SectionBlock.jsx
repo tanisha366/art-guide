@@ -123,9 +123,24 @@ export default function SectionBlock({
         padding:  'clamp(5rem, 10vw, 7rem) clamp(1rem, 4vw, 1.5rem)',
         position: 'relative',
         overflow: 'hidden',
-        background: isEven ? 'var(--dark-2)' : 'var(--dark)',
-      }}
-    >
+        background: isEven 
+          ? 'linear-gradient(135deg, #12121a 0%, #0f0f16 50%, #0a0a12 100%)'
+          : 'linear-gradient(135deg, #0a0a0f 0%, #0d0d14 50%, #10101a 100%)',
+      }}>
+      {/* Professional sectioned background */}
+      <div style={{
+        position: 'absolute',
+        inset: 0,
+        backgroundImage: [
+          isEven 
+            ? 'radial-gradient(circle at 80% 20%, rgba(194,107,107,0.04) 0%, transparent 60%)'
+            : 'radial-gradient(circle at 20% 80%, rgba(124,107,170,0.04) 0%, transparent 60%)',
+          'linear-gradient(rgba(255,255,255,0.01) 1px, transparent 1px)',
+          'linear-gradient(90deg, rgba(255,255,255,0.01) 1px, transparent 1px)'
+        ].join(','),
+        backgroundSize: '1000px 1000px, 60px 60px, 60px 60px',
+        pointerEvents: 'none',
+      }} />
       {/* Scroll-driven glow orb */}
       <motion.div
         style={{

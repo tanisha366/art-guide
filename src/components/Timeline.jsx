@@ -69,8 +69,25 @@ export default function Timeline() {
   return (
     <section
       ref={sectionRef}
-      style={{ padding: '7rem 1.5rem', background: 'var(--dark-2)', position: 'relative', overflow: 'hidden' }}
+      style={{ 
+        padding: 'clamp(5rem, 10vw, 7rem) clamp(1rem, 4vw, 1.5rem)', 
+        background: 'linear-gradient(180deg, #12121a 0%, #0f0f18 40%, #0a0a14 100%)', 
+        position: 'relative', 
+        overflow: 'hidden' 
+      }}
     >
+      {/* Professional timeline background */}
+      <div style={{
+        position: 'absolute',
+        inset: 0,
+        backgroundImage: [
+          'radial-gradient(circle at 50% 0%, rgba(201,168,76,0.06) 0%, transparent 50%)',
+          'radial-gradient(circle at 0% 100%, rgba(124,107,170,0.04) 0%, transparent 50%)',
+          'radial-gradient(circle at 100% 100%, rgba(194,107,107,0.04) 0%, transparent 50%)',
+        ].join(','),
+        backgroundSize: '1200px 800px, 800px 600px, 600px 400px',
+        pointerEvents: 'none',
+      }} />
       {/* Subtle animated grid background */}
       <motion.div
         style={{
