@@ -1,401 +1,341 @@
 // ─────────────────────────────────────────────────────────────────────────────
 // CTABanner.jsx  —  "Ready to Share Your Artwork" call-to-action section
-//
-// Features:
-//   • 8 floating fake art frames (gradient-painted canvases) on left & right
-//   • GSAP float animation on each frame
-//   • Twinkling star particles across the background
-//   • Central card with badge, stats row, and two CTA buttons
-//   • Art frames hidden on mobile (≤900px) via .art-frame-side class
+// Professional two-column layout: left = headline+CTAs, right = feature cards
 // ─────────────────────────────────────────────────────────────────────────────
 
 import { useRef, useEffect } from 'react';
-import { motion, useInView, useAnimationControls } from 'framer-motion';
+import { motion, useInView } from 'framer-motion';
 import { gsap } from 'gsap';
-import { Sparkles, ArrowUpRight, Star } from 'lucide-react';
+import {
+  ArrowUpRight, Upload, DollarSign,
+  Globe, Shield, Star, TrendingUp,
+} from 'lucide-react';
 
-// ─── Fake artwork data (gradient-painted canvas frames)
-const fakeArtworks = [
-  { id: 1, gradient: 'linear-gradient(135deg,#c9a84c 0%,#8b5e1a 40%,#3d1f0a 100%)', rotate: -12, top: '8%', left: '2%', w: 130, h: 170, label: 'Golden Dusk' },
-  { id: 2, gradient: 'linear-gradient(160deg,#1a1a6e 0%,#6b3fa0 50%,#c9a84c 100%)', rotate: 8, top: '55%', left: '0%', w: 115, h: 145, label: 'Cosmos' },
-  { id: 3, gradient: 'linear-gradient(120deg,#0d4f3c 0%,#1a8f6e 50%,#a8d5a2 100%)', rotate: -6, top: '20%', left: '7%', w: 105, h: 130, label: 'Forest Mist' },
-  { id: 4, gradient: 'linear-gradient(145deg,#7b1a1a 0%,#c44b4b 45%,#f5a623 100%)', rotate: 14, top: '70%', left: '5%', w: 120, h: 155, label: 'Ember' },
-  { id: 5, gradient: 'linear-gradient(135deg,#1a3a6b 0%,#4a90d9 50%,#a8d4f5 100%)', rotate: -10, top: '5%', right: '3%', w: 140, h: 175, label: 'Ocean Dream' },
-  { id: 6, gradient: 'linear-gradient(150deg,#3d0a47 0%,#9b3dbd 50%,#e8a0f0 100%)', rotate: 9, top: '52%', right: '0%', w: 118, h: 148, label: 'Violet Hour' },
-  { id: 7, gradient: 'linear-gradient(125deg,#1a1a1a 0%,#c9a84c 30%,#ffffff 70%,#c9a84c 100%)', rotate: -7, top: '22%', right: '6%', w: 108, h: 138, label: 'Monochrome' },
-  { id: 8, gradient: 'linear-gradient(140deg,#0a2a1a 0%,#2d6a4f 40%,#74c69d 80%,#b7e4c7 100%)', rotate: 11, top: '72%', right: '4%', w: 125, h: 158, label: 'Spring Bloom' },
+const FEATURES = [
+  {
+    icon: Upload,
+    title: 'Easy Upload',
+    desc: 'List your artwork in minutes with our guided upload flow.',
+    color: '#c9a84c',
+  },
+  {
+    icon: DollarSign,
+    title: 'Keep 85% Revenue',
+    desc: 'Industry-best artist share — you earn more, always.',
+    color: '#6ee7b7',
+  },
+  {
+    icon: Globe,
+    title: 'Global Reach',
+    desc: 'Sell to collectors in 120+ countries from day one.',
+    color: '#818cf8',
+  },
+  {
+    icon: Shield,
+    title: 'Secure Payments',
+    desc: 'Stripe-powered escrow means you get paid on every sale.',
+    color: '#f472b6',
+  },
 ];
 
-const ArtFrame = ({ artwork, delay }) => {
-  const frameRef = useRef(null);
-
-  useEffect(() => {
-    if (!frameRef.current) return;
-    gsap.to(frameRef.current, {
-      y: -14,
-      duration: 3.5 + delay * 0.4,
-      repeat: -1,
-      yoyo: true,
-      ease: 'sine.inOut',
-      delay: delay * 0.3,
-    });
-  }, [delay]);
-
-  const posStyle = {
-    position: 'absolute',
-    top: artwork.top,
-    left: artwork.left,
-    right: artwork.right,
-    width: artwork.w,
-    zIndex: 0,
-  };
-
-  return (
-    <div className="art-frame-side" ref={frameRef} style={posStyle}>
-      <motion.div
-        initial={{ opacity: 0, scale: 0.7, rotate: artwork.rotate - 10 }}
-        whileInView={{ opacity: 1, scale: 1, rotate: artwork.rotate }}
-        viewport={{ once: true, margin: '-60px' }}
-        transition={{ duration: 1, delay: delay * 0.15, ease: [0.22, 1, 0.36, 1] }}
-        style={{
-          width: '100%',
-          height: artwork.h,
-          borderRadius: '6px',
-          background: artwork.gradient,
-          border: '4px solid rgba(201,168,76,0.55)',
-          boxShadow: `0 8px 40px rgba(0,0,0,0.6), 0 0 0 1px rgba(201,168,76,0.18), inset 0 0 30px rgba(0,0,0,0.3)`,
-          position: 'relative',
-          overflow: 'hidden',
-        }}
-      >
-        {/* Canvas texture lines */}
-        <div style={{
-          position: 'absolute', inset: 0,
-          backgroundImage: 'repeating-linear-gradient(0deg, transparent, transparent 8px, rgba(255,255,255,0.03) 8px, rgba(255,255,255,0.03) 9px)',
-        }} />
-        {/* Frame inner shadow */}
-        <div style={{
-          position: 'absolute', inset: 0,
-          boxShadow: 'inset 0 0 20px rgba(0,0,0,0.5)',
-          borderRadius: '2px',
-        }} />
-        {/* Label tag */}
-        <div style={{
-          position: 'absolute', bottom: 8, left: '50%',
-          transform: 'translateX(-50%)',
-          background: 'rgba(0,0,0,0.7)',
-          backdropFilter: 'blur(4px)',
-          border: '1px solid rgba(201,168,76,0.3)',
-          borderRadius: '4px',
-          padding: '2px 8px',
-          fontSize: '9px',
-          color: 'rgba(201,168,76,0.9)',
-          letterSpacing: '0.08em',
-          whiteSpace: 'nowrap',
-          fontFamily: "'Playfair Display', serif",
-        }}>
-          {artwork.label}
-        </div>
-      </motion.div>
-      {/* Hanging wire */}
-      <div style={{
-        position: 'absolute', top: -14, left: '50%',
-        transform: 'translateX(-50%)',
-        width: 2, height: 14,
-        background: 'linear-gradient(to bottom, rgba(201,168,76,0.7), rgba(201,168,76,0.2))',
-      }} />
-      <div style={{
-        position: 'absolute', top: -16, left: '50%',
-        transform: 'translateX(-50%)',
-        width: 8, height: 8,
-        borderRadius: '50%',
-        background: 'rgba(201,168,76,0.8)',
-        boxShadow: '0 0 6px rgba(201,168,76,0.6)',
-      }} />
-    </div>
-  );
-};
+const STATS = [
+  { value: '10K+', label: 'Active Artists' },
+  { value: '50K+', label: 'Works Listed' },
+  { value: '120+', label: 'Countries' },
+  { value: '85%',  label: 'Artist Share' },
+];
 
 export default function CTABanner() {
-  const ref = useRef(null);
-  const inView = useInView(ref, { once: false, margin: '-80px' });
+  const ref     = useRef(null);
   const glowRef = useRef(null);
-  const cardControls = useAnimationControls();
-  const iconControls = useAnimationControls();
+  const inView  = useInView(ref, { once: false, margin: '-80px' });
 
-  // Pulsing glow — always running
   useEffect(() => {
     if (!glowRef.current) return;
     gsap.to(glowRef.current, {
-      scale: 1.4,
-      opacity: 0.6,
-      duration: 3,
-      repeat: -1,
-      yoyo: true,
-      ease: 'sine.inOut',
+      scale: 1.35, opacity: 0.55,
+      duration: 3.5, repeat: -1, yoyo: true, ease: 'sine.inOut',
     });
   }, []);
 
-  // Instant reset on leave, smooth animate on enter
-  useEffect(() => {
-    if (inView) {
-      cardControls.start({ opacity: 1, y: 0, transition: { duration: 0.9, ease: 'easeOut' } });
-      iconControls.start({ scale: 1, rotate: 0, transition: { duration: 0.6, delay: 0.3, type: 'spring', stiffness: 200 } });
-    } else {
-      cardControls.set({ opacity: 0, y: 60 });
-      iconControls.set({ scale: 0, rotate: -30 });
-    }
-  }, [inView]); // eslint-disable-line
-
   return (
     <section ref={ref} style={{
-      padding: 'clamp(7rem, 12vw, 9rem) clamp(1rem, 4vw, 1.5rem)',
+      padding: 'clamp(6rem, 10vw, 9rem) 0',
       position: 'relative',
       overflow: 'hidden',
-      background: 'linear-gradient(180deg, #0a0a0f 0%, #0d0b14 30%, #0f0e18 70%, #0a0a0f 100%)',
-      minHeight: '600px',
+      background: 'linear-gradient(170deg, #09090e 0%, #0d0c18 45%, #0a0a12 100%)',
     }}>
-      {/* Sophisticated background elements */}
+
+      {/* Radial background washes */}
       <div style={{
-        position: 'absolute',
-        inset: 0,
+        position: 'absolute', inset: 0, pointerEvents: 'none',
         backgroundImage: [
-          'radial-gradient(circle at 20% 20%, rgba(201,168,76,0.08) 0%, transparent 40%)',
-          'radial-gradient(circle at 80% 80%, rgba(124,107,170,0.06) 0%, transparent 40%)',
-          'radial-gradient(circle at 50% 50%, rgba(194,107,107,0.04) 0%, transparent 60%)',
+          'radial-gradient(ellipse 900px 600px at 15% 50%, rgba(201,168,76,0.07) 0%, transparent 70%)',
+          'radial-gradient(ellipse 700px 700px at 85% 30%, rgba(124,107,170,0.06) 0%, transparent 70%)',
+          'radial-gradient(ellipse 600px 400px at 60% 90%, rgba(110,231,183,0.04) 0%, transparent 70%)',
         ].join(','),
-        backgroundSize: '1000px 1000px, 800px 800px, 1200px 1200px',
-        pointerEvents: 'none',
       }} />
-      
-      {/* Professional grid overlay */}
+
+      {/* Dot grid */}
       <div style={{
-        position: 'absolute',
-        inset: 0,
-        backgroundImage: [
-          'linear-gradient(rgba(201,168,76,0.03) 1px, transparent 1px)',
-          'linear-gradient(90deg, rgba(201,168,76,0.03) 1px, transparent 1px)'
-        ].join(','),
-        backgroundSize: '100px 100px',
-        pointerEvents: 'none',
-        opacity: 0.3,
+        position: 'absolute', inset: 0, pointerEvents: 'none',
+        backgroundImage: 'radial-gradient(circle, rgba(201,168,76,0.12) 1px, transparent 1px)',
+        backgroundSize: '36px 36px', opacity: 0.35,
       }} />
 
-      {/* ── Ambient floor light */}
+      {/* Top hairline */}
       <div style={{
-        position: 'absolute', bottom: 0, left: '50%',
-        transform: 'translateX(-50%)',
-        width: '70%', height: '3px',
-        background: 'linear-gradient(90deg, transparent, rgba(201,168,76,0.4), transparent)',
-        filter: 'blur(2px)',
+        position: 'absolute', top: 0, left: 0, right: 0, height: '1px',
+        background: 'linear-gradient(90deg, transparent, rgba(201,168,76,0.3), transparent)',
       }} />
 
-      {/* ── Star particles */}
-      {[...Array(18)].map((_, i) => (
-        <motion.div
-          key={i}
-          animate={{ opacity: [0.1, 0.7, 0.1], scale: [0.8, 1.2, 0.8] }}
-          transition={{ duration: 2.5 + i * 0.3, repeat: Infinity, delay: i * 0.4 }}
-          style={{
-            position: 'absolute',
-            top: `${10 + (i * 37) % 80}%`,
-            left: `${5 + (i * 53) % 90}%`,
-            width: i % 3 === 0 ? 3 : 2,
-            height: i % 3 === 0 ? 3 : 2,
-            borderRadius: '50%',
-            background: 'rgba(201,168,76,0.6)',
-            pointerEvents: 'none',
-          }}
-        />
-      ))}
+      {/* Bottom hairline */}
+      <div style={{
+        position: 'absolute', bottom: 0, left: 0, right: 0, height: '1px',
+        background: 'linear-gradient(90deg, transparent, rgba(201,168,76,0.15), transparent)',
+      }} />
 
-      {/* ── Floating art frames */}
-      {fakeArtworks.map((art, i) => (
-        <ArtFrame key={art.id} artwork={art} delay={i} />
-      ))}
-
-      {/* ── Central pulsing glow */}
+      {/* Central pulsing glow */}
       <div ref={glowRef} style={{
-        position: 'absolute',
-        top: '50%', left: '50%',
+        position: 'absolute', top: '50%', left: '20%',
         transform: 'translate(-50%, -50%)',
-        width: '700px', height: '380px',
-        borderRadius: '50%',
-        background: 'radial-gradient(ellipse, rgba(201,168,76,0.14) 0%, transparent 70%)',
+        width: '600px', height: '500px', borderRadius: '50%',
+        background: 'radial-gradient(ellipse, rgba(201,168,76,0.1) 0%, transparent 70%)',
         pointerEvents: 'none',
       }} />
 
-      {/* Professional main card */}
-      <motion.div
-        className="cta-card"
-        animate={cardControls}
-        whileHover={{ scale: 1.02, y: -12 }}
-        whileTap={{ scale: 0.99 }}
-        style={{
-          maxWidth: '800px', margin: '0 auto',
-          background: 'linear-gradient(145deg, rgba(15,15,25,0.95), rgba(8,8,15,0.9))',
-          borderRadius: '32px', padding: 'clamp(3rem, 6vw, 4.5rem)',
-          border: '1px solid rgba(255,255,255,0.1)',
-          backdropFilter: 'blur(40px)',
-          position: 'relative', zIndex: 10,
-          textAlign: 'center',
-          boxShadow: [
-            '0 0 0 1px rgba(201,168,76,0.1)',
-            '0 20px 60px rgba(0,0,0,0.6)',
-            '0 0 100px rgba(201,168,76,0.05)',
-            'inset 0 1px 0 rgba(255,255,255,0.1)'
-          ].join(','),
-        }}
-      >
-        {/* Top gold shimmer line */}
-        <div style={{
-          position: 'absolute', top: 0, left: '15%', right: '15%', height: '1px',
-          background: 'linear-gradient(90deg, transparent, rgba(201,168,76,0.9), transparent)',
-          filter: 'blur(0.5px)',
-        }} />
-        {/* Bottom faint line */}
-        <div style={{
-          position: 'absolute', bottom: 0, left: '30%', right: '30%', height: '1px',
-          background: 'linear-gradient(90deg, transparent, rgba(201,168,76,0.4), transparent)',
-        }} />
+      {/* Main layout */}
+      <div style={{
+        maxWidth: '1240px', margin: '0 auto',
+        padding: '0 clamp(1.5rem, 4vw, 3rem)',
+        display: 'grid',
+        gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
+        gap: 'clamp(3rem, 6vw, 5rem)',
+        alignItems: 'center',
+        position: 'relative', zIndex: 1,
+      }}>
 
-        {/* Badge */}
+        {/* LEFT — headline & CTAs */}
         <motion.div
-          initial={{ opacity: 0, y: -10 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.2 }}
-          style={{
-            display: 'inline-flex', alignItems: 'center', gap: '6px',
-            background: 'rgba(201,168,76,0.1)',
-            border: '1px solid rgba(201,168,76,0.3)',
-            borderRadius: '50px',
-            padding: '5px 16px',
-            fontSize: '0.72rem',
-            letterSpacing: '0.12em',
-            color: 'rgba(201,168,76,0.9)',
-            textTransform: 'uppercase',
-            marginBottom: '1.5rem',
-          }}
+          initial={{ opacity: 0, x: -40 }}
+          animate={inView ? { opacity: 1, x: 0 } : { opacity: 0, x: -40 }}
+          transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
         >
-          <Star size={10} fill="rgba(201,168,76,0.9)" color="rgba(201,168,76,0.9)" />
-          Trusted by 10,000+ Artists
-          <Star size={10} fill="rgba(201,168,76,0.9)" color="rgba(201,168,76,0.9)" />
+          {/* Badge */}
+          <div style={{
+            display: 'inline-flex', alignItems: 'center', gap: '8px',
+            padding: '7px 18px', borderRadius: '50px',
+            border: '1px solid rgba(201,168,76,0.35)',
+            background: 'rgba(201,168,76,0.08)', marginBottom: '2rem',
+          }}>
+            <Star size={11} fill="rgba(201,168,76,0.9)" color="rgba(201,168,76,0.9)" />
+            <span style={{
+              fontSize: '0.7rem', fontWeight: 700,
+              letterSpacing: '0.14em', textTransform: 'uppercase',
+              color: 'rgba(201,168,76,0.95)',
+            }}>
+              Trusted by 10,000+ Artists
+            </span>
+          </div>
+
+          {/* Headline */}
+          <h2 style={{
+            fontSize: 'clamp(2.2rem, 5vw, 3.4rem)',
+            fontFamily: "'Playfair Display', serif",
+            fontWeight: 800, lineHeight: 1.12, marginBottom: '1.4rem',
+          }}>
+            <span style={{
+              background: 'linear-gradient(135deg, #ffffff 0%, rgba(255,255,255,0.85) 100%)',
+              WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text',
+            }}>
+              Ready to Share
+            </span>
+            <br />
+            <span style={{
+              background: 'linear-gradient(135deg, #c9a84c 0%, #e8d47a 50%, #c9a84c 100%)',
+              WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text',
+            }}>
+              Your Artwork
+            </span>
+            <br />
+            <span style={{
+              background: 'linear-gradient(135deg, #ffffff 0%, rgba(255,255,255,0.85) 100%)',
+              WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text',
+            }}>
+              with the World?
+            </span>
+          </h2>
+
+          {/* Subtitle */}
+          <p style={{
+            color: 'rgba(185,178,210,0.8)', fontSize: '1.05rem',
+            lineHeight: 1.85, maxWidth: '480px', marginBottom: '2.5rem',
+          }}>
+            Join a thriving global community on Zigguratss. Create your free account today
+            and start turning your passion into sustainable income — your gallery awaits.
+          </p>
+
+          {/* Stats row */}
+          <div style={{
+            display: 'flex', flexWrap: 'wrap', gap: '2rem',
+            marginBottom: '2.8rem', padding: '1.5rem',
+            borderRadius: '16px',
+            background: 'rgba(255,255,255,0.03)',
+            border: '1px solid rgba(201,168,76,0.12)',
+          }}>
+            {STATS.map(({ value, label }) => (
+              <div key={label}>
+                <div style={{
+                  fontSize: '1.6rem', fontWeight: 800,
+                  fontFamily: "'Playfair Display', serif",
+                  background: 'linear-gradient(135deg, #c9a84c, #e8d47a)',
+                  WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text',
+                  lineHeight: 1,
+                }}>{value}</div>
+                <div style={{
+                  fontSize: '0.7rem', color: 'rgba(180,170,200,0.65)',
+                  letterSpacing: '0.1em', textTransform: 'uppercase', marginTop: '4px',
+                }}>{label}</div>
+              </div>
+            ))}
+          </div>
+
+          {/* CTA buttons */}
+          <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
+            <motion.a
+              href="https://zigguratss.com/signup"
+              target="_blank"
+              rel="noreferrer"
+              whileHover={{ scale: 1.05, boxShadow: '0 0 50px rgba(201,168,76,0.55)' }}
+              whileTap={{ scale: 0.97 }}
+              style={{
+                display: 'inline-flex', alignItems: 'center', gap: '8px',
+                padding: '14px 36px', borderRadius: '10px',
+                background: 'linear-gradient(135deg, #c9a84c, #a87c28)',
+                color: '#080808', fontWeight: 700,
+                fontSize: '0.95rem', letterSpacing: '0.05em',
+                textDecoration: 'none',
+                boxShadow: '0 4px 28px rgba(201,168,76,0.3)',
+              }}
+            >
+              Start Selling Free <ArrowUpRight size={16} />
+            </motion.a>
+            <motion.a
+              href="https://zigguratss.com"
+              target="_blank"
+              rel="noreferrer"
+              whileHover={{ scale: 1.04, background: 'rgba(255,255,255,0.07)' }}
+              whileTap={{ scale: 0.97 }}
+              style={{
+                display: 'inline-flex', alignItems: 'center', gap: '8px',
+                padding: '14px 32px', borderRadius: '10px',
+                border: '1px solid rgba(201,168,76,0.25)',
+                color: 'rgba(220,215,230,0.9)',
+                fontWeight: 500, fontSize: '0.95rem',
+                textDecoration: 'none',
+                background: 'rgba(255,255,255,0.04)',
+              }}
+            >
+              Explore Gallery
+            </motion.a>
+          </div>
         </motion.div>
 
-        {/* Icon orb */}
+        {/* RIGHT — feature cards */}
         <motion.div
-          initial={{ scale: 0, rotate: -30 }}
-          animate={iconControls}
-          style={{
-            width: 84, height: 84, borderRadius: '50%',
-            background: 'linear-gradient(135deg, var(--gold), var(--gold-dark))',
-            display: 'flex', alignItems: 'center', justifyContent: 'center',
-            margin: '0 auto 1.8rem',
-            boxShadow: '0 0 50px rgba(201,168,76,0.5), 0 0 100px rgba(201,168,76,0.2)',
-          }}
+          initial={{ opacity: 0, x: 40 }}
+          animate={inView ? { opacity: 1, x: 0 } : { opacity: 0, x: 40 }}
+          transition={{ duration: 0.8, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
+          style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}
         >
-          <Sparkles size={34} color="#0a0a0f" />
-        </motion.div>
+          {FEATURES.map((f, i) => {
+            const IconComp = f.icon;
+            return (
+              <motion.div
+                key={f.title}
+                initial={{ opacity: 0, y: 24 }}
+                animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 24 }}
+                transition={{ duration: 0.55, delay: 0.3 + i * 0.1, ease: 'easeOut' }}
+                whileHover={{ y: -6, boxShadow: `0 20px 50px rgba(0,0,0,0.4), 0 0 0 1px ${f.color}22` }}
+                style={{
+                  padding: '1.5rem', borderRadius: '16px',
+                  background: 'rgba(14,14,22,0.85)',
+                  border: `1px solid ${f.color}20`,
+                  backdropFilter: 'blur(20px)',
+                  cursor: 'default',
+                }}
+              >
+                <div style={{
+                  width: 44, height: 44, borderRadius: '10px',
+                  background: `${f.color}18`, border: `1px solid ${f.color}30`,
+                  display: 'flex', alignItems: 'center', justifyContent: 'center',
+                  marginBottom: '1rem',
+                  boxShadow: `0 0 20px ${f.color}18`,
+                }}>
+                  <IconComp size={20} color={f.color} strokeWidth={2} />
+                </div>
+                <div style={{
+                  fontSize: '0.9rem', fontWeight: 700,
+                  color: '#e8e4fc', marginBottom: '0.5rem',
+                }}>
+                  {f.title}
+                </div>
+                <div style={{
+                  fontSize: '0.78rem', color: 'rgba(160,155,190,0.75)', lineHeight: 1.6,
+                }}>
+                  {f.desc}
+                </div>
+                <div style={{
+                  marginTop: '1rem', height: '2px', borderRadius: '1px',
+                  background: `linear-gradient(90deg, ${f.color}55, transparent)`,
+                }} />
+              </motion.div>
+            );
+          })}
 
-        <h2 style={{
-          fontSize: 'clamp(2rem, 5vw, 3.2rem)',
-          fontFamily: "'Playfair Display', serif",
-          fontWeight: 800,
-          lineHeight: 1.15,
-          marginBottom: '1rem',
-          background: 'linear-gradient(135deg, #ffffff 0%, var(--gold) 60%, #fff8e1 100%)',
-          WebkitBackgroundClip: 'text',
-          WebkitTextFillColor: 'transparent',
-          backgroundClip: 'text',
-        }}>
-          Ready to Share Your<br />
-          <span style={{
-            background: 'linear-gradient(135deg, var(--gold), #e8c96a)',
-            WebkitBackgroundClip: 'text',
-            backgroundClip: 'text',
-            WebkitTextFillColor: 'transparent',
-          }}>Artwork</span> with the World?
-        </h2>
-
-        <p style={{
-          color: 'rgba(185,178,200,0.82)',
-          fontSize: 'clamp(0.95rem, 2vw, 1.08rem)',
-          lineHeight: 1.85,
-          maxWidth: '480px',
-          margin: '0 auto 2.2rem',
-          letterSpacing: '0.01em',
-        }}>
-          Join a thriving community of artists on Zigguratss. Create your free account today
-          and start turning your passion into profit — your gallery awaits.
-        </p>
-
-        {/* Social proof row */}
-        <div style={{
-          display: 'flex', gap: '2rem', justifyContent: 'center',
-          marginBottom: '2.5rem', flexWrap: 'wrap',
-        }}>
-          {[['10K+', 'Artists'], ['50K+', 'Artworks'], ['120+', 'Countries']].map(([num, lbl]) => (
-            <div key={lbl} style={{ textAlign: 'center' }}>
-              <div style={{
-                fontSize: '1.4rem', fontWeight: 800,
-                fontFamily: "'Playfair Display', serif",
-                background: 'linear-gradient(135deg, var(--gold), #e8c96a)',
-                WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text',
-              }}>{num}</div>
-              <div style={{ fontSize: '0.72rem', color: 'rgba(180,170,200,0.7)', letterSpacing: '0.1em', textTransform: 'uppercase' }}>{lbl}</div>
+          {/* Trending ribbon */}
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 24 }}
+            transition={{ duration: 0.55, delay: 0.7, ease: 'easeOut' }}
+            style={{
+              gridColumn: '1 / -1',
+              padding: '1.25rem 1.5rem',
+              borderRadius: '16px',
+              background: 'linear-gradient(135deg, rgba(201,168,76,0.1), rgba(201,168,76,0.04))',
+              border: '1px solid rgba(201,168,76,0.22)',
+              display: 'flex', alignItems: 'center', gap: '1rem',
+            }}
+          >
+            <div style={{
+              width: 40, height: 40, borderRadius: '10px',
+              background: 'rgba(201,168,76,0.15)', flexShrink: 0,
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+            }}>
+              <TrendingUp size={20} color="#c9a84c" />
             </div>
-          ))}
-        </div>
+            <div>
+              <div style={{ fontSize: '0.88rem', fontWeight: 700, color: '#e8e4fc', marginBottom: '2px' }}>
+                Growing Fast
+              </div>
+              <div style={{ fontSize: '0.75rem', color: 'rgba(160,155,190,0.7)', lineHeight: 1.5 }}>
+                +2,400 new artists joined last month. Your next buyer is already here.
+              </div>
+            </div>
+            <div style={{
+              marginLeft: 'auto', flexShrink: 0,
+              background: 'rgba(201,168,76,0.12)', border: '1px solid rgba(201,168,76,0.3)',
+              padding: '6px 14px', borderRadius: '50px',
+              fontSize: '0.7rem', fontWeight: 700,
+              color: 'rgba(201,168,76,0.9)', letterSpacing: '0.08em',
+              textTransform: 'uppercase',
+            }}>
+              Join Now
+            </div>
+          </motion.div>
+        </motion.div>
 
-        {/* Divider */}
-        <div style={{ height: '1px', background: 'rgba(201,168,76,0.15)', marginBottom: '2.5rem' }} />
-
-        <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
-          <motion.a
-            href="https://zigguratss.com/signup"
-            target="_blank"
-            rel="noreferrer"
-            whileHover={{ scale: 1.07, boxShadow: '0 0 60px rgba(201,168,76,0.55)' }}
-            whileTap={{ scale: 0.97 }}
-            style={{
-              padding: '15px 40px',
-              borderRadius: '50px',
-              background: 'linear-gradient(135deg, var(--gold), var(--gold-dark))',
-              color: '#0a0a0f',
-              fontWeight: 700,
-              fontSize: '1rem',
-              textDecoration: 'none',
-              letterSpacing: '0.06em',
-              display: 'inline-flex', alignItems: 'center', gap: '8px',
-              boxShadow: '0 4px 24px rgba(201,168,76,0.35)',
-            }}
-          >
-            Join as Artist <ArrowUpRight size={16} />
-          </motion.a>
-          <motion.a
-            href="https://zigguratss.com"
-            target="_blank"
-            rel="noreferrer"
-            whileHover={{ scale: 1.04, borderColor: 'rgba(201,168,76,0.6)' }}
-            whileTap={{ scale: 0.97 }}
-            style={{
-              padding: '15px 40px',
-              borderRadius: '50px',
-              border: '1px solid rgba(201,168,76,0.25)',
-              color: 'rgba(220,215,230,0.9)',
-              fontWeight: 500,
-              fontSize: '1rem',
-              textDecoration: 'none',
-              letterSpacing: '0.06em',
-              background: 'rgba(255,255,255,0.04)',
-              backdropFilter: 'blur(8px)',
-            }}
-          >
-            Explore Artworks
-          </motion.a>
-        </div>
-      </motion.div>
+      </div>
     </section>
   );
 }

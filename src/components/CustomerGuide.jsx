@@ -152,7 +152,13 @@ function StepItem({ text, index }) {
 function GuideSection({ s, idx }) {
   const isEven = idx % 2 !== 0;
   return (
-    <section id={s.id} style={{ padding: '6rem 1.5rem', position: 'relative', overflow: 'hidden' }}>
+    <section id={s.id} style={{
+      padding: 'clamp(5rem, 10vw, 7rem) clamp(1rem, 4vw, 1.5rem)',
+      position: 'relative', overflow: 'hidden',
+      background: isEven
+        ? 'linear-gradient(160deg, #0e0e18 0%, #12121f 50%, #0a0a12 100%)'
+        : 'linear-gradient(160deg, #09090e 0%, #0d0d16 50%, #111119 100%)',
+    }}>
       <motion.div
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 0.12 }}
@@ -347,7 +353,19 @@ export default function CustomerGuide({ onBack }) {
         {sections.map((s, i) => <GuideSection key={s.id} s={s} idx={i} />)}
 
         {/* Perks grid */}
-        <section style={{ padding: '6rem 1.5rem', background: 'var(--dark-2)' }}>
+        <section style={{
+          padding: 'clamp(5rem, 10vw, 7rem) clamp(1rem, 4vw, 1.5rem)',
+          position: 'relative', overflow: 'hidden',
+          background: 'linear-gradient(160deg, #0a0a0f 0%, #0d0d16 50%, #0f0f1c 100%)',
+        }}>
+          {/* Dot grid */}
+          <div style={{
+            position: 'absolute', inset: 0, pointerEvents: 'none',
+            backgroundImage: 'radial-gradient(circle, rgba(124,107,170,0.12) 1px, transparent 1px)',
+            backgroundSize: '32px 32px', opacity: 0.4,
+          }} />
+          {/* Top hairline */}
+          <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: '1px', background: 'linear-gradient(90deg, transparent, rgba(124,107,170,0.3), transparent)' }} />
           <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
             <RevealOnScroll y={40} duration={0.7} style={{ textAlign: 'center', marginBottom: '4rem' }}>
               <div style={{ textAlign: 'center' }}>
@@ -380,7 +398,11 @@ export default function CustomerGuide({ onBack }) {
         </section>
 
         {/* CTA */}
-        <section style={{ padding: '6rem 1.5rem', textAlign: 'center', position: 'relative', overflow: 'hidden' }}>
+        <section style={{
+          padding: 'clamp(5rem, 10vw, 7rem) clamp(1rem, 4vw, 1.5rem)',
+          textAlign: 'center', position: 'relative', overflow: 'hidden',
+          background: 'linear-gradient(160deg, #09090e 0%, #0d0c18 50%, #0a0a12 100%)',
+        }}>
           <motion.div
             animate={{ scale: [1, 1.3, 1], opacity: [0.08, 0.15, 0.08] }}
             transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
