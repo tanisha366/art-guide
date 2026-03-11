@@ -120,12 +120,12 @@ export default function SectionBlock({
       ref={sectionRef}
       className="section-block"
       style={{
-        padding:  'clamp(5rem, 10vw, 7rem) clamp(1rem, 4vw, 1.5rem)',
+        padding:  'clamp(5rem, 10vw, 7rem) clamp(2.5rem, 5vw, 6rem)',
         position: 'relative',
         overflow: 'hidden',
         background: isEven 
-          ? 'linear-gradient(135deg, #fdf8ed 0%, #fffdf7 50%, #faf5e8 100%)'
-          : 'linear-gradient(135deg, #fffdf7 0%, #fdf5e4 50%, #f7edd0 100%)',
+          ? 'linear-gradient(135deg, #eedfc0 0%, #f5ead0 50%, #ebd8b5 100%)'
+          : 'linear-gradient(135deg, #f5ead0 0%, #f0e2ba 50%, #e8d0a0 100%)',
       }}>
       {/* Professional sectioned background */}
       <div style={{
@@ -135,8 +135,8 @@ export default function SectionBlock({
           isEven 
             ? 'radial-gradient(circle at 80% 20%, rgba(194,107,107,0.04) 0%, transparent 60%)'
             : 'radial-gradient(circle at 20% 80%, rgba(124,107,170,0.04) 0%, transparent 60%)',
-          'linear-gradient(rgba(184,148,62,0.06) 1px, transparent 1px)',
-          'linear-gradient(90deg, rgba(184,148,62,0.06) 1px, transparent 1px)'
+          'linear-gradient(rgba(255,255,255,0.01) 1px, transparent 1px)',
+          'linear-gradient(90deg, rgba(255,255,255,0.01) 1px, transparent 1px)'
         ].join(','),
         backgroundSize: '1000px 1000px, 60px 60px, 60px 60px',
         pointerEvents: 'none',
@@ -180,7 +180,7 @@ export default function SectionBlock({
         />
       ))}
 
-      <div style={{ maxWidth: '1200px', margin: '0 auto', position: 'relative', zIndex: 1 }}>
+      <div style={{ maxWidth: '1520px', margin: '0 auto', position: 'relative', zIndex: 1, width: '100%' }}>
         <div style={{
           display:             'grid',
           gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',

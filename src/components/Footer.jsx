@@ -43,7 +43,7 @@ export default function Footer() {
       {/* Top accent line */}
       <div style={{ position: 'absolute', top: 0, left: '5%', right: '5%', height: '1px', background: 'linear-gradient(90deg, transparent, var(--gold), var(--accent), var(--gold), transparent)' }} />
 
-      <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '5rem 1.5rem 2rem' }}>
+      <div style={{ maxWidth: '1520px', margin: '0 auto', width: '100%', padding: '5rem clamp(2.5rem, 5vw, 6rem) 2rem' }}>
         <div style={{
           display: 'grid',
           gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
@@ -82,7 +82,7 @@ export default function Footer() {
                       border: '1px solid var(--border)',
                       display: 'flex', alignItems: 'center', justifyContent: 'center',
                       color: 'var(--text-secondary)',
-                      background: 'rgba(184,148,62,0.06)',
+                      background: 'rgba(255,255,255,0.02)',
                     }}
                   >
                     <Icon size={16} />

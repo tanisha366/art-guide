@@ -52,10 +52,10 @@ export default function Navbar({ onSwitchPage, isCustomerPage, onBack }) {
         position: 'fixed', top: 0, left: 0, right: 0, zIndex: 1000,
         padding: '0 clamp(1rem, 4vw, 2.5rem)', height: 'clamp(60px, 8vw, 68px)',
         display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-        background: scrolled ? 'rgba(255,253,247,0.97)' : 'transparent',
+        background: scrolled ? 'rgba(245, 234, 208, 0.97)' : 'transparent',
         backdropFilter: scrolled ? 'blur(24px) saturate(1.4)' : 'none',
-        borderBottom: scrolled ? '1px solid rgba(184,148,62,0.22)' : 'none',
-        boxShadow: scrolled ? '0 2px 40px rgba(184,148,62,0.12)' : 'none',
+        borderBottom: scrolled ? '1px solid rgba(196,145,42,0.30)' : 'none',
+        boxShadow: scrolled ? '0 2px 40px rgba(180,140,50,0.15)' : 'none',
         transition: 'background 0.5s ease, backdrop-filter 0.5s ease, border-color 0.5s ease, box-shadow 0.5s ease',
       }}
     >
@@ -75,7 +75,7 @@ export default function Navbar({ onSwitchPage, isCustomerPage, onBack }) {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 * i + 0.4 }}
             whileHover={{ color: 'var(--gold)', y: -2 }}
-            style={{ color: 'rgba(160,152,128,0.85)', textDecoration: 'none', fontSize: '0.87rem', fontWeight: 500, letterSpacing: '0.04em', transition: 'color 0.25s ease' }}
+            style={{ color: 'var(--text-secondary)', textDecoration: 'none', fontSize: '0.87rem', fontWeight: 500, letterSpacing: '0.04em', transition: 'color 0.25s ease' }}
           >
             {l.label}
           </motion.a>
@@ -123,7 +123,7 @@ export default function Navbar({ onSwitchPage, isCustomerPage, onBack }) {
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: '100%' }}
             transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-            style={{ position: 'fixed', top: 70, right: 0, bottom: 0, width: '75%', background: 'rgba(255,253,247,0.99)', backdropFilter: 'blur(30px)', padding: '2rem', display: 'flex', flexDirection: 'column', gap: '1.5rem', borderLeft: '1px solid var(--border)' }}
+            style={{ position: 'fixed', top: 70, right: 0, bottom: 0, width: '75%', background: 'rgba(245, 234, 208, 0.98)', backdropFilter: 'blur(30px)', padding: '2rem', display: 'flex', flexDirection: 'column', gap: '1.5rem', borderLeft: '1px solid var(--border)' }}
           >
             {links.map((l) => (
               <a key={l.label} href={l.href} onClick={() => setOpen(false)}

@@ -153,11 +153,11 @@ function GuideSection({ s, idx }) {
   const isEven = idx % 2 !== 0;
   return (
     <section id={s.id} style={{
-      padding: 'clamp(5rem, 10vw, 7rem) clamp(1rem, 4vw, 1.5rem)',
+      padding: 'clamp(5rem, 10vw, 7rem) clamp(2.5rem, 5vw, 6rem)',
       position: 'relative', overflow: 'hidden',
       background: isEven
-        ? 'linear-gradient(160deg, #fdf8ed 0%, #fffdf7 50%, #faf5e8 100%)'
-        : 'linear-gradient(160deg, #fffdf7 0%, #fdf5e4 50%, #f7edd0 100%)',
+        ? 'linear-gradient(160deg, #eedfc0 0%, #f5ead0 50%, #f0e2ba 100%)'
+        : 'linear-gradient(160deg, #f5ead0 0%, #f0e2ba 50%, #e8d0a0 100%)',
     }}>
       <motion.div
         initial={{ opacity: 0 }}
@@ -172,7 +172,7 @@ function GuideSection({ s, idx }) {
           top: '20%', pointerEvents: 'none', zIndex: 0,
         }}
       />
-      <div style={{ maxWidth: '1200px', margin: '0 auto', position: 'relative', zIndex: 1 }}>
+      <div style={{ maxWidth: '1520px', margin: '0 auto', position: 'relative', zIndex: 1, width: '100%' }}>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '4rem', alignItems: 'center' }}>
           {/* Text */}
           <div style={{ order: isEven ? 2 : 1 }}>
@@ -249,8 +249,8 @@ export default function CustomerGuide({ onBack }) {
       {/* Hero */}
       <section style={{
         minHeight: '70vh', display: 'flex', alignItems: 'center', justifyContent: 'center',
-        background: 'linear-gradient(180deg, #fffdf7 0%, #fdf8ed 100%)',
-        position: 'relative', overflow: 'hidden', padding: '8rem 1.5rem 4rem',
+        background: 'linear-gradient(180deg, #f5ead0 0%, #eedfc0 100%)',
+        position: 'relative', overflow: 'hidden', padding: '8rem clamp(2.5rem, 5vw, 6rem) 4rem',
       }}>
         <div style={{
           position: 'absolute', inset: 0,
@@ -306,7 +306,7 @@ export default function CustomerGuide({ onBack }) {
               fontSize: 'clamp(3rem, 9vw, 7rem)',
               fontFamily: "'Playfair Display', serif",
               fontWeight: 900, lineHeight: 1,
-              background: 'linear-gradient(135deg, #1a1508 30%, var(--accent) 100%)',
+              background: 'linear-gradient(135deg, #2d1e04 30%, var(--accent) 100%)',
               WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text',
               marginBottom: '1.5rem',
             }}
@@ -341,7 +341,7 @@ export default function CustomerGuide({ onBack }) {
               Start Here
             </motion.a>
             <motion.a href="https://zigguratss.com/artworks" target="_blank" rel="noreferrer" whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.97 }}
-              style={{ padding: '13px 32px', borderRadius: '50px', border: '1px solid var(--border)', color: 'var(--text-primary)', fontWeight: 500, fontSize: '0.9rem', textDecoration: 'none', background: 'rgba(255,255,255,0.04)', backdropFilter: 'blur(10px)' }}>
+              style={{ padding: '13px 32px', borderRadius: '50px', border: '1px solid var(--border)', color: 'var(--text-primary)', fontWeight: 500, fontSize: '0.9rem', textDecoration: 'none', background: 'rgba(196,145,42,0.12)', backdropFilter: 'blur(10px)' }}>
               Browse Artworks
             </motion.a>
           </motion.div>
@@ -356,7 +356,7 @@ export default function CustomerGuide({ onBack }) {
         <section style={{
           padding: 'clamp(5rem, 10vw, 7rem) clamp(1rem, 4vw, 1.5rem)',
           position: 'relative', overflow: 'hidden',
-          background: 'linear-gradient(160deg, #fdf8ed 0%, #fffdf7 50%, #faf5e8 100%)',
+          background: 'linear-gradient(160deg, #f5ead0 0%, #f0e2ba 50%, #eedfc0 100%)',
         }}>
           {/* Dot grid */}
           <div style={{
@@ -366,7 +366,7 @@ export default function CustomerGuide({ onBack }) {
           }} />
           {/* Top hairline */}
           <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: '1px', background: 'linear-gradient(90deg, transparent, rgba(124,107,170,0.3), transparent)' }} />
-          <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
+          <div style={{ maxWidth: '1520px', margin: '0 auto', width: '100%' }}>
             <RevealOnScroll y={40} duration={0.7} style={{ textAlign: 'center', marginBottom: '4rem' }}>
               <div style={{ textAlign: 'center' }}>
                 <span style={{ fontSize: '0.75rem', letterSpacing: '0.15em', textTransform: 'uppercase', color: 'var(--accent)', fontWeight: 700 }}>Why Buy With Us</span>
@@ -399,9 +399,9 @@ export default function CustomerGuide({ onBack }) {
 
         {/* CTA */}
         <section style={{
-          padding: 'clamp(5rem, 10vw, 7rem) clamp(1rem, 4vw, 1.5rem)',
+          padding: 'clamp(5rem, 10vw, 7rem) clamp(2.5rem, 5vw, 6rem)',
           textAlign: 'center', position: 'relative', overflow: 'hidden',
-          background: 'linear-gradient(160deg, #fdf8ed 0%, #fffdf7 50%, #faf5e4 100%)',
+          background: 'linear-gradient(160deg, #e8d0a0 0%, #eedfc0 50%, #f5ead0 100%)',
         }}>
           <motion.div
             animate={{ scale: [1, 1.3, 1], opacity: [0.08, 0.15, 0.08] }}
@@ -431,7 +431,7 @@ export default function CustomerGuide({ onBack }) {
                 </motion.a>
                 <motion.a href="https://zigguratss.com/signup" target="_blank" rel="noreferrer"
                   whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.97 }}
-                  style={{ padding: '13px 34px', borderRadius: '50px', border: '1px solid var(--border)', color: 'var(--text-primary)', fontWeight: 500, fontSize: '0.95rem', textDecoration: 'none', background: 'rgba(255,255,255,0.04)', backdropFilter: 'blur(10px)' }}>
+                  style={{ padding: '13px 34px', borderRadius: '50px', border: '1px solid var(--border)', color: 'var(--text-primary)', fontWeight: 500, fontSize: '0.95rem', textDecoration: 'none', background: 'rgba(196,145,42,0.12)', backdropFilter: 'blur(10px)' }}>
                   Create Account
                 </motion.a>
               </div>

@@ -23,26 +23,26 @@
 /* ── 1. Design Tokens ────────────────────────────── */
 :root {
   /* Gold palette */
-  --gold:        #b8943e;
-  --gold-light:  #d4aa55;
-  --gold-dark:   #8a6e2a;
+  --gold:        #c4912a;
+  --gold-light:  #daa840;
+  --gold-dark:   #9a7018;
 
-  /* Backgrounds — light warm cream/white palette */
-  --dark:     #fffdf7;
-  --dark-2:   #fdf8ed;
-  --dark-3:   #f5edd8;
-  --card-bg:  rgba(255, 252, 242, 0.93);
+  /* Backgrounds — medium warm amber (professional, clearly tinted) */
+  --dark:     #f5ead0;
+  --dark-2:   #eedfc0;
+  --dark-3:   #e8d0a0;
+  --card-bg:  rgba(248, 238, 205, 0.97);
 
-  /* Text — dark for readability on light bg */
-  --text-primary:   #1a1508;
-  --text-secondary: #6b5f40;
+  /* Text — dark brown for easy reading on warm bg */
+  --text-primary:   #1a1405;
+  --text-secondary: #5a4d2a;
 
   /* Accents */
   --accent:   #6d5f9a;
   --accent-2: #9a6060;
 
   /* Borders */
-  --border: rgba(184, 148, 62, 0.28);
+  --border: rgba(196, 145, 42, 0.40);
 }
 
 

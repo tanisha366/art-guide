@@ -125,8 +125,8 @@ export default function BenefitsSection() {
 
   return (
     <section ref={ref} style={{ 
-      padding: 'clamp(6rem, 12vw, 8rem) clamp(1rem, 4vw, 1.5rem)', 
-      background: 'linear-gradient(180deg, #fdf8ed 0%, #fffdf7 50%, #fdf5e4 100%)', 
+      padding: 'clamp(6rem, 12vw, 8rem) clamp(2.5rem, 5vw, 6rem)', 
+      background: 'linear-gradient(180deg, #eedfc0 0%, #f5ead0 50%, #f0e2ba 100%)', 
       position: 'relative',
       overflow: 'hidden'
     }}>
@@ -167,7 +167,7 @@ export default function BenefitsSection() {
         filter: 'blur(80px)',
         pointerEvents: 'none',
       }} />
-      <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
+      <div style={{ maxWidth: '1520px', margin: '0 auto', width: '100%' }}>
         <div ref={headerRef} style={{ textAlign: 'center', marginBottom: '4rem', opacity: 0 }}>
           <span style={{ fontSize: '0.75rem', letterSpacing: '0.15em', textTransform: 'uppercase', color: 'var(--gold)', fontWeight: 700 }}>Why artists love us</span>
           <h2 style={{ fontSize: 'clamp(2rem, 5vw, 3rem)', fontFamily: "'Playfair Display', serif", fontWeight: 800, marginTop: '0.8rem', color: 'var(--text-primary)' }}>
