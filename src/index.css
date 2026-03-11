@@ -27,22 +27,22 @@
   --gold-light:  #d4aa55;
   --gold-dark:   #8a6e2a;
 
-  /* Backgrounds */
-  --dark:     #0a0a0f;
-  --dark-2:   #12121a;
-  --dark-3:   #1a1a26;
-  --card-bg:  rgba(22, 22, 34, 0.85);
+  /* Backgrounds — light warm cream/white palette */
+  --dark:     #fffdf7;
+  --dark-2:   #fdf8ed;
+  --dark-3:   #f5edd8;
+  --card-bg:  rgba(255, 252, 242, 0.93);
 
-  /* Text */
-  --text-primary:   #ece8de;
-  --text-secondary: #9590a0;
+  /* Text — dark for readability on light bg */
+  --text-primary:   #1a1508;
+  --text-secondary: #6b5f40;
 
   /* Accents */
   --accent:   #6d5f9a;
   --accent-2: #9a6060;
 
   /* Borders */
-  --border: rgba(184, 148, 62, 0.14);
+  --border: rgba(184, 148, 62, 0.28);
 }
 
 

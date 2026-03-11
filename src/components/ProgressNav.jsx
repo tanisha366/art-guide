@@ -30,7 +30,7 @@ const getDotStyle = (isActive) => ({
   border:         isActive ? '2px solid var(--gold)' : '1px solid rgba(201,168,76,0.3)',
   background:     isActive
     ? 'linear-gradient(135deg, var(--gold), var(--gold-dark))'
-    : 'rgba(10,10,15,0.8)',
+    : 'rgba(255,252,242,0.92)',
   backdropFilter: 'blur(10px)',
   display:        'flex',
   alignItems:     'center',

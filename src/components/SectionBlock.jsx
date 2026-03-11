@@ -124,8 +124,8 @@ export default function SectionBlock({
         position: 'relative',
         overflow: 'hidden',
         background: isEven 
-          ? 'linear-gradient(135deg, #12121a 0%, #0f0f16 50%, #0a0a12 100%)'
-          : 'linear-gradient(135deg, #0a0a0f 0%, #0d0d14 50%, #10101a 100%)',
+          ? 'linear-gradient(135deg, #fdf8ed 0%, #fffdf7 50%, #faf5e8 100%)'
+          : 'linear-gradient(135deg, #fffdf7 0%, #fdf5e4 50%, #f7edd0 100%)',
       }}>
       {/* Professional sectioned background */}
       <div style={{
@@ -135,8 +135,8 @@ export default function SectionBlock({
           isEven 
             ? 'radial-gradient(circle at 80% 20%, rgba(194,107,107,0.04) 0%, transparent 60%)'
             : 'radial-gradient(circle at 20% 80%, rgba(124,107,170,0.04) 0%, transparent 60%)',
-          'linear-gradient(rgba(255,255,255,0.01) 1px, transparent 1px)',
-          'linear-gradient(90deg, rgba(255,255,255,0.01) 1px, transparent 1px)'
+          'linear-gradient(rgba(184,148,62,0.06) 1px, transparent 1px)',
+          'linear-gradient(90deg, rgba(184,148,62,0.06) 1px, transparent 1px)'
         ].join(','),
         backgroundSize: '1000px 1000px, 60px 60px, 60px 60px',
         pointerEvents: 'none',

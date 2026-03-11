@@ -156,8 +156,8 @@ function GuideSection({ s, idx }) {
       padding: 'clamp(5rem, 10vw, 7rem) clamp(1rem, 4vw, 1.5rem)',
       position: 'relative', overflow: 'hidden',
       background: isEven
-        ? 'linear-gradient(160deg, #0e0e18 0%, #12121f 50%, #0a0a12 100%)'
-        : 'linear-gradient(160deg, #09090e 0%, #0d0d16 50%, #111119 100%)',
+        ? 'linear-gradient(160deg, #fdf8ed 0%, #fffdf7 50%, #faf5e8 100%)'
+        : 'linear-gradient(160deg, #fffdf7 0%, #fdf5e4 50%, #f7edd0 100%)',
     }}>
       <motion.div
         initial={{ opacity: 0 }}
@@ -249,7 +249,7 @@ export default function CustomerGuide({ onBack }) {
       {/* Hero */}
       <section style={{
         minHeight: '70vh', display: 'flex', alignItems: 'center', justifyContent: 'center',
-        background: 'linear-gradient(180deg, #0a0a0f 0%, #12121a 100%)',
+        background: 'linear-gradient(180deg, #fffdf7 0%, #fdf8ed 100%)',
         position: 'relative', overflow: 'hidden', padding: '8rem 1.5rem 4rem',
       }}>
         <div style={{
@@ -306,7 +306,7 @@ export default function CustomerGuide({ onBack }) {
               fontSize: 'clamp(3rem, 9vw, 7rem)',
               fontFamily: "'Playfair Display', serif",
               fontWeight: 900, lineHeight: 1,
-              background: 'linear-gradient(135deg, #f0ece2 30%, var(--accent) 100%)',
+              background: 'linear-gradient(135deg, #1a1508 30%, var(--accent) 100%)',
               WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text',
               marginBottom: '1.5rem',
             }}
@@ -356,7 +356,7 @@ export default function CustomerGuide({ onBack }) {
         <section style={{
           padding: 'clamp(5rem, 10vw, 7rem) clamp(1rem, 4vw, 1.5rem)',
           position: 'relative', overflow: 'hidden',
-          background: 'linear-gradient(160deg, #0a0a0f 0%, #0d0d16 50%, #0f0f1c 100%)',
+          background: 'linear-gradient(160deg, #fdf8ed 0%, #fffdf7 50%, #faf5e8 100%)',
         }}>
           {/* Dot grid */}
           <div style={{
@@ -401,7 +401,7 @@ export default function CustomerGuide({ onBack }) {
         <section style={{
           padding: 'clamp(5rem, 10vw, 7rem) clamp(1rem, 4vw, 1.5rem)',
           textAlign: 'center', position: 'relative', overflow: 'hidden',
-          background: 'linear-gradient(160deg, #09090e 0%, #0d0c18 50%, #0a0a12 100%)',
+          background: 'linear-gradient(160deg, #fdf8ed 0%, #fffdf7 50%, #faf5e4 100%)',
         }}>
           <motion.div
             animate={{ scale: [1, 1.3, 1], opacity: [0.08, 0.15, 0.08] }}

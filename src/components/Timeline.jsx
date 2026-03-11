@@ -71,7 +71,7 @@ export default function Timeline() {
       ref={sectionRef}
       style={{ 
         padding: 'clamp(5rem, 10vw, 7rem) clamp(1rem, 4vw, 1.5rem)', 
-        background: 'linear-gradient(180deg, #12121a 0%, #0f0f18 40%, #0a0a14 100%)', 
+        background: 'linear-gradient(180deg, #fdf8ed 0%, #fffdf7 40%, #faf5e4 100%)', 
         position: 'relative', 
         overflow: 'hidden' 
       }}
@@ -95,8 +95,8 @@ export default function Timeline() {
           inset:           0,
           pointerEvents:   'none',
           backgroundImage: [
-            'linear-gradient(rgba(201,168,76,0.03) 1px, transparent 1px)',
-            'linear-gradient(90deg, rgba(201,168,76,0.03) 1px, transparent 1px)',
+            'linear-gradient(rgba(184,148,62,0.08) 1px, transparent 1px)',
+            'linear-gradient(90deg, rgba(184,148,62,0.08) 1px, transparent 1px)',
           ].join(', '),
           backgroundSize: '60px 60px',
           opacity:        gridOpacity,
