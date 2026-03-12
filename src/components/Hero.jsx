@@ -119,6 +119,7 @@ export default function Hero() {
 
   return (
     <section
+      id="hero"
       style={{
         position: 'relative',
         minHeight: '100vh',

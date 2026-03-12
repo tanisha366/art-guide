@@ -68,6 +68,7 @@ export default function Timeline() {
 
   return (
     <section
+      id="timeline"
       ref={sectionRef}
       style={{ 
         padding: 'clamp(5rem, 10vw, 7rem) clamp(2.5rem, 5vw, 6rem)', 

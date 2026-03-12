@@ -124,7 +124,7 @@ export default function BenefitsSection() {
   }, []);
 
   return (
-    <section ref={ref} style={{ 
+    <section id="benefits" ref={ref} style={{ 
       padding: 'clamp(6rem, 12vw, 8rem) clamp(2.5rem, 5vw, 6rem)', 
       background: 'linear-gradient(180deg, #eedfc0 0%, #f5ead0 50%, #f0e2ba 100%)', 
       position: 'relative',

@@ -59,7 +59,7 @@ export default function CTABanner() {
   }, []);
 
   return (
-    <section ref={ref} style={{
+    <section id="cta" ref={ref} style={{
       padding: 'clamp(6rem, 10vw, 9rem) 0',
       position: 'relative',
       overflow: 'hidden',

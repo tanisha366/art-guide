@@ -16,6 +16,7 @@ import Footer          from './components/Footer';
 import ScrollProgress  from './components/ScrollProgress';
 import CustomerGuide   from './components/CustomerGuide';
 import ParticleCanvas  from './components/ParticleCanvas';
+import AvatarGuide     from './components/AvatarGuide';
 
 // ─── Step content data ───────────────────────────────────────────────────────
 
@@ -95,6 +96,7 @@ export default function App() {
   return (
     <>
     <ParticleCanvas />
+    <AvatarGuide />
     <AnimatePresence mode="wait">
 
       {page === 'artist' ? (
