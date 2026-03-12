@@ -91,7 +91,7 @@ export default function StepCard({ number, text, delay = 0 }) {
       >
         <CheckCircle2
           size={20}
-          color={hovered ? '#e8c97a' : 'var(--gold)'}
+          color={hovered ? '#a07428' : 'rgba(100, 72, 15, 0.55)'}
           style={{ transition: 'color 0.3s' }}
         />
       </motion.div>
@@ -99,7 +99,7 @@ export default function StepCard({ number, text, delay = 0 }) {
       {/* Step number + text */}
       <div style={{ display: 'flex', alignItems: 'baseline', gap: '10px', flex: 1 }}>
         <motion.span
-          animate={{ color: hovered ? 'var(--gold)' : 'var(--gold-dark)' }}
+          animate={{ color: hovered ? '#8a5e10' : 'rgba(90, 65, 15, 0.45)' }}
           style={{
             fontSize:      '0.65rem',
             fontWeight:    700,
@@ -112,9 +112,9 @@ export default function StepCard({ number, text, delay = 0 }) {
         </motion.span>
 
         <p style={{
-          fontSize:   '0.95rem',
+          fontSize:   '1.05rem',
           color:      hovered ? 'var(--text-primary)' : 'var(--text-secondary)',
-          lineHeight: 1.6,
+          lineHeight: 1.65,
           transition: 'color 0.3s',
         }}>
           {text}

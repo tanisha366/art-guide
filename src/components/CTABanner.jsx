@@ -106,8 +106,8 @@ export default function CTABanner() {
 
       {/* Main layout */}
       <div style={{
-        maxWidth: '1520px', margin: '0 auto', width: '100%',
-        padding: '0 clamp(2.5rem, 5vw, 6rem)',
+        width: '100%',
+        padding: '0 clamp(1.5rem, 3vw, 4rem)',
         display: 'grid',
           gridTemplateColumns: '1fr 1.1fr',
         gap: 'clamp(3rem, 6vw, 5rem)',
@@ -130,7 +130,7 @@ export default function CTABanner() {
           }}>
             <Star size={11} fill="rgba(201,168,76,0.9)" color="rgba(201,168,76,0.9)" />
             <span style={{
-              fontSize: '0.7rem', fontWeight: 700,
+              fontSize: '0.82rem', fontWeight: 700,
               letterSpacing: '0.14em', textTransform: 'uppercase',
               color: 'rgba(201,168,76,0.95)',
             }}>
@@ -140,7 +140,7 @@ export default function CTABanner() {
 
           {/* Headline */}
           <h2 style={{
-            fontSize: 'clamp(2.5rem, 5.5vw, 3.8rem)',
+            fontSize: 'clamp(2.2rem, 4.5vw, 3.4rem)',
             fontFamily: "'Playfair Display', serif",
             fontWeight: 800, lineHeight: 1.12, marginBottom: '1.4rem',
           }}>
@@ -168,8 +168,8 @@ export default function CTABanner() {
 
           {/* Subtitle */}
           <p style={{
-            color: 'rgba(50, 38, 8, 0.82)', fontSize: '1.12rem',
-            lineHeight: 1.85, maxWidth: '480px', marginBottom: '2.5rem',
+            color: 'rgba(50, 38, 8, 0.82)', fontSize: '1.05rem',
+            lineHeight: 1.8, marginBottom: '2.2rem',
           }}>
             Join a thriving global community on Zigguratss. Create your free account today
             and start turning your passion into sustainable income — your gallery awaits.
@@ -186,14 +186,14 @@ export default function CTABanner() {
             {STATS.map(({ value, label }) => (
               <div key={label}>
                 <div style={{
-                  fontSize: '1.6rem', fontWeight: 800,
+                  fontSize: '1.65rem', fontWeight: 800,
                   fontFamily: "'Playfair Display', serif",
                   background: 'linear-gradient(135deg, #c9a84c, #e8d47a)',
                   WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text',
                   lineHeight: 1,
                 }}>{value}</div>
                 <div style={{
-                  fontSize: '0.7rem', color: 'rgba(60, 45, 10, 0.70)',
+                  fontSize: '0.82rem', color: 'rgba(60, 45, 10, 0.70)',
                   letterSpacing: '0.1em', textTransform: 'uppercase', marginTop: '4px',
                 }}>{label}</div>
               </div>
@@ -283,7 +283,7 @@ export default function CTABanner() {
                   {f.title}
                 </div>
                 <div style={{
-                  fontSize: '0.85rem', color: 'rgba(50, 38, 8, 0.72)', lineHeight: 1.65,
+                  fontSize: '0.875rem', color: 'rgba(50, 38, 8, 0.72)', lineHeight: 1.65,
                 }}>
                   {f.desc}
                 </div>
@@ -317,10 +317,10 @@ export default function CTABanner() {
               <TrendingUp size={20} color="#c9a84c" />
             </div>
             <div>
-              <div style={{ fontSize: '0.88rem', fontWeight: 700, color: '#1a1405', marginBottom: '2px' }}>
+              <div style={{ fontSize: '1rem', fontWeight: 700, color: '#1a1405', marginBottom: '2px' }}>
                 Growing Fast
               </div>
-              <div style={{ fontSize: '0.75rem', color: 'rgba(60, 45, 10, 0.70)', lineHeight: 1.5 }}>
+              <div style={{ fontSize: '0.88rem', color: 'rgba(60, 45, 10, 0.70)', lineHeight: 1.5 }}>
                 +2,400 new artists joined last month. Your next buyer is already here.
               </div>
             </div>
@@ -328,7 +328,7 @@ export default function CTABanner() {
               marginLeft: 'auto', flexShrink: 0,
               background: 'rgba(201,168,76,0.12)', border: '1px solid rgba(201,168,76,0.3)',
               padding: '6px 14px', borderRadius: '50px',
-              fontSize: '0.7rem', fontWeight: 700,
+              fontSize: '0.82rem', fontWeight: 700,
               color: 'rgba(201,168,76,0.9)', letterSpacing: '0.08em',
               textTransform: 'uppercase',
             }}>

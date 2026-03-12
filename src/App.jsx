@@ -15,6 +15,7 @@ import CTABanner       from './components/CTABanner';
 import Footer          from './components/Footer';
 import ScrollProgress  from './components/ScrollProgress';
 import CustomerGuide   from './components/CustomerGuide';
+import ParticleCanvas  from './components/ParticleCanvas';
 
 // ─── Step content data ───────────────────────────────────────────────────────
 
@@ -92,6 +93,8 @@ export default function App() {
   };
 
   return (
+    <>
+    <ParticleCanvas />
     <AnimatePresence mode="wait">
 
       {page === 'artist' ? (
@@ -161,5 +164,6 @@ export default function App() {
       )}
 
     </AnimatePresence>
+    </>
   );
 }

@@ -79,7 +79,7 @@ export default function SectionBlock({
 
         .fromTo(numRef.current,
           { opacity: 0, scale: 0.3, rotation: -20, y: 30 },
-          { opacity: 0.07, scale: 1, rotation: 0,  y: 0, duration: 1, ease: 'elastic.out(1, 0.6)' }, 0.1)
+          { opacity: 0.06, scale: 1, rotation: 0,  y: 0, duration: 1, ease: 'elastic.out(1, 0.6)' }, 0.1)
 
         .fromTo(headingRef.current,
           { opacity: 0, y: 60, skewY: 3, filter: 'blur(6px)' },
@@ -120,7 +120,7 @@ export default function SectionBlock({
       ref={sectionRef}
       className="section-block"
       style={{
-        padding:  'clamp(5rem, 10vw, 7rem) clamp(2.5rem, 5vw, 6rem)',
+        padding:  'clamp(3.5rem, 7vw, 5.5rem) clamp(2rem, 4vw, 5rem)',
         position: 'relative',
         overflow: 'hidden',
         background: isEven 
@@ -212,7 +212,7 @@ export default function SectionBlock({
                     width:          28,
                     height:         28,
                     borderRadius:   '50%',
-                    background:     `linear-gradient(135deg, ${accentColor}, ${accentColor}88)`,
+                    background:     'linear-gradient(135deg, rgba(130,90,20,0.75), rgba(100,68,12,0.55))',
                     display:        'flex',
                     alignItems:     'center',
                     justifyContent: 'center',
@@ -226,7 +226,7 @@ export default function SectionBlock({
                   fontWeight:    700,
                   letterSpacing: '0.12em',
                   textTransform: 'uppercase',
-                  color:         accentColor,
+                  color:         'rgba(80, 58, 12, 0.85)',
                   whiteSpace:    'nowrap',
                 }}>
                   {label}
@@ -239,11 +239,11 @@ export default function SectionBlock({
               ref={numRef}
               style={{
                 fontFamily:    "'Playfair Display', serif",
-                fontSize:      'clamp(6rem, 15vw, 12rem)',
+                fontSize:      'clamp(7rem, 17vw, 14rem)',
                 fontWeight:    900,
-                color:         accentColor,
+                color:         'rgba(80, 55, 10, 1)',
                 lineHeight:    0.8,
-                marginBottom:  '-0.3em',
+                marginBottom:  '-0.35em',
                 userSelect:    'none',
                 pointerEvents: 'none',
                 opacity:       0,
@@ -256,7 +256,7 @@ export default function SectionBlock({
             <h2
               ref={headingRef}
               style={{
-                fontSize:   'clamp(1.8rem, 4vw, 2.6rem)',
+                fontSize:   'clamp(2.5rem, 5.2vw, 3.4rem)',
                 fontFamily: "'Playfair Display', serif",
                 fontWeight: 800,
                 color:      'var(--text-primary)',
@@ -283,7 +283,7 @@ export default function SectionBlock({
             {/* Subtitle */}
             <p
               ref={subtitleRef}
-              style={{ fontSize: '1rem', color: 'var(--text-secondary)', lineHeight: 1.8, maxWidth: '480px', opacity: 0 }}
+              style={{ fontSize: '1.08rem', color: 'var(--text-secondary)', lineHeight: 1.8, maxWidth: '520px', opacity: 0 }}
             >
               {subtitle}
             </p>
@@ -318,7 +318,7 @@ export default function SectionBlock({
 
               {/* Corner glow */}
               <motion.div
-                animate={{ opacity: [0.08, 0.16, 0.08] }}
+                animate={{ opacity: [0.04, 0.09, 0.04] }}
                 transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
                 style={{
                   position:     'absolute',

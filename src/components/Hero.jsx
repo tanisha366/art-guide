@@ -115,7 +115,7 @@ export default function Hero() {
 
   // Title and subtitle are now animated by Framer Motion directly
 
-  const titleLines = ['Artist Guide'];
+  const titleLines = ['Artist', 'Guide'];
 
   return (
     <section
@@ -124,7 +124,7 @@ export default function Hero() {
         minHeight: '100vh',
         display: 'flex',
         flexDirection: 'column',
-        alignItems: 'flex-start',
+        alignItems: 'center',
         justifyContent: 'center',
         overflow: 'hidden',
         padding: 'clamp(7rem, 12vh, 10rem) clamp(2rem, 6vw, 7rem) clamp(6rem, 10vh, 8rem)',
@@ -152,58 +152,85 @@ export default function Hero() {
         pointerEvents: 'none',
       }} />
 
-      {/* Top label — feels handwritten/personal */}
+      {/* Top label */}
       <motion.p
         initial={{ opacity: 0, y: 14 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.3, duration: 0.7 }}
         style={{
           position: 'relative', zIndex: 10,
-          fontSize: '0.78rem', letterSpacing: '0.18em',
-          textTransform: 'uppercase', fontWeight: 600,
-          color: 'rgba(150, 100, 10, 0.9)',
-          marginBottom: '1.4rem',
+          fontSize: '0.78rem', letterSpacing: '0.22em',
+          textTransform: 'uppercase', fontWeight: 700,
+          color: 'rgba(150, 100, 10, 0.85)',
+          marginBottom: '2rem',
+          display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '12px',
         }}
       >
+        <span style={{ display: 'inline-block', width: '32px', height: '1.5px', background: 'rgba(196,145,42,0.7)' }} />
         Zigguratss · Artist Guide
+        <span style={{ display: 'inline-block', width: '32px', height: '1.5px', background: 'rgba(196,145,42,0.7)' }} />
       </motion.p>
 
-      {/* Main title — simple slide up, no letter-by-letter robot feel */}
-      <div ref={titleRef} style={{ position: 'relative', zIndex: 10, textAlign: 'left', width: '100%' }}>
-        {titleLines.map((line, i) => (
-          <motion.div
-            key={i}
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.5 + i * 0.18, duration: 0.75, ease: [0.22, 1, 0.36, 1] }}
-            style={{
-              fontSize: 'clamp(5rem, 14vw, 12rem)',
-              fontFamily: "'Playfair Display', serif",
-              fontWeight: 900,
-              lineHeight: 1,
-              letterSpacing: '-0.02em',
-              background: 'linear-gradient(135deg, #1a1408 0%, #6b4a10 55%, #c4912a 100%)',
-              whiteSpace: 'nowrap',
-              WebkitBackgroundClip: 'text',
-              WebkitTextFillColor: 'transparent',
-              backgroundClip: 'text',
-            }}
-          >
-            {line}
-          </motion.div>
-        ))}
+      {/* Main title */}
+      <div ref={titleRef} style={{ position: 'relative', zIndex: 10, textAlign: 'center', width: '100%' }}>
 
-        {/* Warm underline */}
+        {/* Line 1 — thin italic "Artist" */}
         <motion.div
-          initial={{ scaleX: 0 }}
-          animate={{ scaleX: 1 }}
-          transition={{ delay: 1.0, duration: 0.7, ease: 'easeOut' }}
+          initial={{ opacity: 0, x: -50 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ delay: 0.5, duration: 0.85, ease: [0.22, 1, 0.36, 1] }}
           style={{
-            height: '2px',
-            background: 'linear-gradient(90deg, transparent, rgba(184,148,62,0.6), transparent)',
-            margin: '1.2rem auto 0',
-            width: '50%',
+            fontSize: 'clamp(2.8rem, 7vw, 6rem)',
+            fontFamily: "'Playfair Display', serif",
+            fontWeight: 400,
+            fontStyle: 'italic',
+            lineHeight: 1,
+            letterSpacing: '0.04em',
+            color: '#8a5e10',
+            marginBottom: '0.1em',
+            display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '1.2rem',
+          }}
+        >
+          Artist
+          {/* small decorative diamond */}
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" style={{ marginTop: '0.1em', flexShrink: 0 }}>
+            <rect x="7" y="0.5" width="9" height="9" rx="0.5" transform="rotate(45 7 0.5)" fill="rgba(196,145,42,0.6)" />
+          </svg>
+        </motion.div>
+
+        {/* Line 2 — massive bold "Guide" */}
+        <motion.div
+          initial={{ opacity: 0, y: 50 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.75, duration: 0.85, ease: [0.22, 1, 0.36, 1] }}
+          style={{
+            fontSize: 'clamp(5.5rem, 16vw, 13rem)',
+            fontFamily: "'Playfair Display', serif",
+            fontWeight: 900,
+            lineHeight: 0.92,
+            letterSpacing: '-0.03em',
+            background: 'linear-gradient(135deg, #1a1408 0%, #7a5010 45%, #c4912a 80%, #e8b830 100%)',
+            WebkitBackgroundClip: 'text',
+            WebkitTextFillColor: 'transparent',
+            backgroundClip: 'text',
+          }}
+        >
+          Guide
+        </motion.div>
+
+        {/* Accent underline bar */}
+        <motion.div
+          initial={{ scaleX: 0, opacity: 0 }}
+          animate={{ scaleX: 1, opacity: 1 }}
+          transition={{ delay: 1.1, duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
+          style={{
+            marginTop: '1.2rem',
+            width: 'clamp(120px, 28vw, 380px)',
+            background: 'linear-gradient(90deg, rgba(196,145,42,0.2), #c4912a, #e8b830, #c4912a, rgba(196,145,42,0.2))',
+            borderRadius: '2px',
+            height: '4px',
             transformOrigin: 'center',
+            margin: '1.2rem auto 0',
           }}
         />
       </div>
@@ -212,7 +239,7 @@ export default function Hero() {
       <div
         ref={subtitleRef}
         style={{
-          position: 'relative', zIndex: 10, textAlign: 'left',
+          position: 'relative', zIndex: 10, textAlign: 'center',
           maxWidth: '600px', padding: '0', marginTop: '1.6rem',
         }}
       >
@@ -234,7 +261,7 @@ export default function Hero() {
         transition={{ delay: 1.2, duration: 0.7 }}
         style={{
           display: 'flex', gap: '1rem', flexWrap: 'wrap',
-          justifyContent: 'flex-start', marginTop: '2.4rem',
+          justifyContent: 'center', marginTop: '2.4rem',
           position: 'relative', zIndex: 10,
         }}
       >
@@ -286,7 +313,7 @@ export default function Hero() {
         className="hero-stats"
         style={{
           display: 'flex', gap: '1px', flexWrap: 'wrap',
-          justifyContent: 'flex-start', marginTop: '3.5rem',
+          justifyContent: 'center', marginTop: '3.5rem',
           border: '1px solid rgba(150,100,10,0.22)',
           position: 'relative', zIndex: 10,
           background: 'rgba(196,145,42,0.12)',
