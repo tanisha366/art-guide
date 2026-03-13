@@ -19,10 +19,10 @@ export default function ParticleCanvas() {
     };
     window.addEventListener('resize', resize);
 
-    // Warm gold + amber palette
+    // Space + gold palette for dark theme
     const COLORS = [
-      '#c4912a', '#e8b830', '#d4aa55', '#f0cc70',
-      '#b8943e', '#fad878', '#e8d090', '#ffffff',
+      '#ffffff', '#c47a3a', '#a5622a', '#c8b4ff',
+      '#80c8ff', '#ff80b0', '#ffd45e', '#e8e8ff',
     ];
 
     // ── Fire flake particle ──────────────────────────────────

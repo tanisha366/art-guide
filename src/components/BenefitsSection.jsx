@@ -19,11 +19,11 @@ gsap.registerPlugin(ScrollTrigger);
 
 // ─── Data
 const FEATURES = [
-  { icon: Globe, title: 'Global Reach', desc: 'Showcase your artwork to collectors and art lovers from across the globe.', color: '#b8943e' },
+  { icon: Globe, title: 'Global Reach', desc: 'Showcase your artwork to collectors and art lovers from across the globe.', color: '#b45309' },
   { icon: Shield, title: 'Secure Payments', desc: 'Multiple secure payment gateways including PayPal, Visa, and banking transfers.', color: '#6d5f9a' },
-  { icon: TrendingUp, title: 'Grow Your Brand', desc: 'Build your artist profile and grow a following of dedicated art enthusiasts.', color: '#b8943e' },
+  { icon: TrendingUp, title: 'Grow Your Brand', desc: 'Build your artist profile and grow a following of dedicated art enthusiasts.', color: '#b45309' },
   { icon: Award, title: 'Contests & Recognition', desc: 'Participate in weekly art contests and win recognition for your talent.', color: '#6d5f9a' },
-  { icon: Banknote, title: 'Fair Earnings', desc: 'Transparent pricing with your earnings directly deposited to your bank.', color: '#b8943e' },
+  { icon: Banknote, title: 'Fair Earnings', desc: 'Transparent pricing with your earnings directly deposited to your bank.', color: '#b45309' },
   { icon: Headphones, title: 'Dedicated Support', desc: '24/7 support team ready to help you with any questions or issues.', color: '#6d5f9a' },
 ];
 

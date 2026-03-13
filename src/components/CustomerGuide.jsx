@@ -21,7 +21,7 @@ const sections = [
     label: 'Step 1 — Account',
     title: 'Create Your Buyer Account',
     subtitle: 'Join the Zigguratss community in minutes. Your account gives you access to thousands of unique artworks from artists worldwide.',
-    accentColor: '#c9a84c',
+    accentColor: '#b45309',
     steps: [
       'Visit zigguratss.com and click "My Account" in the top right corner.',
       'Select "Login / Register" to open the registration form.',
@@ -97,11 +97,11 @@ const sections = [
 ];
 
 const perks = [
-  { icon: HeartHandshake, title: 'Original Artwork Only', desc: 'Every piece is 100% authentic and created by verified artists.', color: '#c9a84c' },
+  { icon: HeartHandshake, title: 'Original Artwork Only', desc: 'Every piece is 100% authentic and created by verified artists.', color: '#b45309' },
   { icon: CreditCard, title: 'Secure Checkout', desc: 'Multiple safe payment options including PayPal, Visa, and bank transfer.', color: '#7c6baa' },
   { icon: Truck, title: 'Worldwide Shipping', desc: 'We deliver artwork to your doorstep anywhere in the world.', color: '#c26b6b' },
   { icon: RefreshCw, title: 'Hassle-free Returns', desc: 'Not satisfied? Contact us within 48 hours for return assistance.', color: '#4bc9a8' },
-  { icon: Star, title: 'Curated Collections', desc: 'Discover weekly featured artists and contest-winning artworks.', color: '#c9a84c' },
+  { icon: Star, title: 'Curated Collections', desc: 'Discover weekly featured artists and contest-winning artworks.', color: '#b45309' },
   { icon: MessageCircle, title: '24/7 Support', desc: 'Our dedicated support team is always ready to help you.', color: '#7c6baa' },
 ];
 
@@ -156,8 +156,8 @@ function GuideSection({ s, idx }) {
       padding: 'clamp(5rem, 10vw, 7rem) clamp(2.5rem, 5vw, 6rem)',
       position: 'relative', overflow: 'hidden',
       background: isEven
-        ? 'linear-gradient(160deg, #eedfc0 0%, #f5ead0 50%, #f0e2ba 100%)'
-        : 'linear-gradient(160deg, #f5ead0 0%, #f0e2ba 50%, #e8d0a0 100%)',
+        ? 'linear-gradient(160deg, #08081a 0%, #0a0a18 50%, #07070f 100%)'
+        : 'linear-gradient(160deg, #07070e 0%, #09091a 50%, #080812 100%)',
     }}>
       <motion.div
         initial={{ opacity: 0 }}
@@ -249,7 +249,7 @@ export default function CustomerGuide({ onBack }) {
       {/* Hero */}
       <section style={{
         minHeight: '70vh', display: 'flex', alignItems: 'center', justifyContent: 'center',
-        background: 'linear-gradient(180deg, #f5ead0 0%, #eedfc0 100%)',
+        background: 'linear-gradient(180deg, #08081a 0%, #07070f 100%)',
         position: 'relative', overflow: 'hidden', padding: '8rem clamp(2.5rem, 5vw, 6rem) 4rem',
       }}>
         <div style={{
@@ -401,7 +401,7 @@ export default function CustomerGuide({ onBack }) {
         <section style={{
           padding: 'clamp(5rem, 10vw, 7rem) clamp(2.5rem, 5vw, 6rem)',
           textAlign: 'center', position: 'relative', overflow: 'hidden',
-          background: 'linear-gradient(160deg, #e8d0a0 0%, #eedfc0 50%, #f5ead0 100%)',
+          background: 'linear-gradient(160deg, #06060d 0%, #08081a 50%, #09090f 100%)',
         }}>
           <motion.div
             animate={{ scale: [1, 1.3, 1], opacity: [0.08, 0.15, 0.08] }}

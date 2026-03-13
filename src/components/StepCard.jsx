@@ -16,15 +16,16 @@ import { CheckCircle2 } from 'lucide-react';
 const getRowStyle = (hovered) => ({
   display:       'flex',
   alignItems:    'flex-start',
-  gap:           '14px',
-  padding:       '14px 18px',
-  borderRadius:  '12px',
-  border:        `1px solid ${hovered ? 'rgba(201,168,76,0.4)' : 'transparent'}`,
-  background:    hovered ? 'rgba(201,168,76,0.07)' : 'transparent',
+  gap:           '18px',
+  padding:       '18px 24px',
+  borderRadius:  '16px',
+  border:        `1.5px solid ${hovered ? 'var(--gold)' : 'var(--border)'}`,
+  background:    hovered ? 'rgba(184,138,26,0.07)' : 'var(--card-bg)',
+  boxShadow:     hovered ? '0 4px 24px 0 rgba(184,138,26,0.10)' : '0 1.5px 8px 0 rgba(60,40,10,0.03)',
   cursor:        'default',
   position:      'relative',
   overflow:      'hidden',
-  transition:    'background 0.3s ease, border-color 0.3s ease',
+  transition:    'background 0.3s, border-color 0.3s, box-shadow 0.3s',
 });
 
 // ─── Component ───────────────────────────────────────────────────────────── //
@@ -98,24 +99,29 @@ export default function StepCard({ number, text, delay = 0 }) {
 
       {/* Step number + text */}
       <div style={{ display: 'flex', alignItems: 'baseline', gap: '10px', flex: 1 }}>
+
         <motion.span
-          animate={{ color: hovered ? '#8a5e10' : 'rgba(90, 65, 15, 0.45)' }}
+          animate={{ color: hovered ? 'var(--gold-dark)' : 'rgba(90, 65, 15, 0.38)' }}
           style={{
-            fontSize:      '0.65rem',
-            fontWeight:    700,
-            letterSpacing: '0.08em',
+            fontSize:      '0.72rem',
+            fontWeight:    800,
+            letterSpacing: '0.13em',
             textTransform: 'uppercase',
             flexShrink:    0,
+            fontFamily:    'Inter, Arial, sans-serif',
           }}
         >
           {String(number).padStart(2, '0')}
         </motion.span>
 
         <p style={{
-          fontSize:   '1.05rem',
+          fontSize:   '1.13rem',
           color:      hovered ? 'var(--text-primary)' : 'var(--text-secondary)',
-          lineHeight: 1.65,
+          lineHeight: 1.7,
+          fontWeight: 500,
+          letterSpacing: '0.01em',
           transition: 'color 0.3s',
+          fontFamily: 'Inter, Arial, sans-serif',
         }}>
           {text}
         </p>

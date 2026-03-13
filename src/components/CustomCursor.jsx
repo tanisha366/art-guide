@@ -34,7 +34,7 @@ export default function CustomCursor() {
     };
     const onLeave = () => {
       gsap.to(cursor, { scale: 1, opacity: 1, duration: 0.3 });
-      gsap.to(follower, { scale: 1, borderColor: 'rgba(201,168,76,0.5)', duration: 0.3 });
+      gsap.to(follower, { scale: 1, borderColor: 'rgba(196,122,58,0.5)', duration: 0.3 });
     };
     const onDown = () => gsap.to(cursor, { scale: 0.7, duration: 0.1 });
     const onUp = () => gsap.to(cursor, { scale: 1, duration: 0.1 });
@@ -92,7 +92,7 @@ export default function CustomCursor() {
           top: -20, left: -20,
           width: 40, height: 40,
           borderRadius: '50%',
-          border: '1.5px solid rgba(201,168,76,0.5)',
+          border: '1.5px solid rgba(196,122,58,0.5)',
           pointerEvents: 'none',
           zIndex: 99998,
           willChange: 'transform',

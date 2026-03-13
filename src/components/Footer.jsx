@@ -58,7 +58,7 @@ export default function Footer() {
                   width: 42, height: 42, borderRadius: '12px',
                   background: 'linear-gradient(135deg, var(--gold), var(--accent))',
                   display: 'flex', alignItems: 'center', justifyContent: 'center',
-                  boxShadow: '0 0 24px rgba(201,168,76,0.25)',
+                  boxShadow: '0 0 24px rgba(196,122,58,0.25)',
                 }}>
                   <Palette size={20} color="#0a0a0f" />
                 </div>
@@ -137,7 +137,7 @@ export default function Footer() {
                 href="https://api.whatsapp.com/send?phone=917838535496"
                 target="_blank"
                 rel="noreferrer"
-                whileHover={{ scale: 1.04, boxShadow: '0 0 28px rgba(201,168,76,0.35)' }}
+                whileHover={{ scale: 1.04, boxShadow: '0 0 28px rgba(196,122,58,0.35)' }}
                 whileTap={{ scale: 0.97 }}
                 style={{
                   display: 'inline-flex', alignItems: 'center', gap: '8px',

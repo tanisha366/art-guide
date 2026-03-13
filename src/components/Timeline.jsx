@@ -18,10 +18,10 @@ gsap.registerPlugin(ScrollTrigger);
 // ─── Data ─────────────────────────────────────────────────────────────── //
 
 const MILESTONES = [
-  { icon: UserPlus,  label: 'Step 01', title: 'Register',        color: '#b8943e', desc: 'Takes about 2 minutes. Add your name, email and create a password — nothing complicated.'       },
-  { icon: Settings,  label: 'Step 02', title: 'Build your profile', color: '#b8943e', desc: 'Fill in your bio, upload a photo, link your portfolio and add your bank details for payouts.' },
-  { icon: ImagePlus, label: 'Step 03', title: 'Upload your work', color: '#b8943e', desc: 'Add at least 5 clear images of each artwork along with sizing, medium and price details.'   },
-  { icon: Megaphone, label: 'Step 04', title: 'Go live',          color: '#b8943e', desc: 'Our team reviews and approves your listing. Once live, collectors can find and buy your work.'   },
+  { icon: UserPlus,  label: 'Step 01', title: 'Register',        color: '#b45309', desc: 'Takes about 2 minutes. Add your name, email and create a password — nothing complicated.'       },
+  { icon: Settings,  label: 'Step 02', title: 'Build your profile', color: '#b45309', desc: 'Fill in your bio, upload a photo, link your portfolio and add your bank details for payouts.' },
+  { icon: ImagePlus, label: 'Step 03', title: 'Upload your work', color: '#b45309', desc: 'Add at least 5 clear images of each artwork along with sizing, medium and price details.'   },
+  { icon: Megaphone, label: 'Step 04', title: 'Go live',          color: '#b45309', desc: 'Our team reviews and approves your listing. Once live, collectors can find and buy your work.'   },
 ];
 
 // ─── Component ───────────────────────────────────────────────────────────── //

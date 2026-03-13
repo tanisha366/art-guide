@@ -12,7 +12,6 @@ import Timeline        from './components/Timeline';
 import SectionBlock    from './components/SectionBlock';
 import BenefitsSection from './components/BenefitsSection';
 import CTABanner       from './components/CTABanner';
-import Footer          from './components/Footer';
 import ScrollProgress  from './components/ScrollProgress';
 import CustomerGuide   from './components/CustomerGuide';
 import ParticleCanvas  from './components/ParticleCanvas';
@@ -156,7 +155,6 @@ export default function App() {
             <CTABanner />
           </main>
 
-          <Footer onSwitchPage={switchToCustomer} />
         </motion.div>
 
       ) : (
