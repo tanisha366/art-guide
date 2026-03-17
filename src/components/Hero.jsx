@@ -41,7 +41,15 @@ export default function Hero() {
     const ctx = canvas.getContext('2d');
     let W = (canvas.width  = window.innerWidth);
     let H = (canvas.height = window.innerHeight);
-    const onResize = () => { W = canvas.width = window.innerWidth; H = canvas.height = window.innerHeight; };
+    // Throttle resize for performance
+    let resizeTimeout;
+    const onResize = () => {
+      clearTimeout(resizeTimeout);
+      resizeTimeout = setTimeout(() => {
+        W = canvas.width = window.innerWidth;
+        H = canvas.height = window.innerHeight;
+      }, 120);
+    };
     window.addEventListener('resize', onResize);
 
     // ── Floating dot particles ──────────────────────────────────────────
@@ -112,8 +120,10 @@ export default function Hero() {
       }
     }
 
-    const particles = Array.from({ length: 90 }, () => new Particle());
-    const splashes  = Array.from({ length: 7  }, () => new Splash());
+    // Reduce particles/splashes for mobile
+    const isMobile = window.innerWidth < 700;
+    const particles = Array.from({ length: isMobile ? 32 : 60 }, () => new Particle());
+    const splashes  = Array.from({ length: isMobile ? 2 : 5 }, () => new Splash());
     let raf;
 
     const animate = () => {
@@ -127,6 +137,7 @@ export default function Hero() {
     return () => {
       cancelAnimationFrame(raf);
       window.removeEventListener('resize', onResize);
+      clearTimeout(resizeTimeout);
     };
   }, []);
 
@@ -168,10 +179,18 @@ export default function Hero() {
       {/* Canvas */}
       <canvas
         ref={canvasRef}
-        style={{ position: 'absolute', inset: 0, pointerEvents: 'none', zIndex: 0 }}
+        style={{
+          position: 'absolute',
+          inset: 0,
+          pointerEvents: 'none',
+          zIndex: 0,
+          // Lower resolution for mobile for better performance
+          ...(window.innerWidth < 700 ? { width: '100vw', height: '60vh' } : {}),
+        }}
       />
 
       {/* Warm ambient glow orbs */}
+      {/* Reduce background orb size on mobile */}
       <motion.div
         animate={{ scale: [1, 1.3, 1], opacity: [0.18, 0.32, 0.18] }}
         transition={{ duration: 7, repeat: Infinity, ease: 'easeInOut' }}
@@ -180,8 +199,8 @@ export default function Hero() {
           top:           '35%',
           left:          '50%',
           transform:     'translate(-50%, -50%)',
-          width:         '700px',
-          height:        '700px',
+          width:         window.innerWidth < 700 ? '320px' : '700px',
+          height:        window.innerWidth < 700 ? '320px' : '700px',
           borderRadius:  '50%',
           background:    'radial-gradient(circle, rgba(196,145,42,0.14) 0%, rgba(109,95,154,0.08) 50%, transparent 70%)',
           pointerEvents: 'none',
@@ -195,8 +214,8 @@ export default function Hero() {
           position:      'absolute',
           right:         '-8%',
           top:           '15%',
-          width:         '480px',
-          height:        '480px',
+          width:         window.innerWidth < 700 ? '180px' : '480px',
+          height:        window.innerWidth < 700 ? '180px' : '480px',
           borderRadius:  '50%',
           background:    'radial-gradient(circle, rgba(196,145,42,0.12) 0%, transparent 65%)',
           pointerEvents: 'none',
@@ -210,8 +229,8 @@ export default function Hero() {
           position:      'absolute',
           left:          '-8%',
           bottom:        '10%',
-          width:         '500px',
-          height:        '500px',
+          width:         window.innerWidth < 700 ? '160px' : '500px',
+          height:        window.innerWidth < 700 ? '160px' : '500px',
           borderRadius:  '50%',
           background:    'radial-gradient(circle, rgba(109,95,154,0.12) 0%, transparent 65%)',
           pointerEvents: 'none',
