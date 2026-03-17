@@ -1,8 +1,4 @@
-// ─────────────────────────────────────────────────────────────────────────────
-// App.jsx  —  Root component: page routing between Artist Guide & Customer Guide
-// ─────────────────────────────────────────────────────────────────────────────
-
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { UserPlus, Settings, ImagePlus, Palette } from 'lucide-react';
 
@@ -17,67 +13,79 @@ import CustomerGuide   from './components/CustomerGuide';
 import ParticleCanvas  from './components/ParticleCanvas';
 import AvatarGuide     from './components/AvatarGuide';
 
-// ─── Step content data ───────────────────────────────────────────────────────
-
+// ─── Step data (artist) ─────────────────────────────────────────────────────
 const registerSteps = [
-  'Go to My Account on the top right corner of the website.',
+  'Go to My Account on the top right corner.',
   'Click on Login / Register.',
-  'Fill in the JOIN US form — your Full Name, Email, Mobile Number, Password, and select "I am an artist".',
-  'Select your profession: e.g. painter, sculptor, photographer, etc.',
-  'Accept Zigguratss Terms & Conditions.',
-  'Click on JOIN US to submit.',
-  'A verification link will be sent to your email address.',
-  'Click the "Link to Verify" button in your inbox.',
-  'Your account is now verified and ready to use!',
+  'Fill JOIN US form: Full Name, Email, Mobile, Password, select "I am an artist".',
+  'Choose your profession (painter, sculptor, etc.).',
+  'Accept Terms & Conditions.',
+  'Click JOIN US.',
+  'A verification link will be sent to your email.',
+  'Click "Link to Verify" in the email.',
+  'Your account is verified and ready!',
 ];
 
 const setupSteps = [
-  'Login to your account with your email and password.',
-  'Navigate to "My Profile" and complete your basic details — Name, Country, Address, and your Artist Bio.',
-  'Add your payment details for payment gateway transactions.',
-  'Enter your Bank Details (so you receive payments after artwork is sold).',
-  'Add your Portfolio link to showcase your work.',
-  'Double-check all information before submitting.',
-  'Click the "Submit" button when ready.',
-  'Go back to your profile and click "Add Other Information".',
-  'Fill in your Awards & Recognition, Prizes Won, and Exhibition history.',
-  'Click "Continue" to save your information.',
+  'Login to your account.',
+  'Go to "My Profile" and complete basic details (Name, Country, Address, Bio).',
+  'Add payment details for transactions.',
+  'Enter Bank Details to receive payments.',
+  'Add your Portfolio link.',
+  'Double-check all info.',
+  'Click Submit.',
+  'Go back to profile and click "Add Other Information".',
+  'Fill in Awards, Recognition, Prizes, Exhibition history.',
+  'Click Continue to save.',
 ];
 
 const uploadSteps = [
-  'Navigate to the My Artwork section in your dashboard.',
-  'Select the Type of Artwork you want to upload.',
-  'Click "Submit" to proceed.',
-  'Fill in all artwork details — medium, technique, style, and size.',
-  'Select the primary image of your artwork.',
-  'Choose whether you are available for Commission Work.',
-  'Select your preferred Shipping Options.',
-  'Accept Zigguratss Terms & Conditions for artwork.',
-  'Click "Continue" to proceed.',
-  'Add at least 5 high-quality images in the "Add More Images" section.',
-  'Click "Submit" — your artwork is sent to our team for activation!',
+  'Navigate to My Artwork in your dashboard.',
+  'Select Type of Artwork.',
+  'Click Submit.',
+  'Fill details: medium, technique, style, size.',
+  'Select primary image.',
+  'Indicate if available for Commission Work.',
+  'Choose Shipping Options.',
+  'Accept Terms & Conditions.',
+  'Click Continue.',
+  'Add at least 5 high-quality images.',
+  'Click Submit — artwork sent for activation.',
 ];
 
 const manageSteps = [
-  'Monitor your artwork status from the My Artwork dashboard.',
-  'Once activated by the Zigguratss team, your artwork is live and visible to buyers.',
-  'Use your profile to update pricing, descriptions, or availability.',
-  'Respond quickly to buyer inquiries to improve your conversion rate.',
-  'Participate in weekly Zigguratss Contests to gain more visibility.',
-  'Share your artwork pages on social media to drive traffic.',
-  'Track earnings and payment history from your account dashboard.',
-  'Update your portfolio regularly with new artworks.',
+  'Monitor artwork status in My Artwork dashboard.',
+  'Once activated, artwork is live and visible.',
+  'Update pricing, descriptions, or availability.',
+  'Respond quickly to buyer inquiries.',
+  'Participate in weekly Contests for visibility.',
+  'Share artwork pages on social media.',
+  'Track earnings and payment history.',
+  'Update portfolio regularly.',
 ];
 
-// ─── Page transition variants ────────────────────────────────────────────────
-
+// ─── Page transitions ───────────────────────────────────────────────────────
 const pageVariants = {
-  initial : { opacity: 0, y: 30,  filter: 'blur(8px)' },
-  animate : { opacity: 1, y: 0,   filter: 'blur(0px)', transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] } },
-  exit    : { opacity: 0, y: -20, filter: 'blur(8px)', transition: { duration: 0.4, ease: 'easeIn' } },
+  initial: { opacity: 0, y: 20 },
+  animate: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] } },
+  exit: { opacity: 0, y: -20, transition: { duration: 0.4 } },
 };
 
-// ─── Component ───────────────────────────────────────────────────────────────
+// ─── Particle background generator (same as CustomerGuide) ──────────────────
+const earthyColors = [
+  '#b85e3a', '#c47e5a', '#a5673f', '#8b5a2b', '#b78c5a', '#d9a066',
+  '#e3b37c', '#c9a34b', '#d4af37', '#bf8f3f', '#9e7b56', '#7d6b4b',
+];
+
+const flameParticles = Array.from({ length: 30 }, (_, i) => ({
+  id: i,
+  left: `${Math.random() * 100}%`,
+  top: `${Math.random() * 100}%`,
+  size: 120 + Math.random() * 280,
+  delay: Math.random() * 6,
+  duration: 12 + Math.random() * 12,
+  color: earthyColors[i % earthyColors.length],
+}));
 
 export default function App() {
   const [page, setPage] = useState('artist');
@@ -94,76 +102,174 @@ export default function App() {
 
   return (
     <>
-    <ParticleCanvas />
-    <AvatarGuide />
-    <AnimatePresence mode="wait">
+      <AnimatePresence mode="wait">
+        {page === 'artist' ? (
+          <motion.div
+            key="artist"
+            variants={pageVariants}
+            initial="initial"
+            animate="animate"
+            exit="exit"
+            style={{
+              position: 'relative',
+              background: '#f9f6f2',
+              width: '100%',
+              overflowX: 'hidden',
+            }}
+          >
+            {/* Particle background */}
+            {flameParticles.map((particle) => (
+              <motion.div
+                key={particle.id}
+                animate={{
+                  scale: [1, 1.3, 1],
+                  opacity: [0.1, 0.3, 0.1],
+                  x: [0, Math.sin(particle.id) * 70, 0],
+                  y: [0, -50, 0],
+                }}
+                transition={{
+                  duration: particle.duration,
+                  repeat: Infinity,
+                  ease: 'easeInOut',
+                  delay: particle.delay,
+                }}
+                style={{
+                  position: 'fixed',
+                  left: particle.left,
+                  top: particle.top,
+                  width: particle.size,
+                  height: particle.size,
+                  background: `radial-gradient(circle, ${particle.color} 0%, transparent 70%)`,
+                  borderRadius: '50%',
+                  filter: 'blur(60px)',
+                  zIndex: 0,
+                  pointerEvents: 'none',
+                }}
+              />
+            ))}
 
-      {page === 'artist' ? (
-        <motion.div key="artist" variants={pageVariants} initial="initial" animate="animate" exit="exit">
-          <ScrollProgress />
-          <Navbar onSwitchPage={switchToCustomer} />
-
-          <main>
-            <Hero />
-            <Timeline />
-
-            <SectionBlock
-              id="register"
-              number="A"
-              label="Step 1"
-              title="Getting yourself registered"
-              subtitle="It only takes a few minutes. Fill in your details, verify your email, and you're in — no complicated forms, nothing to pay upfront."
-              steps={registerSteps}
-              icon={UserPlus}
-              accentColor="#b8943e"
+            {/* Additional floating shapes */}
+            <motion.div
+              animate={{ scale: [1, 1.2, 1], opacity: [0.15, 0.3, 0.15], rotate: [0, 15, 0] }}
+              transition={{ duration: 18, repeat: Infinity, ease: 'easeInOut' }}
+              style={{
+                position: 'fixed',
+                top: '10%',
+                left: '5%',
+                width: '400px',
+                height: '400px',
+                background: 'radial-gradient(circle, rgba(201,163,75,0.15) 0%, transparent 70%)',
+                borderRadius: '50%',
+                filter: 'blur(80px)',
+                zIndex: 0,
+                pointerEvents: 'none',
+              }}
+            />
+            <motion.div
+              animate={{ scale: [1, 1.3, 1], opacity: [0.15, 0.3, 0.15], rotate: [0, -15, 0] }}
+              transition={{ duration: 22, repeat: Infinity, ease: 'easeInOut', delay: 2 }}
+              style={{
+                position: 'fixed',
+                bottom: '10%',
+                right: '5%',
+                width: '500px',
+                height: '500px',
+                background: 'radial-gradient(circle, rgba(139,90,43,0.15) 0%, transparent 70%)',
+                borderRadius: '50%',
+                filter: 'blur(100px)',
+                zIndex: 0,
+                pointerEvents: 'none',
+              }}
             />
 
-            <SectionBlock
-              id="setup"
-              number="B"
-              label="Step 2"
-              title="Making your profile work for you"
-              subtitle="Think of your profile as your digital studio. Add a photo, write something about yourself, and link your bank so you're ready to get paid."
-              steps={setupSteps}
-              icon={Settings}
-              accentColor="#6d5f9a"
-            />
+            <ScrollProgress />
+            <Navbar onSwitchPage={switchToCustomer} sticky />
 
-            <SectionBlock
-              id="upload"
-              number="C"
-              label="Step 3"
-              title="Putting your work out there"
-              subtitle="Upload at least 5 clear photos of each piece, add the details collectors actually care about — size, medium, price — and hit submit."
-              steps={uploadSteps}
-              icon={ImagePlus}
-              accentColor="#b8943e"
-            />
+            {/* AI Avatar */}
+            <div style={{
+              position: 'fixed',
+              bottom: '20px',
+              left: '20px',
+              zIndex: 1000,
+              pointerEvents: 'none',
+            }}>
+              <ParticleCanvas />
+              <div style={{ pointerEvents: 'auto' }}>
+                <AvatarGuide />
+              </div>
+            </div>
 
-            <SectionBlock
-              id="manage"
-              number="D"
-              label="Step 4"
-              title="Staying on top of things"
-              subtitle="Once you're live, it's about keeping things fresh — update your listings, respond to buyers and watch your presence on the platform grow."
-              steps={manageSteps}
-              icon={Palette}
-              accentColor="#6d5f9a"
-            />
+            <main style={{ position: 'relative', zIndex: 1, width: '100%' }}>
+              {/* Hero – ensure heading is black (modify Hero component or pass style) */}
+              <Hero />
 
-            <BenefitsSection />
-            <CTABanner />
-          </main>
+              <Timeline />
 
-        </motion.div>
+              <SectionBlock
+                id="register"
+                number="A"
+                label="Step 1"
+                title="Getting yourself registered"
+                subtitle="It only takes a few minutes. Fill in your details, verify your email, and you're in — no complicated forms, nothing to pay upfront."
+                steps={registerSteps}
+                icon={UserPlus}
+                accentColor="#b68b5c"
+                tiltEffect
+                // Assuming SectionBlock accepts titleColor prop; if not, we can override in component
+              />
 
-      ) : (
-        <motion.div key="customer" variants={pageVariants} initial="initial" animate="animate" exit="exit">
-          <CustomerGuide onBack={switchToArtist} />
-        </motion.div>
-      )}
+              <SectionBlock
+                id="setup"
+                number="B"
+                label="Step 2"
+                title="Making your profile work for you"
+                subtitle="Think of your profile as your digital studio. Add a photo, write about yourself, and link your bank so you're ready to get paid."
+                steps={setupSteps}
+                icon={Settings}
+                accentColor="#8a7bb5"
+                tiltEffect
+              />
 
-    </AnimatePresence>
+              <SectionBlock
+                id="upload"
+                number="C"
+                label="Step 3"
+                title="Putting your work out there"
+                subtitle="Upload at least 5 clear photos of each piece, add the details collectors actually care about — size, medium, price — and hit submit."
+                steps={uploadSteps}
+                icon={ImagePlus}
+                accentColor="#b68b5c"
+                tiltEffect
+              />
+
+              <SectionBlock
+                id="manage"
+                number="D"
+                label="Step 4"
+                title="Staying on top of things"
+                subtitle="Once you're live, it's about keeping things fresh — update listings, respond to buyers, and watch your presence grow."
+                steps={manageSteps}
+                icon={Palette}
+                accentColor="#8a7bb5"
+                tiltEffect
+              />
+
+              <BenefitsSection />
+              <CTABanner />
+            </main>
+          </motion.div>
+        ) : (
+          <motion.div
+            key="customer"
+            variants={pageVariants}
+            initial="initial"
+            animate="animate"
+            exit="exit"
+          >
+            <CustomerGuide onBack={switchToArtist} />
+          </motion.div>
+        )}
+      </AnimatePresence>
     </>
   );
 }
