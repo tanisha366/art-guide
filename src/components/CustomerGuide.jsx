@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -101,56 +101,65 @@ export default function CustomerGuide({ onBack }) {
   // Simplified palette
   const earthyColors = ['#b85e3a', '#8b5a2b', '#b78c5a', '#c9a34b', '#9e7b56'];
 
-  // Reduced particle count for performance
-  const flameParticles = Array.from({ length: 12 }, (_, i) => ({
-    id: i,
-    left: `${Math.random() * 100}%`,
-    top: `${Math.random() * 100}%`,
-    size: 80 + Math.random() * 150,
-    delay: Math.random() * 5,
-    duration: 10 + Math.random() * 10,
-    color: earthyColors[i % earthyColors.length],
-  }));
-
-  const bubbleParticles = Array.from({ length: 6 }, (_, i) => ({
-    id: i + 100,
-    left: `${Math.random() * 100}%`,
-    top: `${Math.random() * 100}%`,
-    size: 150 + Math.random() * 200,
-    delay: Math.random() * 6,
-    duration: 15 + Math.random() * 15,
-    color: earthyColors[(i + 2) % earthyColors.length],
-  }));
+  // Generate particles only once for consistent visuals
+  const flameParticlesRef = useRef();
+  const bubbleParticlesRef = useRef();
+  if (!flameParticlesRef.current) {
+    flameParticlesRef.current = Array.from({ length: 12 }, (_, i) => ({
+      id: i,
+      left: `${Math.random() * 100}%`,
+      top: `${Math.random() * 100}%`,
+      size: 80 + Math.random() * 150,
+      delay: Math.random() * 5,
+      duration: 10 + Math.random() * 10,
+      color: earthyColors[i % earthyColors.length],
+    }));
+  }
+  if (!bubbleParticlesRef.current) {
+    bubbleParticlesRef.current = Array.from({ length: 6 }, (_, i) => ({
+      id: i + 100,
+      left: `${Math.random() * 100}%`,
+      top: `${Math.random() * 100}%`,
+      size: 150 + Math.random() * 200,
+      delay: Math.random() * 6,
+      duration: 15 + Math.random() * 15,
+      color: earthyColors[(i + 2) % earthyColors.length],
+    }));
+  }
+  const flameParticles = flameParticlesRef.current;
+  const bubbleParticles = bubbleParticlesRef.current;
 
   return (
     <>
       <ScrollProgress />
       <Navbar onBack={onBack} isCustomerPage />
 
-      <div style={{ position: 'relative', overflow: 'hidden' }}>
-        {/* Static gradient background */}
+      <div style={{ position: 'relative', overflow: 'hidden', minHeight: '100vh' }}>
+        {/* Static gradient background (absolute, not fixed) */}
         <div style={{
-          position: 'fixed',
+          position: 'absolute',
           top: 0,
           left: 0,
           right: 0,
           bottom: 0,
           background: 'linear-gradient(145deg, #fcfaf8, #f5efe9)',
           zIndex: -2,
+          pointerEvents: 'none',
         }} />
 
-        {/* Simple parallax overlay */}
+        {/* Simple parallax overlay (absolute, not fixed) */}
         <motion.div
           style={{
-            position: 'fixed',
+            position: 'absolute',
             top: 0,
             left: 0,
             right: 0,
             bottom: 0,
-            background: 'radial-gradient(circle at 30% 50%, rgba(201,163,75,0.05) 0%, transparent 50%)',
+            background: 'radial-gradient(circle at 30% 50%, rgba(201,163,75,0.07) 0%, transparent 50%)',
             y: y1,
             opacity: opacity1,
             zIndex: -1,
+            pointerEvents: 'none',
           }}
         />
 
@@ -228,7 +237,19 @@ export default function CustomerGuide({ onBack }) {
           ))}
 
           {/* Content */}
-          <div style={{ position: 'relative', zIndex: 10, maxWidth: '1100px', margin: '0 auto', textAlign: 'center' }}>
+          <div style={{
+            position: 'relative',
+            zIndex: 10,
+            maxWidth: '1100px',
+            margin: '0 auto',
+            textAlign: 'center',
+            background: 'rgba(255,255,255,0.92)',
+            borderRadius: '2.5rem',
+            boxShadow: '0 8px 32px 0 rgba(60, 40, 20, 0.10)',
+            padding: '2.5rem 2vw',
+            backdropFilter: 'blur(2px)',
+            border: '1px solid #f5efe9',
+          }}>
             <motion.h1
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
@@ -237,8 +258,14 @@ export default function CustomerGuide({ onBack }) {
                 fontSize: 'clamp(3.5rem, 10vw, 7rem)',
                 fontFamily: "'Playfair Display', serif",
                 fontWeight: 700,
-                color: '#000000',
+                color: 'transparent',
+                background: 'linear-gradient(90deg, #b78c5a 10%, #c9a34b 50%, #8b5a2b 90%)',
+                WebkitBackgroundClip: 'text',
+                backgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
                 marginBottom: '0.5rem',
+                letterSpacing: '-2px',
+                textShadow: '0 2px 8px #f5efe9',
               }}
             >
               Customer Guide
@@ -251,8 +278,10 @@ export default function CustomerGuide({ onBack }) {
               style={{
                 width: '120px',
                 height: '4px',
-                background: 'linear-gradient(90deg, transparent, #000000, #666666, #000000, transparent)',
+                background: 'linear-gradient(90deg, transparent, #b78c5a, #c9a34b, #b78c5a, transparent)',
                 margin: '1rem auto 1.5rem',
+                borderRadius: '2px',
+                boxShadow: '0 2px 8px #c9a34b44',
               }}
             />
 
@@ -266,6 +295,8 @@ export default function CustomerGuide({ onBack }) {
                 maxWidth: '700px',
                 margin: '0 auto 2rem',
                 lineHeight: 1.6,
+                fontWeight: 500,
+                textShadow: '0 1px 4px #f5efe9',
               }}
             >
               Simple steps to discover, buy, and enjoy original artwork.
