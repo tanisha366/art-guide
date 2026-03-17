@@ -1,5 +1,5 @@
-import { useEffect } from 'react';
-import { motion } from 'framer-motion';
+import { useEffect, useRef } from 'react';
+import { motion, useScroll, useTransform } from 'framer-motion';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import {
@@ -93,32 +93,39 @@ export default function CustomerGuide({ onBack }) {
     ScrollTrigger.refresh();
   }, []);
 
+  const { scrollYProgress } = useScroll();
+  const y1 = useTransform(scrollYProgress, [0, 1], [0, 200]);
+  const y2 = useTransform(scrollYProgress, [0, 1], [0, -150]);
+  const opacity1 = useTransform(scrollYProgress, [0, 0.5, 1], [1, 0.8, 0.6]);
+
   // Enhanced earthy palette
   const earthyColors = [
     '#b85e3a', '#c47e5a', '#a5673f', '#8b5a2b', '#b78c5a', '#d9a066',
     '#e3b37c', '#c9a34b', '#d4af37', '#bf8f3f', '#9e7b56', '#7d6b4b',
   ];
 
-  // Flame particles (smaller, faster)
-  const flameParticles = Array.from({ length: 30 }, (_, i) => ({
+  // Flame particles (smaller, more numerous)
+  const flameParticles = Array.from({ length: 45 }, (_, i) => ({
     id: i,
     left: `${Math.random() * 100}%`,
     top: `${Math.random() * 100}%`,
-    size: 80 + Math.random() * 200,
-    delay: Math.random() * 5,
-    duration: 10 + Math.random() * 10,
+    size: 60 + Math.random() * 200,
+    delay: Math.random() * 8,
+    duration: 12 + Math.random() * 15,
     color: earthyColors[i % earthyColors.length],
+    xDrift: (Math.random() - 0.5) * 150,
+    yDrift: (Math.random() - 0.5) * 100,
   }));
 
   // Bubble particles (larger, slower, more transparent)
-  const bubbleParticles = Array.from({ length: 15 }, (_, i) => ({
+  const bubbleParticles = Array.from({ length: 20 }, (_, i) => ({
     id: i + 100,
     left: `${Math.random() * 100}%`,
     top: `${Math.random() * 100}%`,
-    size: 200 + Math.random() * 300,
-    delay: Math.random() * 8,
-    duration: 20 + Math.random() * 15,
-    color: earthyColors[(i + 3) % earthyColors.length],
+    size: 150 + Math.random() * 350,
+    delay: Math.random() * 10,
+    duration: 25 + Math.random() * 20,
+    color: earthyColors[(i + 4) % earthyColors.length],
   }));
 
   return (
@@ -126,373 +133,401 @@ export default function CustomerGuide({ onBack }) {
       <ScrollProgress />
       <Navbar onBack={onBack} isCustomerPage />
 
-      {/* HERO SECTION with enhanced flame particles and bubbles */}
-      <section
-        style={{
-          position: 'relative',
-          minHeight: '80vh',
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          justifyContent: 'center',
-          overflow: 'hidden',
-          width: '100%',
-          padding: 'clamp(7rem, 12vh, 10rem) 5vw clamp(5rem, 8vh, 7rem)',
-          background: '#fcfaf8',
-          textAlign: 'center',
-        }}
-      >
-        {/* Rich flame particle background */}
-        {flameParticles.map((particle) => (
+      {/* Main container with animated gradient background */}
+      <div style={{ position: 'relative', overflow: 'hidden' }}>
+        {/* Animated gradient background layers */}
+        <motion.div
+          style={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            background: 'linear-gradient(145deg, #fcfaf8, #f5efe9, #f0e8e0)',
+            backgroundSize: '400% 400%',
+            zIndex: -2,
+          }}
+          animate={{
+            backgroundPosition: ['0% 0%', '100% 100%', '0% 0%'],
+          }}
+          transition={{
+            duration: 20,
+            repeat: Infinity,
+            ease: 'linear',
+          }}
+        />
+
+        {/* Animated overlay with parallax */}
+        <motion.div
+          style={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            background: 'radial-gradient(circle at 30% 50%, rgba(201,163,75,0.08) 0%, transparent 50%), radial-gradient(circle at 70% 50%, rgba(139,90,43,0.08) 0%, transparent 50%)',
+            y: y1,
+            opacity: opacity1,
+            zIndex: -1,
+          }}
+        />
+
+        {/* Hero Section */}
+        <section
+          style={{
+            position: 'relative',
+            minHeight: '90vh',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            overflow: 'hidden',
+            width: '100%',
+            padding: '0 5vw',
+          }}
+        >
+          {/* Flame particles */}
+          {flameParticles.map((particle) => (
+            <motion.div
+              key={particle.id}
+              animate={{
+                scale: [1, 1.4, 1],
+                opacity: [0.1, 0.35, 0.1],
+                x: [0, particle.xDrift, 0],
+                y: [0, particle.yDrift, 0],
+              }}
+              transition={{
+                duration: particle.duration,
+                repeat: Infinity,
+                ease: 'easeInOut',
+                delay: particle.delay,
+              }}
+              style={{
+                position: 'absolute',
+                left: particle.left,
+                top: particle.top,
+                width: particle.size,
+                height: particle.size,
+                background: `radial-gradient(circle, ${particle.color} 0%, transparent 70%)`,
+                borderRadius: '50%',
+                filter: 'blur(50px)',
+                zIndex: 0,
+                pointerEvents: 'none',
+              }}
+            />
+          ))}
+
+          {/* Bubble particles */}
+          {bubbleParticles.map((particle) => (
+            <motion.div
+              key={particle.id}
+              animate={{
+                scale: [1, 1.25, 1],
+                opacity: [0.05, 0.15, 0.05],
+                x: [0, Math.sin(particle.id) * 120, 0],
+                y: [0, -80, 0],
+              }}
+              transition={{
+                duration: particle.duration,
+                repeat: Infinity,
+                ease: 'easeInOut',
+                delay: particle.delay,
+              }}
+              style={{
+                position: 'absolute',
+                left: particle.left,
+                top: particle.top,
+                width: particle.size,
+                height: particle.size,
+                background: `radial-gradient(circle, ${particle.color} 0%, transparent 80%)`,
+                borderRadius: '50%',
+                filter: 'blur(80px)',
+                zIndex: 0,
+                pointerEvents: 'none',
+              }}
+            />
+          ))}
+
+          {/* Large floating shapes with parallax */}
           <motion.div
-            key={particle.id}
-            animate={{
-              scale: [1, 1.3, 1],
-              opacity: [0.1, 0.3, 0.1],
-              x: [0, Math.sin(particle.id) * 70, 0],
-              y: [0, -50, 0],
-            }}
-            transition={{
-              duration: particle.duration,
-              repeat: Infinity,
-              ease: 'easeInOut',
-              delay: particle.delay,
-            }}
             style={{
               position: 'absolute',
-              left: particle.left,
-              top: particle.top,
-              width: particle.size,
-              height: particle.size,
-              background: `radial-gradient(circle, ${particle.color} 0%, transparent 70%)`,
+              top: '0%',
+              left: '-5%',
+              width: '600px',
+              height: '600px',
+              background: 'radial-gradient(circle, rgba(201,163,75,0.12) 0%, transparent 70%)',
               borderRadius: '50%',
-              filter: 'blur(50px)',
+              filter: 'blur(100px)',
               zIndex: 0,
-              pointerEvents: 'none',
+              y: y2,
             }}
-          />
-        ))}
-
-        {/* Bubble particles – larger, slower, more transparent */}
-        {bubbleParticles.map((particle) => (
-          <motion.div
-            key={particle.id}
             animate={{
               scale: [1, 1.2, 1],
-              opacity: [0.05, 0.15, 0.05],
-              x: [0, Math.cos(particle.id) * 100, 0],
-              y: [0, -80, 0],
+              opacity: [0.1, 0.2, 0.1],
+              rotate: [0, 20, 0],
             }}
-            transition={{
-              duration: particle.duration,
-              repeat: Infinity,
-              ease: 'easeInOut',
-              delay: particle.delay,
-            }}
+            transition={{ duration: 25, repeat: Infinity, ease: 'easeInOut' }}
+          />
+          <motion.div
             style={{
               position: 'absolute',
-              left: particle.left,
-              top: particle.top,
-              width: particle.size,
-              height: particle.size,
-              background: `radial-gradient(circle, ${particle.color} 0%, transparent 80%)`,
+              bottom: '0%',
+              right: '-5%',
+              width: '700px',
+              height: '700px',
+              background: 'radial-gradient(circle, rgba(139,90,43,0.12) 0%, transparent 70%)',
               borderRadius: '50%',
-              filter: 'blur(80px)',
+              filter: 'blur(120px)',
               zIndex: 0,
-              pointerEvents: 'none',
+              y: y1,
             }}
+            animate={{
+              scale: [1, 1.3, 1],
+              opacity: [0.1, 0.2, 0.1],
+              rotate: [0, -20, 0],
+            }}
+            transition={{ duration: 30, repeat: Infinity, ease: 'easeInOut', delay: 3 }}
+          />
+
+          {/* Content */}
+          <div style={{ position: 'relative', zIndex: 10, maxWidth: '1100px', margin: '0 auto', textAlign: 'center' }}>
+            <motion.h1
+              initial={{ opacity: 0, y: 40 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 1, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
+              style={{
+                fontSize: 'clamp(4.2rem, 11vw, 8rem)',
+                fontFamily: "'Playfair Display', serif",
+                fontWeight: 700,
+                color: '#000000',
+                marginBottom: '0.5rem',
+                textShadow: '0 4px 20px rgba(0,0,0,0.15)',
+              }}
+            >
+              Customer Guide
+            </motion.h1>
+
+            <motion.div
+              initial={{ scaleX: 0 }}
+              animate={{ scaleX: 1 }}
+              transition={{ delay: 0.8, duration: 1 }}
+              style={{
+                width: '150px',
+                height: '4px',
+                background: 'linear-gradient(90deg, transparent, #000000, #666666, #000000, transparent)',
+                margin: '1rem auto 1.5rem',
+                borderRadius: '4px',
+                boxShadow: '0 0 15px rgba(0,0,0,0.3)',
+              }}
+            />
+
+            <motion.p
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 1 }}
+              style={{
+                fontSize: 'clamp(1.2rem, 2.5vw, 1.5rem)',
+                color: '#4a3f38',
+                maxWidth: '700px',
+                margin: '0 auto 2rem',
+                lineHeight: 1.6,
+              }}
+            >
+              Simple steps to discover, buy, and enjoy original artwork.
+              Your collection starts here.
+            </motion.p>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 1.2 }}
+              style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}
+            >
+              <motion.a
+                href="https://zigguratss.com/artworks"
+                target="_blank"
+                rel="noreferrer"
+                whileHover={{ scale: 1.05, boxShadow: '0 15px 40px rgba(0,0,0,0.3)' }}
+                whileTap={{ scale: 0.95 }}
+                style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '8px',
+                  padding: '1rem 2.5rem',
+                  borderRadius: '50px',
+                  background: '#000000',
+                  color: '#ffffff',
+                  fontSize: '1.1rem',
+                  fontWeight: 600,
+                  textDecoration: 'none',
+                  boxShadow: '0 10px 25px rgba(0,0,0,0.2)',
+                }}
+              >
+                Browse Artworks <ArrowRight size={18} />
+              </motion.a>
+              <motion.a
+                href="https://zigguratss.com/signup"
+                target="_blank"
+                rel="noreferrer"
+                whileHover={{ scale: 1.05, borderColor: '#000000', background: '#ffffff' }}
+                whileTap={{ scale: 0.95 }}
+                style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '8px',
+                  padding: '1rem 2.5rem',
+                  borderRadius: '50px',
+                  border: '1px solid #00000080',
+                  color: '#000000',
+                  fontSize: '1.1rem',
+                  fontWeight: 600,
+                  textDecoration: 'none',
+                  background: 'transparent',
+                }}
+              >
+                Create Account
+              </motion.a>
+            </motion.div>
+
+            {/* Stats Bar */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 1.4 }}
+              style={{
+                display: 'flex',
+                justifyContent: 'center',
+                gap: 'clamp(2rem, 8vw, 4rem)',
+                flexWrap: 'wrap',
+                marginTop: '4rem',
+                padding: '2rem 1rem',
+                borderTop: '1px solid rgba(0,0,0,0.1)',
+              }}
+            >
+              {[
+                { icon: UserCircle, label: 'Happy Collectors', value: '10K+' },
+                { icon: ShoppingCart, label: 'Artworks Sold', value: '25K+' },
+                { icon: Star, label: '5-Star Reviews', value: '4.9' },
+              ].map((stat, i) => (
+                <motion.div
+                  key={i}
+                  whileHover={{ scale: 1.1 }}
+                  style={{ textAlign: 'center' }}
+                >
+                  <stat.icon size={36} color="#000000" style={{ marginBottom: '0.5rem' }} />
+                  <div style={{ fontSize: '2rem', fontWeight: 700, color: '#000000' }}>{stat.value}</div>
+                  <div style={{ fontSize: '0.9rem', color: '#666' }}>{stat.label}</div>
+                </motion.div>
+              ))}
+            </motion.div>
+          </div>
+        </section>
+
+        {/* Step sections */}
+        {customerSections.map((section) => (
+          <SectionBlock
+            key={section.id}
+            id={section.id}
+            number={section.number}
+            label={section.label}
+            title={section.title}
+            subtitle={section.subtitle}
+            steps={section.steps}
+            icon={section.icon}
+            accentColor={section.accentColor}
+            fullWidth
           />
         ))}
 
-        {/* Additional floating shapes for depth */}
-        <motion.div
-          animate={{ scale: [1, 1.2, 1], opacity: [0.1, 0.2, 0.1], rotate: [0, 15, 0] }}
-          transition={{ duration: 18, repeat: Infinity, ease: 'easeInOut' }}
-          style={{
-            position: 'absolute',
-            top: '5%',
-            left: '2%',
-            width: '400px',
-            height: '400px',
-            background: 'radial-gradient(circle, rgba(201,163,75,0.1) 0%, transparent 70%)',
-            borderRadius: '50%',
-            filter: 'blur(80px)',
-            zIndex: 1,
-          }}
-        />
-        <motion.div
-          animate={{ scale: [1, 1.3, 1], opacity: [0.1, 0.2, 0.1], rotate: [0, -15, 0] }}
-          transition={{ duration: 22, repeat: Infinity, ease: 'easeInOut', delay: 3 }}
-          style={{
-            position: 'absolute',
-            bottom: '5%',
-            right: '2%',
-            width: '500px',
-            height: '500px',
-            background: 'radial-gradient(circle, rgba(139,90,43,0.1) 0%, transparent 70%)',
-            borderRadius: '50%',
-            filter: 'blur(100px)',
-            zIndex: 1,
-          }}
-        />
+        <BenefitsSection perks={perks} fullWidth />
 
-        {/* Content */}
-        <div style={{ position: 'relative', zIndex: 10, width: '100%', maxWidth: '1100px' }}>
-          <motion.h1
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
-            style={{
-              fontSize: 'clamp(4.2rem, 11vw, 8rem)',
+        {/* Final CTA with its own particles */}
+        <section
+          style={{
+            position: 'relative',
+            width: '100%',
+            padding: '6rem 5vw',
+            background: '#f0ebe5',
+            textAlign: 'center',
+            overflow: 'hidden',
+          }}
+        >
+          {/* Particles for final section */}
+          {flameParticles.slice(0, 20).map((p, i) => (
+            <motion.div
+              key={`cta-${i}`}
+              animate={{
+                scale: [1, 1.2, 1],
+                opacity: [0.1, 0.2, 0.1],
+                y: [0, -30, 0],
+                x: [0, Math.sin(i) * 50, 0],
+              }}
+              transition={{
+                duration: 18 + i,
+                repeat: Infinity,
+                ease: 'easeInOut',
+                delay: i * 0.3,
+              }}
+              style={{
+                position: 'absolute',
+                left: `${5 + i * 4}%`,
+                top: `${10 + i * 4}%`,
+                width: '120px',
+                height: '120px',
+                background: `radial-gradient(circle, ${earthyColors[i % earthyColors.length]} 0%, transparent 70%)`,
+                borderRadius: '50%',
+                filter: 'blur(50px)',
+                zIndex: 0,
+                pointerEvents: 'none',
+              }}
+            />
+          ))}
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+            style={{ position: 'relative', zIndex: 2, maxWidth: '800px', margin: '0 auto' }}
+          >
+            <h2 style={{
+              fontSize: 'clamp(2.5rem, 5vw, 4rem)',
               fontFamily: "'Playfair Display', serif",
-              fontWeight: 700,
-              lineHeight: 1.1,
               color: '#000000',
               marginBottom: '1rem',
-              letterSpacing: '-0.02em',
-              textShadow: '2px 2px 10px rgba(0,0,0,0.1)',
-            }}
-          >
-            Customer Guide
-            <span style={{
-              display: 'block',
-              fontSize: 'clamp(1.8rem, 4vw, 2.8rem)',
-              color: '#333333',
-              fontWeight: 400,
-              marginTop: '0.5rem',
-              fontStyle: 'italic',
             }}>
-              Your Journey to Owning Art
-            </span>
-          </motion.h1>
-
-          <motion.div
-            initial={{ scaleX: 0, opacity: 0 }}
-            animate={{ scaleX: 1, opacity: 1 }}
-            transition={{ delay: 1, duration: 1, ease: [0.22, 1, 0.36, 1] }}
-            style={{
-              width: 'clamp(120px, 22vw, 320px)',
-              height: '3px',
-              background: 'linear-gradient(90deg, transparent, #000000, #666666, #000000, transparent)',
-              borderRadius: '2px',
-              margin: '1.5rem auto 0',
-              transformOrigin: 'center',
-              boxShadow: '0 0 8px rgba(0,0,0,0.25)',
-            }}
-          />
-
-          <p style={{
-            fontSize: 'clamp(1.1rem, 2.2vw, 1.3rem)',
-            color: '#4a3f38',
-            lineHeight: 1.8,
-            fontWeight: 400,
-            maxWidth: '720px',
-            margin: '2rem auto 2.5rem',
-          }}>
-            Simple steps to discover, buy, and enjoy original artwork. 
-            Your collection starts here.
-          </p>
-
-          <motion.div
-            animate={{ y: [0, -5, 0] }}
-            transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
-            style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}
-          >
+              Ready to find your perfect piece?
+            </h2>
+            <p style={{
+              fontSize: '1.2rem',
+              color: '#4a4a4a',
+              marginBottom: '2rem',
+            }}>
+              Explore thousands of original artworks from talented artists worldwide.
+            </p>
             <motion.a
               href="https://zigguratss.com/artworks"
               target="_blank"
               rel="noreferrer"
-              whileHover={{ scale: 1.05, boxShadow: '0 0 30px rgba(0,0,0,0.3)' }}
-              whileTap={{ scale: 0.97 }}
+              whileHover={{ scale: 1.05, boxShadow: '0 20px 40px rgba(0,0,0,0.2)' }}
+              whileTap={{ scale: 0.95 }}
               style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '8px',
-                padding: '16px 42px',
-                borderRadius: '40px',
+                display: 'inline-block',
+                padding: '1rem 3rem',
+                borderRadius: '50px',
                 background: '#000000',
-                color: '#ffffff',
+                color: '#fff',
+                fontSize: '1.1rem',
                 fontWeight: 600,
-                fontSize: '1rem',
                 textDecoration: 'none',
-                letterSpacing: '0.02em',
-                boxShadow: '0 6px 18px rgba(0,0,0,0.25)',
+                boxShadow: '0 10px 20px rgba(0,0,0,0.15)',
               }}
             >
               Browse Artworks
             </motion.a>
-            <motion.a
-              href="https://zigguratss.com/signup"
-              target="_blank"
-              rel="noreferrer"
-              whileHover={{ scale: 1.05, borderColor: '#000000', background: '#ffffff' }}
-              whileTap={{ scale: 0.97 }}
-              style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '8px',
-                padding: '16px 38px',
-                borderRadius: '40px',
-                border: '1px solid #00000080',
-                color: '#000000',
-                fontWeight: 600,
-                fontSize: '1rem',
-                textDecoration: 'none',
-                background: '#ffffff',
-                boxShadow: '0 4px 12px rgba(0,0,0,0.02)',
-              }}
-            >
-              Create Account
-            </motion.a>
           </motion.div>
-        </div>
-      </section>
-
-      {/* Step sections – clean */}
-      {customerSections.map((section) => (
-        <SectionBlock
-          key={section.id}
-          id={section.id}
-          number={section.number}
-          label={section.label}
-          title={section.title}
-          subtitle={section.subtitle}
-          steps={section.steps}
-          icon={section.icon}
-          accentColor={section.accentColor}
-          fullWidth
-        />
-      ))}
-
-      <BenefitsSection perks={perks} fullWidth />
-
-      {/* FINAL BROWSE ARTWORKS SECTION with enhanced background */}
-      <section
-        style={{
-          position: 'relative',
-          width: '100%',
-          padding: '6rem 5vw',
-          background: '#f0ebe5',
-          textAlign: 'center',
-          overflow: 'hidden',
-        }}
-      >
-        {/* Flame particles for this section */}
-        {flameParticles.slice(0, 15).map((particle, i) => (
-          <motion.div
-            key={`final-${i}`}
-            animate={{
-              scale: [1, 1.25, 1],
-              opacity: [0.1, 0.25, 0.1],
-              y: [0, -30, 0],
-              x: [0, Math.sin(i) * 40, 0],
-            }}
-            transition={{
-              duration: 14 + i,
-              repeat: Infinity,
-              ease: 'easeInOut',
-              delay: i * 0.4,
-            }}
-            style={{
-              position: 'absolute',
-              left: `${5 + i * 6}%`,
-              top: `${10 + i * 5}%`,
-              width: '150px',
-              height: '150px',
-              background: `radial-gradient(circle, ${
-                i % 3 === 0 ? '#b85e3a' : i % 3 === 1 ? '#c9a34b' : '#8b5a2b'
-              } 0%, transparent 70%)`,
-              borderRadius: '50%',
-              filter: 'blur(40px)',
-              zIndex: 0,
-              pointerEvents: 'none',
-            }}
-          />
-        ))}
-
-        {/* Bubbles for final section */}
-        {bubbleParticles.slice(0, 8).map((particle, i) => (
-          <motion.div
-            key={`bubble-final-${i}`}
-            animate={{
-              scale: [1, 1.2, 1],
-              opacity: [0.05, 0.15, 0.05],
-              y: [0, -40, 0],
-              x: [0, Math.cos(i) * 50, 0],
-            }}
-            transition={{
-              duration: 18 + i,
-              repeat: Infinity,
-              ease: 'easeInOut',
-              delay: i * 0.6,
-            }}
-            style={{
-              position: 'absolute',
-              left: `${10 + i * 8}%`,
-              top: `${15 + i * 6}%`,
-              width: '200px',
-              height: '200px',
-              background: `radial-gradient(circle, ${
-                i % 2 === 0 ? '#9e7b56' : '#b78c5a'
-              } 0%, transparent 80%)`,
-              borderRadius: '50%',
-              filter: 'blur(60px)',
-              zIndex: 0,
-              pointerEvents: 'none',
-            }}
-          />
-        ))}
-
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
-          style={{ position: 'relative', zIndex: 2, maxWidth: '900px', margin: '0 auto' }}
-        >
-          <h2 style={{
-            fontSize: 'clamp(2.5rem, 5vw, 4rem)',
-            fontFamily: "'Playfair Display', serif",
-            fontWeight: 700,
-            color: '#000000',
-            marginBottom: '1rem',
-            textShadow: '2px 2px 8px rgba(0,0,0,0.05)',
-          }}>
-            Ready to find your perfect piece?
-          </h2>
-          <p style={{
-            fontSize: '1.3rem',
-            color: '#4a4a4a',
-            marginBottom: '2.5rem',
-            maxWidth: '600px',
-            margin: '0 auto 2.5rem',
-          }}>
-            Explore thousands of original artworks from talented artists worldwide.
-          </p>
-          <motion.a
-            href="https://zigguratss.com/artworks"
-            target="_blank"
-            rel="noreferrer"
-            whileHover={{ scale: 1.05, boxShadow: '0 20px 30px rgba(0,0,0,0.3)' }}
-            whileTap={{ scale: 0.95 }}
-            style={{
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: '10px',
-              padding: '1.2rem 3.5rem',
-              borderRadius: '50px',
-              background: '#000000',
-              color: '#fff',
-              fontSize: '1.2rem',
-              fontWeight: 600,
-              textDecoration: 'none',
-              boxShadow: '0 10px 20px rgba(0,0,0,0.2)',
-            }}
-          >
-            Browse Artworks <ArrowRight size={20} />
-          </motion.a>
-        </motion.div>
-      </section>
+        </section>
+      </div>
     </>
   );
 }
