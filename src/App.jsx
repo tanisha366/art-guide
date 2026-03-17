@@ -77,15 +77,22 @@ const earthyColors = [
   '#e3b37c', '#c9a34b', '#d4af37', '#bf8f3f', '#9e7b56', '#7d6b4b',
 ];
 
-const flameParticles = Array.from({ length: 30 }, (_, i) => ({
-  id: i,
-  left: `${Math.random() * 100}%`,
-  top: `${Math.random() * 100}%`,
-  size: 120 + Math.random() * 280,
-  delay: Math.random() * 6,
-  duration: 12 + Math.random() * 12,
-  color: earthyColors[i % earthyColors.length],
-}));
+// Generate particles only once, and make count responsive
+function getFlameParticles() {
+  const isMobile = typeof window !== 'undefined' && window.innerWidth < 700;
+  const count = isMobile ? 10 : 30;
+  return Array.from({ length: count }, (_, i) => ({
+    id: i,
+    left: `${Math.random() * 100}%`,
+    top: `${Math.random() * 100}%`,
+    size: isMobile ? 60 + Math.random() * 120 : 120 + Math.random() * 280,
+    delay: Math.random() * 6,
+    duration: isMobile ? 10 + Math.random() * 8 : 12 + Math.random() * 12,
+    color: earthyColors[i % earthyColors.length],
+  }));
+}
+
+const [flameParticles] = typeof window !== 'undefined' ? [getFlameParticles()] : [[]];
 
 export default function App() {
   const [page, setPage] = useState('artist');
@@ -122,10 +129,10 @@ export default function App() {
               <motion.div
                 key={particle.id}
                 animate={{
-                  scale: [1, 1.3, 1],
-                  opacity: [0.1, 0.3, 0.1],
-                  x: [0, Math.sin(particle.id) * 70, 0],
-                  y: [0, -50, 0],
+                  scale: [1, 1.2, 1],
+                  opacity: [0.08, 0.18, 0.08],
+                  x: [0, Math.sin(particle.id) * (window.innerWidth < 700 ? 18 : 70), 0],
+                  y: [0, window.innerWidth < 700 ? -18 : -50, 0],
                 }}
                 transition={{
                   duration: particle.duration,
@@ -134,49 +141,51 @@ export default function App() {
                   delay: particle.delay,
                 }}
                 style={{
-                  position: 'fixed',
+                  position: window.innerWidth < 700 ? 'absolute' : 'fixed',
                   left: particle.left,
                   top: particle.top,
                   width: particle.size,
                   height: particle.size,
                   background: `radial-gradient(circle, ${particle.color} 0%, transparent 70%)`,
                   borderRadius: '50%',
-                  filter: 'blur(60px)',
+                  filter: 'blur(40px)',
                   zIndex: 0,
                   pointerEvents: 'none',
+                  transition: 'all 0.2s',
                 }}
               />
             ))}
 
             {/* Additional floating shapes */}
+            {/* Responsive background shapes */}
             <motion.div
-              animate={{ scale: [1, 1.2, 1], opacity: [0.15, 0.3, 0.15], rotate: [0, 15, 0] }}
-              transition={{ duration: 18, repeat: Infinity, ease: 'easeInOut' }}
+              animate={{ scale: [1, 1.1, 1], opacity: [0.10, 0.18, 0.10], rotate: [0, 10, 0] }}
+              transition={{ duration: 14, repeat: Infinity, ease: 'easeInOut' }}
               style={{
-                position: 'fixed',
-                top: '10%',
-                left: '5%',
-                width: '400px',
-                height: '400px',
-                background: 'radial-gradient(circle, rgba(201,163,75,0.15) 0%, transparent 70%)',
+                position: window.innerWidth < 700 ? 'absolute' : 'fixed',
+                top: window.innerWidth < 700 ? '8%' : '10%',
+                left: window.innerWidth < 700 ? '8%' : '5%',
+                width: window.innerWidth < 700 ? '120px' : '400px',
+                height: window.innerWidth < 700 ? '120px' : '400px',
+                background: 'radial-gradient(circle, rgba(201,163,75,0.13) 0%, transparent 70%)',
                 borderRadius: '50%',
-                filter: 'blur(80px)',
+                filter: 'blur(40px)',
                 zIndex: 0,
                 pointerEvents: 'none',
               }}
             />
             <motion.div
-              animate={{ scale: [1, 1.3, 1], opacity: [0.15, 0.3, 0.15], rotate: [0, -15, 0] }}
-              transition={{ duration: 22, repeat: Infinity, ease: 'easeInOut', delay: 2 }}
+              animate={{ scale: [1, 1.15, 1], opacity: [0.10, 0.18, 0.10], rotate: [0, -10, 0] }}
+              transition={{ duration: 16, repeat: Infinity, ease: 'easeInOut', delay: 1 }}
               style={{
-                position: 'fixed',
-                bottom: '10%',
-                right: '5%',
-                width: '500px',
-                height: '500px',
-                background: 'radial-gradient(circle, rgba(139,90,43,0.15) 0%, transparent 70%)',
+                position: window.innerWidth < 700 ? 'absolute' : 'fixed',
+                bottom: window.innerWidth < 700 ? '8%' : '10%',
+                right: window.innerWidth < 700 ? '8%' : '5%',
+                width: window.innerWidth < 700 ? '140px' : '500px',
+                height: window.innerWidth < 700 ? '140px' : '500px',
+                background: 'radial-gradient(circle, rgba(139,90,43,0.13) 0%, transparent 70%)',
                 borderRadius: '50%',
-                filter: 'blur(100px)',
+                filter: 'blur(50px)',
                 zIndex: 0,
                 pointerEvents: 'none',
               }}
