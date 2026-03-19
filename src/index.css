@@ -295,6 +295,118 @@ a, button {
     width: 100% !important;
     justify-content: center !important;
   }
+
+  /* CTABanner grid responsive */
+  .cta-banner-grid {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 2rem !important;
+    width: 100% !important;
+  }
+
+  .cta-feature-cards {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 1rem !important;
+    width: 100% !important;
+  }
+
+  .cta-stats-row {
+    flex-direction: column !important;
+    gap: 1.2rem !important;
+    align-items: center !important;
+    width: 100% !important;
+  }
+
+  .cta-banner-grid > * {
+    width: 92vw !important;
+    max-width: 420px !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    box-sizing: border-box !important;
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+  }
+
+  .card, .feature-card, .stats-card {
+    width: 92vw !important;
+    max-width: 420px !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    box-sizing: border-box !important;
+    overflow-wrap: break-word !important;
+    word-break: break-word !important;
+    padding: 1rem !important;
+    margin-bottom: 1rem !important;
+    background-clip: padding-box !important;
+  }
+  .cta-card {
+    margin-bottom: 1rem !important;
+  }
+  /* Add scroll for overflow */
+  .cta-banner-grid {
+    overflow-x: auto !important;
+    padding-bottom: 1rem !important;
+  }
+  /* Ensure section padding for all */
+  section, .section-block {
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+    box-sizing: border-box !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    max-width: 420px !important;
+  }
+  /* Center Join Now and feature ribbon for mobile */
+  .cta-feature-cards, .cta-banner-grid {
+    align-items: center !important;
+    justify-content: center !important;
+  }
+  .cta-banner-grid .feature-ribbon {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 100% !important;
+    margin: 0 auto 1rem auto !important;
+    text-align: center !important;
+  }
+  .cta-banner-grid .feature-ribbon .join-now {
+    margin: 1rem auto !important;
+    display: block !important;
+    width: 80vw !important;
+    max-width: 320px !important;
+    text-align: center !important;
+    font-size: 1rem !important;
+    padding: 0.8rem 1.2rem !important;
+    border-radius: 50px !important;
+    background: var(--gold) !important;
+    color: #fff !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.08em !important;
+  }
+  /* Fix feature card spacing */
+  .feature-card {
+    margin-bottom: 1.2rem !important;
+    width: 90vw !important;
+    max-width: 340px !important;
+    text-align: center !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+  .stats-card {
+    width: 90vw !important;
+    max-width: 340px !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    margin-bottom: 1.2rem !important;
+    text-align: center !important;
+  }
+  /* Add scroll for overflow */
+  .cta-banner-grid {
+    overflow-x: auto !important;
+    padding-bottom: 1rem !important;
+  }
 }
 
 /* Small phones — reduce base font size, tighter spacing */

@@ -15,8 +15,7 @@ import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Palette, Menu, X, Users, Brush } from 'lucide-react';
 
-// ─── Nav link data
-
+// ─── Nav link data – updated to match actual section IDs
 const artistLinks = [
   { label: 'Register',       href: '#register' },
   { label: 'Get Started',    href: '#setup'    },
@@ -25,15 +24,24 @@ const artistLinks = [
 ];
 
 const customerLinks = [
-  { label: 'Account',  href: '#register' },
-  { label: 'Browse',   href: '#browse'   },
-  { label: 'Purchase', href: '#purchase' },
-  { label: 'Delivery', href: '#delivery' },
+  { label: 'Discover',  href: '#discover' },
+  { label: 'Purchase',  href: '#purchase' },
+  { label: 'Benefits',  href: '#benefits' },
 ];
 
 export default function Navbar({ onSwitchPage, isCustomerPage, onBack }) {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+
+  // Update scrolled state on scroll
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 20);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   return (
     <>
       <motion.nav

@@ -1,13 +1,4 @@
-// ─────────────────────────────────────────────────────────────────────────────
-// BenefitsSection.jsx  —  6-card "Why Zigguratss" benefits grid
-//
-// Each card has:
-//   • 3D tilt on mouse move
-//   • Corner glow & bottom shimmer on hover
-//   • Icon box with glow
-//   • GSAP ScrollTrigger header entrance
-// ─────────────────────────────────────────────────────────────────────────────
-
+// BenefitsSection.jsx – fully responsive
 import { useRef, useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { gsap } from 'gsap';
@@ -17,7 +8,19 @@ import RevealOnScroll from './RevealOnScroll';
 
 gsap.registerPlugin(ScrollTrigger);
 
-// ─── Data
+// Custom hook for media query
+function useMediaQuery(query) {
+  const [matches, setMatches] = useState(false);
+  useEffect(() => {
+    const media = window.matchMedia(query);
+    if (media.matches !== matches) setMatches(media.matches);
+    const listener = () => setMatches(media.matches);
+    media.addEventListener('change', listener);
+    return () => media.removeEventListener('change', listener);
+  }, [matches, query]);
+  return matches;
+}
+
 const FEATURES = [
   { icon: Globe, title: 'Global Reach', desc: 'Showcase your artwork to collectors and art lovers from across the globe.', color: '#b45309' },
   { icon: Shield, title: 'Secure Payments', desc: 'Multiple secure payment gateways including PayPal, Visa, and banking transfers.', color: '#6d5f9a' },
@@ -27,12 +30,13 @@ const FEATURES = [
   { icon: Headphones, title: 'Dedicated Support', desc: '24/7 support team ready to help you with any questions or issues.', color: '#6d5f9a' },
 ];
 
-function BenefitCard({ b, index }) {
+function BenefitCard({ b, index, isMobile }) {
   const [hovered, setHovered] = useState(false);
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
   const cardRef = useRef(null);
 
   const handleMouseMove = (e) => {
+    if (isMobile) return; // disable tilt on mobile
     const rect = cardRef.current.getBoundingClientRect();
     setMousePos({
       x: ((e.clientX - rect.left) / rect.width - 0.5) * 18,
@@ -45,64 +49,73 @@ function BenefitCard({ b, index }) {
       <motion.div
         ref={cardRef}
         onMouseMove={handleMouseMove}
-        onMouseEnter={() => setHovered(true)}
+        onMouseEnter={() => !isMobile && setHovered(true)}
         onMouseLeave={() => { setHovered(false); setMousePos({ x: 0, y: 0 }); }}
-        animate={hovered ? { rotateX: -mousePos.y * 0.4, rotateY: mousePos.x * 0.4 } : { rotateX: 0, rotateY: 0 }}
-        whileHover={{ y: -10, boxShadow: `0 24px 70px ${b.color}28`, borderColor: `${b.color}55` }}
+        animate={!isMobile && hovered ? { rotateX: -mousePos.y * 0.4, rotateY: mousePos.x * 0.4 } : {}}
+        whileHover={!isMobile ? { y: -10, boxShadow: `0 24px 70px ${b.color}28`, borderColor: `${b.color}55` } : {}}
         style={{
           background: 'var(--card-bg)', borderRadius: '20px',
           border: `1px solid ${hovered ? b.color + '44' : 'var(--border)'}`,
-          padding: '2rem', backdropFilter: 'blur(20px)',
+          padding: isMobile ? '1.5rem' : '2rem',
+          backdropFilter: 'blur(20px)',
           cursor: 'default', position: 'relative', overflow: 'hidden',
           transformStyle: 'preserve-3d', willChange: 'transform',
           transition: 'border-color 0.3s ease, box-shadow 0.3s ease',
           height: '100%', boxSizing: 'border-box',
         }}
       >
-      {/* Corner glow */}
-      <motion.div
-        animate={{ opacity: hovered ? 0.18 : 0 }}
-        style={{
-          position: 'absolute', top: 0, right: 0, width: '120px', height: '120px',
-          background: `radial-gradient(circle, ${b.color} 0%, transparent 70%)`,
-          borderRadius: '50%', transform: 'translate(40px,-40px)', pointerEvents: 'none',
-          transition: 'opacity 0.4s ease',
-        }}
-      />
+        {/* Corner glow */}
+        <motion.div
+          animate={{ opacity: hovered ? 0.18 : 0 }}
+          style={{
+            position: 'absolute', top: 0, right: 0, width: '120px', height: '120px',
+            background: `radial-gradient(circle, ${b.color} 0%, transparent 70%)`,
+            borderRadius: '50%', transform: 'translate(40px,-40px)', pointerEvents: 'none',
+            transition: 'opacity 0.4s ease',
+          }}
+        />
 
-      <motion.div
-        whileHover={{ scale: 1.2, rotate: 8 }}
-        style={{
-          width: 52, height: 52, borderRadius: '14px',
-          background: `linear-gradient(135deg, ${b.color}30, ${b.color}08)`,
-          border: `1px solid ${b.color}44`,
-          display: 'flex', alignItems: 'center', justifyContent: 'center',
-          marginBottom: '1.2rem',
-          boxShadow: hovered ? `0 0 24px ${b.color}44` : 'none',
-          transition: 'box-shadow 0.3s',
-        }}
-      >
-        <b.icon size={22} color={b.color} />
-      </motion.div>
+        <motion.div
+          whileHover={!isMobile && { scale: 1.2, rotate: 8 }}
+          style={{
+            width: 52, height: 52, borderRadius: '14px',
+            background: `linear-gradient(135deg, ${b.color}30, ${b.color}08)`,
+            border: `1px solid ${b.color}44`,
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+            marginBottom: '1.2rem',
+            boxShadow: hovered ? `0 0 24px ${b.color}44` : 'none',
+            transition: 'box-shadow 0.3s',
+          }}
+        >
+          <b.icon size={22} color={b.color} />
+        </motion.div>
 
-      <h3 style={{ fontSize: '1.05rem', fontFamily: "'Playfair Display', serif", fontWeight: 700, color: 'var(--text-primary)', marginBottom: '0.6rem' }}>
-        {b.title}
-      </h3>
-      <p style={{ fontSize: '0.88rem', color: hovered ? 'var(--text-primary)' : 'var(--text-secondary)', lineHeight: 1.7, transition: 'color 0.3s' }}>
-        {b.desc}
-      </p>
+        <h3 style={{
+          fontSize: isMobile ? '1rem' : '1.05rem',
+          fontFamily: "'Playfair Display', serif", fontWeight: 700,
+          color: 'var(--text-primary)', marginBottom: '0.6rem'
+        }}>
+          {b.title}
+        </h3>
+        <p style={{
+          fontSize: isMobile ? '0.85rem' : '0.88rem',
+          color: hovered ? 'var(--text-primary)' : 'var(--text-secondary)',
+          lineHeight: 1.7, transition: 'color 0.3s'
+        }}>
+          {b.desc}
+        </p>
 
-      {/* Bottom shimmer bar */}
-      <motion.div
-        initial={{ scaleX: 0, opacity: 0 }}
-        animate={hovered ? { scaleX: 1, opacity: 1 } : { scaleX: 0, opacity: 0 }}
-        transition={{ duration: 0.4 }}
-        style={{
-          position: 'absolute', bottom: 0, left: 0, right: 0, height: '2px',
-          background: `linear-gradient(90deg, transparent, ${b.color}, transparent)`,
-          transformOrigin: 'center',
-        }}
-      />
+        {/* Bottom shimmer bar */}
+        <motion.div
+          initial={{ scaleX: 0, opacity: 0 }}
+          animate={hovered ? { scaleX: 1, opacity: 1 } : { scaleX: 0, opacity: 0 }}
+          transition={{ duration: 0.4 }}
+          style={{
+            position: 'absolute', bottom: 0, left: 0, right: 0, height: '2px',
+            background: `linear-gradient(90deg, transparent, ${b.color}, transparent)`,
+            transformOrigin: 'center',
+          }}
+        />
       </motion.div>
     </RevealOnScroll>
   );
@@ -111,6 +124,8 @@ function BenefitCard({ b, index }) {
 export default function BenefitsSection() {
   const ref = useRef(null);
   const headerRef = useRef(null);
+  const isMobile = useMediaQuery('(max-width: 768px)');
+  const isTablet = useMediaQuery('(min-width: 769px) and (max-width: 1024px)');
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -123,62 +138,86 @@ export default function BenefitsSection() {
     return () => ctx.revert();
   }, []);
 
+  // Responsive grid columns
+  const gridCols = isMobile ? '1fr' : (isTablet ? 'repeat(2, 1fr)' : 'repeat(3, 1fr)');
+
   return (
     <section id="benefits" ref={ref} style={{ 
-      padding: 'clamp(6rem, 12vw, 8rem) clamp(2.5rem, 5vw, 6rem)', 
+      padding: isMobile ? '4rem 1.5rem' : 'clamp(6rem, 12vw, 8rem) clamp(2.5rem, 5vw, 6rem)',
       background: 'linear-gradient(180deg, #eedfc0 0%, #f5ead0 50%, #f0e2ba 100%)', 
       position: 'relative',
       overflow: 'hidden'
     }}>
-      {/* Professional geometric background */}
-      <div style={{
-        position: 'absolute',
-        inset: 0,
-        backgroundImage: [
-          'radial-gradient(circle at 25% 25%, rgba(124,107,170,0.05) 0%, transparent 50%)',
-          'radial-gradient(circle at 75% 75%, rgba(201,168,76,0.05) 0%, transparent 50%)',
-          'linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px)',
-          'linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px)'
-        ].join(','),
-        backgroundSize: '800px 800px, 800px 800px, 80px 80px, 80px 80px',
-        pointerEvents: 'none',
-      }} />
+      {/* Professional geometric background - hidden on mobile for performance */}
+      {!isMobile && (
+        <div style={{
+          position: 'absolute',
+          inset: 0,
+          backgroundImage: [
+            'radial-gradient(circle at 25% 25%, rgba(124,107,170,0.05) 0%, transparent 50%)',
+            'radial-gradient(circle at 75% 75%, rgba(201,168,76,0.05) 0%, transparent 50%)',
+            'linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px)',
+            'linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px)'
+          ].join(','),
+          backgroundSize: '800px 800px, 800px 800px, 80px 80px, 80px 80px',
+          pointerEvents: 'none',
+        }} />
+      )}
       
-      {/* Floating orbs for depth */}
+      {/* Floating orbs for depth - scaled down or hidden on mobile */}
       <div style={{
         position: 'absolute',
         top: '10%',
         right: '10%',
-        width: '300px',
-        height: '300px',
+        width: isMobile ? '150px' : '300px',
+        height: isMobile ? '150px' : '300px',
         borderRadius: '50%',
         background: 'radial-gradient(circle, rgba(124,107,170,0.08) 0%, transparent 70%)',
-        filter: 'blur(60px)',
+        filter: 'blur(40px)',
         pointerEvents: 'none',
       }} />
       <div style={{
         position: 'absolute',
         bottom: '20%',
         left: '15%',
-        width: '400px',
-        height: '400px',
+        width: isMobile ? '200px' : '400px',
+        height: isMobile ? '200px' : '400px',
         borderRadius: '50%',
         background: 'radial-gradient(circle, rgba(201,168,76,0.06) 0%, transparent 70%)',
-        filter: 'blur(80px)',
+        filter: 'blur(60px)',
         pointerEvents: 'none',
       }} />
+      
       <div style={{ maxWidth: '1520px', margin: '0 auto', width: '100%' }}>
-        <div ref={headerRef} style={{ textAlign: 'center', marginBottom: '4rem', opacity: 0 }}>
-          <span style={{ fontSize: '0.75rem', letterSpacing: '0.15em', textTransform: 'uppercase', color: 'var(--gold)', fontWeight: 700 }}>Why artists love us</span>
-          <h2 style={{ fontSize: 'clamp(2rem, 5vw, 3rem)', fontFamily: "'Playfair Display', serif", fontWeight: 800, marginTop: '0.8rem', color: 'var(--text-primary)' }}>
+        <div ref={headerRef} style={{ textAlign: 'center', marginBottom: isMobile ? '2.5rem' : '4rem', opacity: 0 }}>
+          <span style={{ fontSize: '0.75rem', letterSpacing: '0.15em', textTransform: 'uppercase', color: 'var(--gold)', fontWeight: 700 }}>
+            Why artists love us
+          </span>
+          <h2 style={{ 
+            fontSize: isMobile ? '1.8rem' : 'clamp(2rem, 5vw, 3rem)',
+            fontFamily: "'Playfair Display', serif", fontWeight: 800,
+            marginTop: '0.8rem', color: 'var(--text-primary)'
+          }}>
             Real tools. Real earnings.
           </h2>
-          <p style={{ marginTop: '1rem', color: 'var(--text-secondary)', fontSize: '1rem', maxWidth: '520px', margin: '1rem auto 0' }}>
+          <p style={{ 
+            marginTop: '1rem', color: 'var(--text-secondary)',
+            fontSize: isMobile ? '0.9rem' : '1rem',
+            maxWidth: '520px', margin: '1rem auto 0'
+          }}>
             We built Zigguratss for artists, not corporations. Here's what that looks like in practice.
           </p>
         </div>
-        <div className="benefits-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1.5rem', perspective: '1000px' }}>
-          {FEATURES.map((b, i) => <BenefitCard key={b.title} b={b} index={i} />)}
+        
+        <div className="benefits-grid" style={{ 
+          display: 'grid', 
+          gridTemplateColumns: gridCols, 
+          gap: isMobile ? '1rem' : '1.5rem', 
+          perspective: '1000px' 
+        }}>
+          {FEATURES.map((b, i) => (
+            <BenefitCard key={b.title} b={b} index={i} isMobile={isMobile} />
+          ))}
         </div>
       </div>
     </section>
